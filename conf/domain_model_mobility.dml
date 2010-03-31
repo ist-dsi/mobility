@@ -1,6 +1,12 @@
 package module.mobility.domain;
 
+
 class MobilitySystem {
+}
+
+class MobilityYear {
+	Integer year;
+	Integer counter;
 }
 
 class JobOffer {
@@ -15,28 +21,36 @@ class JobOffer {
 class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
+
 relation MyOrgMobilitySystem {
 	.myorg.domain.MyOrg playsRole myOrg;
 	MobilitySystem playsRole mobilitySystem;
 }
 
+relation MobilitySystemMobilityYear {
+	MobilitySystem playsRole mobilitySystem;
+	MobilityYear playsRole mobilityYear {
+		multiplicity *;
+	}
+}
+
 relation MobilitySystemJobOffer {
 	MobilitySystem playsRole mobilitySystem;
-	JobOffer playsRole JobOffer{
+	JobOffer playsRole jobOffer {
 		multiplicity *;
 	}
 }
 
 relation JobOfferRequestor {
 	.module.organization.domain.Person playsRole creator;
-	JobOffer playsRole jobOffer{
+	JobOffer playsRole jobOffer {
 		multiplicity *;
 	}
 }
 
 relation JobOfferApprover {
 	.module.organization.domain.Accountability playsRole approver;
-	JobOffer playsRole jobOffer{
+	JobOffer playsRole jobOffer {
 		multiplicity *;
 	}
 }
@@ -44,4 +58,11 @@ relation JobOfferApprover {
 relation JobOfferProcessJobOffer {
 	JobOfferProcess playsRole jobOfferProcess;
 	JobOffer playsRole jobOffer;
+}
+
+relation MobilityYearJobOffer {
+	MobilityYear playsRole mobilityYear;
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
 }

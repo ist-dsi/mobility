@@ -11,9 +11,10 @@ import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class JobOffer extends JobOffer_Base {
 
-    public JobOffer(DateTime beginDate, DateTime endDate, MultiLanguageString title) {
+    public JobOffer(int year, DateTime beginDate, DateTime endDate, MultiLanguageString title) {
 	super();
 	setMobilitySystem(MobilitySystem.getInstance());
+	setMobilityYear(MobilityYear.findMobilityYear(year));
 	setBeginDate(beginDate);
 	setEndDate(endDate);
 	setTitle(title);

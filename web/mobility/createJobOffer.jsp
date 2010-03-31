@@ -7,6 +7,7 @@
 	
 <fr:edit id="jobOfferBean" name="jobOfferBean" action="/mobility.do?method=createJobOffer">
 	<fr:schema type="module.mobility.domain.util.JobOfferBean" bundle="MOBILITY_RESOURCES">
+		<fr:slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<fr:slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<fr:slot name="endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<fr:slot name="title" key="label.mobility.jobOffer.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">

@@ -1,6 +1,7 @@
 package module.mobility.domain.util;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 import module.mobility.domain.JobOffer;
 
@@ -10,6 +11,8 @@ import pt.ist.fenixWebFramework.services.Service;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class JobOfferBean implements Serializable {
+
+    private int year = Calendar.getInstance().get(Calendar.YEAR);
     private DateTime beginDate;
     private DateTime endDate;
     private MultiLanguageString title;
@@ -38,8 +41,17 @@ public class JobOfferBean implements Serializable {
 	this.title = title;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
     @Service
     public JobOffer create() {
-	return new JobOffer(beginDate, endDate, title);
+	return new JobOffer(year, beginDate, endDate, title);
     }
+
 }
