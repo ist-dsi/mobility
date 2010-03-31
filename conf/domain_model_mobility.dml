@@ -1,0 +1,47 @@
+package module.mobility.domain;
+
+class MobilitySystem {
+}
+
+class JobOffer {
+	DateTime beginDate;
+	DateTime endDate;
+	MultiLanguageString title;
+	DateTime creationDate;
+	DateTime confirmationDate;
+	DateTime approvalDate;
+}
+
+class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
+}
+
+relation MyOrgMobilitySystem {
+	.myorg.domain.MyOrg playsRole myOrg;
+	MobilitySystem playsRole mobilitySystem;
+}
+
+relation MobilitySystemJobOffer {
+	MobilitySystem playsRole mobilitySystem;
+	JobOffer playsRole JobOffer{
+		multiplicity *;
+	}
+}
+
+relation JobOfferRequestor {
+	.module.organization.domain.Person playsRole creator;
+	JobOffer playsRole jobOffer{
+		multiplicity *;
+	}
+}
+
+relation JobOfferApprover {
+	.module.organization.domain.Accountability playsRole approver;
+	JobOffer playsRole jobOffer{
+		multiplicity *;
+	}
+}
+
+relation JobOfferProcessJobOffer {
+	JobOfferProcess playsRole jobOfferProcess;
+	JobOffer playsRole jobOffer;
+}
