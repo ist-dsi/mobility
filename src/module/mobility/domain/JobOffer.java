@@ -28,8 +28,14 @@ public class JobOffer extends JobOffer_Base {
 	new JobOfferProcess(this);
     }
 
+    public boolean getIsUnderConstruction(User user) {
+	return (getCreator().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user))
+		&& getSubmittedForApprovalDate() == null;
+    }
+
     public boolean getIsPendingApproval(User user) {
-	return getCreator().equals(user.getPerson()) && getSubmittedForApprovalDate() == null;
+	return (getCreator().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user))
+		&& getSubmittedForApprovalDate() != null && getApprovalDate() == null;
     }
 
     public void edit(JobOfferBean jobOfferBean) {

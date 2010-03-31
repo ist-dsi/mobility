@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import module.mobility.domain.JobOfferProcess;
+import module.mobility.domain.MobilitySystem;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.util.JobOfferBean;
@@ -61,8 +62,8 @@ public class MobilityAction extends ContextBaseAction {
 	return ProcessManagement.forwardToProcess(jobOfferProcess);
     }
 
-    public ActionForward portfolio(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
+    public ActionForward portfolio(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
 	final User user = UserView.getCurrentUser();
 	if (user == null || !user.hasPerson()) {
 	    return frontPage(mapping, form, request, response);
@@ -76,4 +77,17 @@ public class MobilityAction extends ContextBaseAction {
 	return ProcessManagement.forwardToProcess(personalPortfolioProcess);
     }
 
+    public ActionForward configuration(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final MobilitySystem mobilitySystem = MobilitySystem.getInstance();
+	request.setAttribute("mobilitySystem", mobilitySystem);
+	return forward(request, "/mobility/configuration.jsp");
+    }
+
+    public ActionForward configureManagers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final MobilitySystem mobilitySystem = MobilitySystem.getInstance();
+	request.setAttribute("mobilitySystem", mobilitySystem);
+	return forward(request, "/mobility/configureManagers.jsp");
+    }
 }

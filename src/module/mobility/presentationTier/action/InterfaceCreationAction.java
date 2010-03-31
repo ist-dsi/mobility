@@ -3,9 +3,11 @@ package module.mobility.presentationTier.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import myorg.domain.RoleType;
 import myorg.domain.VirtualHost;
 import myorg.domain.contents.ActionNode;
 import myorg.domain.contents.Node;
+import myorg.domain.groups.Role;
 import myorg.domain.groups.UserGroup;
 import myorg.presentationTier.actions.ContextBaseAction;
 
@@ -39,6 +41,9 @@ public class InterfaceCreationAction extends ContextBaseAction {
 
 	ActionNode.createActionNode(virtualHost, homeNode, "/mobility", "portfolio", "resources.MobilityResources",
 		"link.sideBar.mobility.personalProfile", UserGroup.getInstance());
+
+	ActionNode.createActionNode(virtualHost, homeNode, "/mobility", "configuration", "resources.MobilityResources",
+		"link.sideBar.mobility.configuration", Role.getRole(RoleType.MANAGER));
 
 	return forwardToMuneConfiguration(request, virtualHost, node);
     }

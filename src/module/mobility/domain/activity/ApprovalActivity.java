@@ -9,7 +9,7 @@ import myorg.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
-public class SubmitForApprovalActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
+public class ApprovalActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
     @Override
     public String getLocalizedName() {
@@ -19,12 +19,12 @@ public class SubmitForApprovalActivity extends WorkflowActivity<JobOfferProcess,
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.getIsUnderConstruction(user);
+	return jobOffer.getIsPendingApproval(user);
     }
 
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-	activityInformation.getProcess().getJobOffer().setSubmittedForApprovalDate(new DateTime());
+	activityInformation.getProcess().getJobOffer().setApprovalDate(new DateTime());
     }
 
     @Override

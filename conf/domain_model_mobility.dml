@@ -73,6 +73,16 @@ relation MobilityYearJobOffer {
 	}
 }
 
+relation MobilitySystemManagementUnit {
+	MobilitySystem playsRole mobilitySystem;
+	.module.organization.domain.Unit playsRole managementUnit;
+}
+
+relation MobilitySystemManagementAccountabilityType {
+	MobilitySystem playsRole mobilitySystem;
+	.module.organization.domain.AccountabilityType playsRole managementAccountabilityType;
+}
+
 relation MobilitySystemPersonalPortfolio {
 	MobilitySystem playsRole mobilitySystem;
 	PersonalPortfolio playsRole personalPortfolio {

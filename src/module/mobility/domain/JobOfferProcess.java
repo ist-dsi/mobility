@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import module.mobility.domain.activity.ApprovalActivity;
 import module.mobility.domain.activity.EditJobOfferActivity;
 import module.mobility.domain.activity.SubmitForApprovalActivity;
 import module.workflow.activities.ActivityInformation;
@@ -18,7 +19,7 @@ public class JobOfferProcess extends JobOfferProcess_Base {
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
 	activitiesAux.add(new SubmitForApprovalActivity());
-	// activitiesAux.add(new CancelSubmitionForApprovalActivity());
+	activitiesAux.add(new ApprovalActivity());
 	activitiesAux.add(new EditJobOfferActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
