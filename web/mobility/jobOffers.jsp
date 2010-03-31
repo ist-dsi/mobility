@@ -16,6 +16,7 @@
 			<fr:property name="classes" value="plist mtop05 width100pc"/>
 		</fr:layout>
 		<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
+			<fr:slot name="jobOffer.jobOfferProcess.processIdentification" key="label.mobility.processIdentification" />
 			<fr:slot name="jobOffer.beginDate" key="label.mobility.beginDate" />
 			<fr:slot name="jobOffer.endDate" key="label.mobility.endDate" />
 			<fr:slot name="jobOffer.title" key="label.mobility.jobOffer.title" />

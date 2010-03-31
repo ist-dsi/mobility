@@ -23,6 +23,15 @@ public class JobOfferProcess extends JobOfferProcess_Base {
     public JobOfferProcess(final JobOffer jobOffer) {
 	super();
 	setJobOffer(jobOffer);
+	setProcessNumber(jobOffer.getMobilityYear().nextNumber().toString());
+    }
+
+    public String getProcessIdentification() {
+	return getMobilityYear().getYear() + "/" + getProcessNumber();
+    }
+
+    private MobilityYear getMobilityYear() {
+	return getJobOffer().getMobilityYear();
     }
 
     @Override
