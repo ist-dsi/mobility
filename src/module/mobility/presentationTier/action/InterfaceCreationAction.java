@@ -37,6 +37,9 @@ public class InterfaceCreationAction extends ContextBaseAction {
 	ActionNode.createActionNode(virtualHost, homeNode, "/mobility", "employeeOffers", "resources.MobilityResources",
 		"link.sideBar.mobility.employeeOffers", UserGroup.getInstance());
 
+	ActionNode.createActionNode(virtualHost, homeNode, "/mobility", "portfolio", "resources.MobilityResources",
+		"link.sideBar.mobility.personalProfile", UserGroup.getInstance());
+
 	return forwardToMuneConfiguration(request, virtualHost, node);
     }
 }

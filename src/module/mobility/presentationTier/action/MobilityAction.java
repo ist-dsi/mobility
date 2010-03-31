@@ -6,9 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import module.mobility.domain.JobOfferProcess;
+import module.mobility.domain.PersonalPortfolio;
+import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.util.JobOfferBean;
+import module.organization.domain.Person;
 import module.workflow.presentationTier.actions.ProcessManagement;
 import myorg.applicationTier.Authenticate.UserView;
+import myorg.domain.User;
 import myorg.presentationTier.actions.ContextBaseAction;
 
 import org.apache.struts.action.ActionForm;
@@ -55,6 +59,21 @@ public class MobilityAction extends ContextBaseAction {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
 	return ProcessManagement.forwardToProcess(jobOfferProcess);
+    }
+
+    public ActionForward portfolio(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final User user = UserView.getCurrentUser();
+	if (user == null || !user.hasPerson()) {
+	    return frontPage(mapping, form, request, response);
+	}
+	final Person person = user.getPerson();
+	if (!person.hasPersonalPortfolio()) {
+	    PersonalPortfolio.create(person);
+	}
+	final PersonalPortfolio personalPortfolio = person.getPersonalPortfolio();
+	final PersonalPortfolioProcess personalPortfolioProcess = personalPortfolio.getPersonalPortfolioProcess();
+	return ProcessManagement.forwardToProcess(personalPortfolioProcess);
     }
 
 }

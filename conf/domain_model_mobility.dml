@@ -21,6 +21,12 @@ class JobOffer {
 class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
+class PersonalPortfolio {
+}
+
+class PersonalPortfolioProcess extends .module.workflow.domain.WorkflowProcess {
+}
+
 
 relation MyOrgMobilitySystem {
 	.myorg.domain.MyOrg playsRole myOrg;
@@ -65,4 +71,21 @@ relation MobilityYearJobOffer {
 	JobOffer playsRole jobOffer {
 		multiplicity *;
 	}
+}
+
+relation MobilitySystemPersonalPortfolio {
+	MobilitySystem playsRole mobilitySystem;
+	PersonalPortfolio playsRole personalPortfolio {
+		multiplicity *;
+	}
+}
+
+relation PersonPersonalPortfolio {
+	.module.organization.domain.Person playsRole person;
+	PersonalPortfolio playsRole personalPortfolio;
+}
+
+relation PersonalPortfolioPersonalPortfolioProcess {
+	PersonalPortfolioProcess playsRole personalPortfolioProcess;
+	PersonalPortfolio playsRole personalPortfolio;
 }
