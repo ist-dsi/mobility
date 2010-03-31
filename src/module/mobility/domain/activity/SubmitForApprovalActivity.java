@@ -23,7 +23,7 @@ public class SubmitForApprovalActivity extends WorkflowActivity<JobOfferProcess,
 
     @Override
     protected void process(JobOfferInformation activityInformation) {
-	activityInformation.getJobOffer().setSubmittedForApprovalDate(new DateTime());
+	activityInformation.getProcess().getJobOffer().setSubmittedForApprovalDate(new DateTime());
     }
 
 }
