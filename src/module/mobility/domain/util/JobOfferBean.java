@@ -17,6 +17,15 @@ public class JobOfferBean implements Serializable {
     private DateTime endDate;
     private MultiLanguageString title;
 
+    public JobOfferBean() {
+    }
+
+    public JobOfferBean(JobOffer jobOffer) {
+	setBeginDate(jobOffer.getBeginDate());
+	setEndDate(jobOffer.getEndDate());
+	setTitle(jobOffer.getTitle());
+    }
+
     public DateTime getBeginDate() {
 	return beginDate;
     }
@@ -42,11 +51,11 @@ public class JobOfferBean implements Serializable {
     }
 
     public int getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(int year) {
-        this.year = year;
+	this.year = year;
     }
 
     @Service

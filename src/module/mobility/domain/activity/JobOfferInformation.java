@@ -1,28 +1,30 @@
 package module.mobility.domain.activity;
 
-import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
+import module.mobility.domain.util.JobOfferBean;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 
 public class JobOfferInformation extends ActivityInformation<JobOfferProcess> {
-    private JobOffer jobOffer;
+    private JobOfferBean jobOfferBean;
 
     public JobOfferInformation(final JobOfferProcess jobOfferProcess,
 	    WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
 	super(jobOfferProcess, activity);
-    }
-
-    public JobOffer getJobOffer() {
-	return jobOffer;
-    }
-
-    public void setJobOffer(JobOffer jobOffer) {
-	this.jobOffer = jobOffer;
+	setJobOfferBean(new JobOfferBean(jobOfferProcess.getJobOffer()));
     }
 
     @Override
     public boolean hasAllneededInfo() {
-	return getJobOffer() != null;
+	return getProcess().getJobOffer() != null && isForwardedFromInput();
     }
+
+    public JobOfferBean getJobOfferBean() {
+	return jobOfferBean;
+    }
+
+    public void setJobOfferBean(JobOfferBean jobOfferBean) {
+	this.jobOfferBean = jobOfferBean;
+    }
+
 }

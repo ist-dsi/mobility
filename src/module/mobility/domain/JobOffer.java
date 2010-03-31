@@ -1,5 +1,6 @@
 package module.mobility.domain;
 
+import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
@@ -27,8 +28,14 @@ public class JobOffer extends JobOffer_Base {
 	new JobOfferProcess(this);
     }
 
-    public boolean getIsPendingConfirmation(User user) {
-	return getCreator().equals(user.getPerson()) && getConfirmationDate() == null;
+    public boolean getIsPendingApproval(User user) {
+	return getCreator().equals(user.getPerson()) && getSubmittedForApprovalDate() == null;
+    }
+
+    public void edit(JobOfferBean jobOfferBean) {
+	setBeginDate(jobOfferBean.getBeginDate());
+	setEndDate(jobOfferBean.getEndDate());
+	setTitle(jobOfferBean.getTitle());
     }
 
 }

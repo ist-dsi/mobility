@@ -14,7 +14,7 @@ class JobOffer {
 	DateTime endDate;
 	MultiLanguageString title;
 	DateTime creationDate;
-	DateTime confirmationDate;
+	DateTime submittedForApprovalDate;
 	DateTime approvalDate;
 }
 

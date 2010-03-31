@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.util.JobOfferBean;
+import module.workflow.presentationTier.actions.ProcessManagement;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.presentationTier.actions.ContextBaseAction;
 
@@ -48,6 +49,12 @@ public class MobilityAction extends ContextBaseAction {
 	JobOfferBean jobOfferBean = getRenderedObject();
 	jobOfferBean.create();
 	return jobOffers(mapping, form, request, response);
+    }
+
+    public ActionForward viewJobOfferProcess(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
+	return ProcessManagement.forwardToProcess(jobOfferProcess);
     }
 
 }

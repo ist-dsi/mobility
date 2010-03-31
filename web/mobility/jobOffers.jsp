@@ -14,6 +14,10 @@
 	<fr:view name="processes">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="plist mtop05 width100pc"/>
+			<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
+			<fr:property name="key(view)" value="label.view" />
+			<fr:property name="param(view)" value="OID" />
+			<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
 		</fr:layout>
 		<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
 			<fr:slot name="jobOffer.jobOfferProcess.processIdentification" key="label.mobility.processIdentification" />
