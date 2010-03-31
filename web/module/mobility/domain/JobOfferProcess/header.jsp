@@ -7,7 +7,7 @@
 <bean:define id="jobOffer" name="process" property="jobOffer"/>
 
 <h2>
-	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility"/> 
-	<bean:write name="jobOffer" property="title"/> 
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.processIdentification"/> - 
+	<bean:write name="jobOffer" property="jobOfferProcess.processIdentification"/> 
 </h2>
 

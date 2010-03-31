@@ -1,5 +1,7 @@
 <schema name="activityInformation.EditJobOfferActivity" type="module.mobility.domain.activity.JobOfferInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="jobOfferBean.beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="jobOfferBean.endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="jobOfferBean.title" key="label.mobility.jobOffer.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="jobOfferBean.title" key="label.mobility.jobOffer.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="50"/>
+	</slot>
 </schema>
