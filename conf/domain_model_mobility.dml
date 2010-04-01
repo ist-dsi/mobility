@@ -9,13 +9,16 @@ class MobilityYear {
 	Integer counter;
 }
 
-class JobOffer {
+class Offer {
 	DateTime beginDate;
 	DateTime endDate;
-	MultiLanguageString title;
 	DateTime creationDate;
 	DateTime submittedForApprovalDate;
 	DateTime approvalDate;
+}
+
+class JobOffer extends Offer {
+	MultiLanguageString title;
 }
 
 class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
@@ -25,6 +28,12 @@ class PersonalPortfolio {
 }
 
 class PersonalPortfolioProcess extends .module.workflow.domain.WorkflowProcess {
+}
+
+class WorkerOffer extends Offer {
+}
+
+class WorkerOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
 
@@ -98,4 +107,30 @@ relation PersonPersonalPortfolio {
 relation PersonalPortfolioPersonalPortfolioProcess {
 	PersonalPortfolioProcess playsRole personalPortfolioProcess;
 	PersonalPortfolio playsRole personalPortfolio;
+}
+
+relation MobilitySystemWorkerOffer {
+	MobilitySystem playsRole mobilitySystem;
+	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
+}
+
+relation WorkerOfferWorkerOfferProcess {
+	WorkerOffer playsRole workerOffer;
+	WorkerOfferProcess playsRole workerOfferProcess;
+}
+
+relation PersonalPortfolioWorkerOffer {
+	PersonalPortfolio playsRole personalPortfolio;
+	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
+}
+
+relation MobilityYearWorkerOffer {
+	MobilityYear playsRole mobilityYear;
+	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
 }

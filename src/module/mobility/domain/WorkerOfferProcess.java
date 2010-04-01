@@ -4,25 +4,32 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import module.mobility.domain.activity.CreateWorkerJobOffer;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
 import myorg.domain.User;
 
-public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
-
+public class WorkerOfferProcess extends WorkerOfferProcess_Base {
+    
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
 
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
-	activitiesAux.add(new CreateWorkerJobOffer());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 
-    public PersonalPortfolioProcess(final PersonalPortfolio personalPortfolio) {
+    public WorkerOfferProcess(final WorkerOffer workerOffer) {
         super();
-        setPersonalPortfolio(personalPortfolio);
+        setWorkerOffer(workerOffer);
+        setProcessNumber(workerOffer.getMobilityYear().nextNumber().toString());
+    }
+
+    public String getProcessIdentification() {
+	return getMobilityYear().getYear() + "/" + getProcessNumber();
+    }
+
+    private MobilityYear getMobilityYear() {
+	return getWorkerOffer().getMobilityYear();
     }
 
     @Override
@@ -32,7 +39,7 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
 
     @Override
     public User getProcessCreator() {
-	return getPersonalPortfolio().getPerson().getUser();
+	return getWorkerOffer().getPersonalPortfolio().getPerson().getUser();
     }
 
     @Override
@@ -43,11 +50,6 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
     @Override
     public void notifyUserDueToComment(User user, String comment) {
 	// do nothing.
-    }
-
-    @Override
-    public boolean isCommentsSupportAvailable() {
-	return false;
     }
 
 }

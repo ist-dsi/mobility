@@ -9,6 +9,7 @@ import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioProcess;
+import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
 import module.workflow.presentationTier.actions.ProcessManagement;
@@ -39,6 +40,8 @@ public class MobilityAction extends ContextBaseAction {
 
     public ActionForward employeeOffers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
+	final Set<WorkerOffer> workerOffers = MobilitySystem.getInstance().getWorkerOfferSet();
+	request.setAttribute("workerOffers", workerOffers);
 	return forward(request, "/mobility/employeeOffers.jsp");
     }
 

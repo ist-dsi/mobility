@@ -5,3 +5,9 @@
 		<property name="size" value="50"/>
 	</slot>
 </schema>
+
+<schema name="activityInformation.CreateWorkerJobOffer" type="module.mobility.domain.activity.WorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
+</schema>
