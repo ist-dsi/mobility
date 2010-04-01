@@ -91,7 +91,7 @@ public class JobOffer extends JobOffer_Base {
 
     public boolean getHasAllNeededInfoForSubmitCancidacy() {
 	Person person = UserView.getCurrentUser().getPerson();
-	return getIsApproved() && person.hasPersonalPortfolio() && person.getPersonalPortfolio().hasAnyPersonalPortofolioInfo();
+	return getIsApproved() && person.hasPersonalPortfolio() && person.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
     }
 
     public boolean hasCandidacy(User user) {
