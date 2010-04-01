@@ -58,6 +58,7 @@ class PersonalPortfolioProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
 class WorkerOffer extends Offer {
+	Boolean displayPhoto;
 	Boolean displayName;
 	Boolean displayDateOfBirth;
 	Boolean displayCarrer;
