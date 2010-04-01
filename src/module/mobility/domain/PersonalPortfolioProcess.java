@@ -18,9 +18,9 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
 
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
-	activitiesAux.add(new CreateWorkerJobOffer());
 	activitiesAux.add(new DefineNewPersonalPortfolioInfo());
 	activitiesAux.add(new UpdatePersonalPortfolioInfo());
+	activitiesAux.add(new CreateWorkerJobOffer());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 

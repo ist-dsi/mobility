@@ -6,12 +6,6 @@
 	</slot>
 </schema>
 
-<schema name="activityInformation.CreateWorkerJobOffer" type="module.mobility.domain.activity.WorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
-</schema>
-
 <schema name="activityInformation.DefineNewPersonalPortfolioInfo" type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
@@ -22,4 +16,25 @@
 	<slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="salary" key="label.mobility.salary" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="activityInformation.CreateWorkerJobOffer" type="module.mobility.domain.activity.WorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
+	<slot name="displayName" key="label.mobility.workerJobOffer.displayName"/>
+	<slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
+	<slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
+	<slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
+	<slot name="displaySalary" key="label.mobility.workerJobOffer.displaySalary"/>
+</schema>
+
+<schema name="activityInformation.EditWorkerJobOffer" type="module.mobility.domain.activity.EditWorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
+	<slot name="displayName" key="label.mobility.workerJobOffer.displayName"/>
+	<slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
+	<slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
+	<slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
+	<slot name="displaySalary" key="label.mobility.workerJobOffer.displaySalary"/>
 </schema>

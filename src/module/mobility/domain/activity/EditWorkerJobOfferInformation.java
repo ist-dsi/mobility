@@ -1,17 +1,15 @@
 package module.mobility.domain.activity;
 
-import java.util.Calendar;
-
-import module.mobility.domain.PersonalPortfolioProcess;
+import module.mobility.domain.WorkerOffer;
+import module.mobility.domain.WorkerOfferProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 
 import org.joda.time.DateTime;
 
-public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortfolioProcess> {
+public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOfferProcess> {
 
-    private int year = Calendar.getInstance().get(Calendar.YEAR);
-    private DateTime beginDate = new DateTime();
+    private DateTime beginDate;
     private DateTime endDate;
 
     private Boolean displayName = Boolean.FALSE;
@@ -20,14 +18,23 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
     private Boolean displayCategory = Boolean.FALSE;
     private Boolean displaySalary = Boolean.FALSE;
 
-    public WorkerJobOfferInformation(final PersonalPortfolioProcess process,
-	    WorkflowActivity<PersonalPortfolioProcess, ? extends ActivityInformation<PersonalPortfolioProcess>> activity) {
+    public EditWorkerJobOfferInformation(final WorkerOfferProcess process,
+	    WorkflowActivity<WorkerOfferProcess, ? extends ActivityInformation<WorkerOfferProcess>> activity) {
 	super(process, activity);
+	final WorkerOffer workerOffer = process.getWorkerOffer();
+        setBeginDate(workerOffer.getBeginDate());
+        setEndDate(workerOffer.getEndDate());
+
+        setDisplayCarrer(workerOffer.getDisplayName());
+        setDisplayDateOfBirth(workerOffer.getDisplayDateOfBirth());
+        setDisplayCarrer(workerOffer.getDisplayCarrer());
+        setDisplayCategory(workerOffer.getDisplayCategory());
+        setDisplaySalary(workerOffer.getDisplaySalary());
     }
 
     @Override
     public boolean hasAllneededInfo() {
-	return isForwardedFromInput();
+        return isForwardedFromInput() && beginDate != null;
     }
 
     public DateTime getBeginDate() {
@@ -44,14 +51,6 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
 
     public void setEndDate(DateTime endDate) {
         this.endDate = endDate;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 
     public Boolean getDisplayName() {

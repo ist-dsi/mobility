@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import module.mobility.domain.activity.EditWorkerJobOffer;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
@@ -15,6 +16,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base {
 
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
+	activitiesAux.add(new EditWorkerJobOffer());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 

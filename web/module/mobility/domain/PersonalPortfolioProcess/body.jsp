@@ -97,6 +97,8 @@
 		<th>
 			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.endDate"/>
 		</th>
+		<th>
+		</th>
 	</tr>
 	<logic:empty name="personalPortfolio" property="workerOffer">
 		<tr>
@@ -116,7 +118,14 @@
 				<fr:view name="workerOffer" property="beginDate"/>
 			</td>
 			<td>
-				<fr:view name="workerOffer" property="endDate"/>
+				<logic:present name="workerOffer" property="endDate">
+					<fr:view name="workerOffer" property="endDate"/>
+				</logic:present>
+			</td>
+			<td>
+				<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="workerOffer" paramProperty="workerOfferProcess.externalId">
+					<bean:message bundle="MOBILITY_RESOURCES" key="label.view"/>
+				</html:link>
 			</td>
 		</tr>
 	</logic:iterate>
