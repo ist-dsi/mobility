@@ -17,7 +17,7 @@ public class EditJobOfferActivity extends WorkflowActivity<JobOfferProcess, JobO
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.getIsPendingApproval(user) || jobOffer.getIsUnderConstruction(user);
+	return jobOffer.getIsUnderConstruction(user);
     }
 
     @Override

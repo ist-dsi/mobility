@@ -60,12 +60,12 @@ public class JobOffer extends JobOffer_Base {
     }
 
     public boolean getIsUnderConstruction(User user) {
-	return !getCanceled() && (getCreator().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user))
-		&& getSubmittedForApprovalDate() == null;
+	return !getCanceled() && getCreator().equals(user.getPerson()) && getSubmittedForApprovalDate() == null;
     }
 
     public boolean getIsPendingApproval(User user) {
-	return (MobilitySystem.getInstance().isManagementMember(user)) && getIsPendingApproval();
+	return (MobilitySystem.getInstance().isManagementMember(user) || getCreator().equals(user.getPerson()))
+		&& getIsPendingApproval();
     }
 
     public boolean getIsPendingApproval() {
