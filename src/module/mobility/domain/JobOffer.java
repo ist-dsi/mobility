@@ -25,23 +25,77 @@ public class JobOffer extends JobOffer_Base {
 	}
 	setCreator(person);
 	setCreationDate(new DateTime());
+	setCanceled(Boolean.FALSE);
 	new JobOfferProcess(this);
     }
 
+    public JobOffer(JobOfferBean jobOfferBean) {
+	super();
+	setMobilitySystem(MobilitySystem.getInstance());
+	setMobilityYear(MobilityYear.findMobilityYear(jobOfferBean.getYear()));
+	setBeginDate(jobOfferBean.getBeginDate());
+	setEndDate(jobOfferBean.getEndDate());
+	final Person person = UserView.getCurrentUser().getPerson();
+	if (person == null) {
+	    throw new DomainException("message.mobility.requestor.cannot.be.null");
+	}
+	setCreator(person);
+	setCreationDate(new DateTime());
+
+	setForm(jobOfferBean);
+	new JobOfferProcess(this);
+    }
+
+    private void setForm(JobOfferBean jobOfferBean) {
+	setTitle(jobOfferBean.getTitle());
+	setJobProfile(jobOfferBean.getJobProfile());
+	setKnowledgeRequirements(jobOfferBean.getKnowledgeRequirements());
+	setSkillRequirements(jobOfferBean.getSkillRequirements());
+	setCareerRequirements(jobOfferBean.getCareerRequirements());
+	setCategoryRequirements(jobOfferBean.getCategoryRequirements());
+	setSalaryPositionRequirements(jobOfferBean.getSalaryPositionRequirements());
+	setQualificationRequirements(jobOfferBean.getQualificationRequirements());
+	setFormationRequirements(jobOfferBean.getFormationRequirements());
+	setProfessionalExperienceRequirements(jobOfferBean.getProfessionalExperienceRequirements());
+    }
+
     public boolean getIsUnderConstruction(User user) {
-	return (getCreator().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user))
+	return !getCanceled() && (getCreator().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user))
 		&& getSubmittedForApprovalDate() == null;
     }
 
     public boolean getIsPendingApproval(User user) {
-	return (getCreator().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user))
-		&& getSubmittedForApprovalDate() != null && getApprovalDate() == null;
+	return (MobilitySystem.getInstance().isManagementMember(user)) && getIsPendingApproval();
+    }
+
+    public boolean getIsPendingApproval() {
+	return !getCanceled() && getSubmittedForApprovalDate() != null && getApprovalDate() == null;
     }
 
     public void edit(JobOfferBean jobOfferBean) {
-	setBeginDate(jobOfferBean.getBeginDate());
-	setEndDate(jobOfferBean.getEndDate());
-	setTitle(jobOfferBean.getTitle());
+	setForm(jobOfferBean);
+    }
+
+    public boolean getIsApproved(User user) {
+	return getIsApproved() && (MobilitySystem.getInstance().isManagementMember(user));
+    }
+
+    public boolean getIsApproved() {
+	return !getCanceled() && getApprovalDate() != null;
+    }
+
+    public void approve() {
+	setApprovalDate(new DateTime());
+	setApprover(MobilitySystem.getInstance().getManagementAccountability(UserView.getCurrentUser()));
+    }
+
+    public boolean getHasAllNeededInfoForSubmitCancidacy() {
+	Person person = UserView.getCurrentUser().getPerson();
+	return getIsApproved() && person.hasPersonalPortfolio() && person.getPersonalPortfolio().hasAnyPersonalPortofolioInfo();
+    }
+
+    public boolean hasCandidacy(User user) {
+	return getCandidatePortfolioSet().contains(user.getPerson().getPersonalPortfolio());
     }
 
 }

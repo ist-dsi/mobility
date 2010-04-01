@@ -10,8 +10,11 @@ import module.mobility.domain.MobilitySystem;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.WorkerOffer;
+import module.mobility.domain.activity.SubmitCandidacyActivity;
+import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
+import module.workflow.activities.ActivityInformation;
 import module.workflow.presentationTier.actions.ProcessManagement;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
@@ -59,10 +62,43 @@ public class MobilityAction extends ContextBaseAction {
 	return jobOffers(mapping, form, request, response);
     }
 
-    public ActionForward viewJobOfferProcess(final ActionMapping mapping, final ActionForm form,
+    public ActionForward viewJobOfferProcessToManage(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
 	return ProcessManagement.forwardToProcess(jobOfferProcess);
+    }
+
+    public ActionForward viewJobOfferProcess(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
+	request.setAttribute("process", jobOfferProcess);
+	return forward(request, "/mobility/showJobOfferProcess.jsp");
+    }
+
+    public ActionForward submitCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
+	SubmitCandidacyActivity submitCandidacyActivity = new SubmitCandidacyActivity();
+	if (submitCandidacyActivity.isActive(jobOfferProcess)) {
+	    ActivityInformation<JobOfferProcess> activityInformation = submitCandidacyActivity
+		    .getActivityInformation(jobOfferProcess);
+	    activityInformation.execute();
+	}
+	request.setAttribute("process", jobOfferProcess);
+	return forward(request, "/mobility/showJobOfferProcess.jsp");
+    }
+
+    public ActionForward unSubmitCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
+	UnSubmitCandidacyActivity unSubmitCandidacyActivity = new UnSubmitCandidacyActivity();
+	if (unSubmitCandidacyActivity.isActive(jobOfferProcess)) {
+	    ActivityInformation<JobOfferProcess> activityInformation = unSubmitCandidacyActivity
+		    .getActivityInformation(jobOfferProcess);
+	    activityInformation.execute();
+	}
+	request.setAttribute("process", jobOfferProcess);
+	return forward(request, "/mobility/showJobOfferProcess.jsp");
     }
 
     public ActionForward portfolio(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

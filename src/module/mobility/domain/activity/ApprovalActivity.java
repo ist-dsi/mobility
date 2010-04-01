@@ -7,8 +7,6 @@ import module.workflow.activities.WorkflowActivity;
 import myorg.domain.User;
 import myorg.util.BundleUtil;
 
-import org.joda.time.DateTime;
-
 public class ApprovalActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
     @Override
@@ -24,7 +22,7 @@ public class ApprovalActivity extends WorkflowActivity<JobOfferProcess, Activity
 
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-	activityInformation.getProcess().getJobOffer().setApprovalDate(new DateTime());
+	activityInformation.getProcess().getJobOffer().approve();
     }
 
     @Override

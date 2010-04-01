@@ -7,7 +7,7 @@ import module.workflow.activities.WorkflowActivity;
 import myorg.domain.User;
 import myorg.util.BundleUtil;
 
-public class EditJobOfferActivity extends WorkflowActivity<JobOfferProcess, JobOfferInformation> {
+public class CancelApprovalActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
     @Override
     public String getLocalizedName() {
@@ -17,17 +17,17 @@ public class EditJobOfferActivity extends WorkflowActivity<JobOfferProcess, JobO
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.getIsPendingApproval(user) || jobOffer.getIsUnderConstruction(user);
+	return jobOffer.getIsApproved(user);
     }
 
     @Override
-    protected void process(JobOfferInformation activityInformation) {
-	activityInformation.getProcess().getJobOffer().edit(activityInformation.getJobOfferBean());
+    protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
+	activityInformation.getProcess().getJobOffer().setApprovalDate(null);
+	activityInformation.getProcess().getJobOffer().setApprover(null);
     }
 
     @Override
     public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-	return new JobOfferInformation(process, this);
+	return new ActivityInformation(process, this);
     }
-
 }

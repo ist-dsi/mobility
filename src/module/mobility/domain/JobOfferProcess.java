@@ -7,11 +7,17 @@ import java.util.List;
 import java.util.Set;
 
 import module.mobility.domain.activity.ApprovalActivity;
+import module.mobility.domain.activity.CancelApprovalActivity;
+import module.mobility.domain.activity.CancelJobOfferActivity;
+import module.mobility.domain.activity.CancelSubmitionForApprovalActivity;
 import module.mobility.domain.activity.EditJobOfferActivity;
+import module.mobility.domain.activity.SubmitCandidacyActivity;
 import module.mobility.domain.activity.SubmitForApprovalActivity;
+import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
+import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 
 public class JobOfferProcess extends JobOfferProcess_Base {
@@ -21,6 +27,11 @@ public class JobOfferProcess extends JobOfferProcess_Base {
 	activitiesAux.add(new SubmitForApprovalActivity());
 	activitiesAux.add(new ApprovalActivity());
 	activitiesAux.add(new EditJobOfferActivity());
+	activitiesAux.add(new CancelSubmitionForApprovalActivity());
+	activitiesAux.add(new CancelJobOfferActivity());
+	activitiesAux.add(new CancelApprovalActivity());
+	activitiesAux.add(new SubmitCandidacyActivity());
+	activitiesAux.add(new UnSubmitCandidacyActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 
@@ -59,9 +70,8 @@ public class JobOfferProcess extends JobOfferProcess_Base {
 
     @Override
     public boolean isAccessible(User user) {
-	return getProcessCreator().equals(user);
-	// ou publicado
-	// ou pendeste de autorizacao do DRH e eu for do DRH
+	return getProcessCreator().equals(user) || getJobOffer().getIsApproved()
+		|| (MobilitySystem.getInstance().isManagementMember(user));
     }
 
     public static Set<JobOfferProcess> getJobOfferProcessByUser(User user) {
@@ -72,5 +82,10 @@ public class JobOfferProcess extends JobOfferProcess_Base {
 	    }
 	}
 	return processes;
+    }
+
+    public boolean getCanManageJobProcess() {
+	final User user = UserView.getCurrentUser();
+	return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
     }
 }

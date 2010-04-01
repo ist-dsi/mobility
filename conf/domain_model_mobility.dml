@@ -24,10 +24,20 @@ class Offer {
 	DateTime creationDate;
 	DateTime submittedForApprovalDate;
 	DateTime approvalDate;
+	Boolean canceled;	
 }
 
 class JobOffer extends Offer {
 	MultiLanguageString title;
+	MultiLanguageString jobProfile;
+	MultiLanguageString knowledgeRequirements;
+	MultiLanguageString skillRequirements;
+	MultiLanguageString careerRequirements;
+	MultiLanguageString categoryRequirements;
+	MultiLanguageString salaryPositionRequirements;
+	MultiLanguageString qualificationRequirements;
+	MultiLanguageString formationRequirements;
+	MultiLanguageString professionalExperienceRequirements;
 }
 
 class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
@@ -167,6 +177,15 @@ relation MobilitySystemPersonalPortfolioInfo {
 relation PersonalPortfolioPersonalPortfolioInfo {
 	PersonalPortfolio playsRole personalPortfolio;
 	PersonalPortfolioInfo playsRole personalPortfolioInfo {
+		multiplicity *;
+	}
+}
+
+relation JobOfferPersonalPortfolio {
+	JobOffer playsRole jobOffer{
+		multiplicity *;
+	}
+	PersonalPortfolio playsRole candidatePortfolio{
 		multiplicity *;
 	}
 }
