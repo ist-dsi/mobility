@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import module.mobility.domain.activity.CreateWorkerJobOffer;
+import module.mobility.domain.activity.DefineNewPersonalPortfolioInfo;
+import module.mobility.domain.activity.UpdatePersonalPortfolioInfo;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
@@ -17,6 +19,8 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
 	activitiesAux.add(new CreateWorkerJobOffer());
+	activitiesAux.add(new DefineNewPersonalPortfolioInfo());
+	activitiesAux.add(new UpdatePersonalPortfolioInfo());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 

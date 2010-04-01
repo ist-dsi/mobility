@@ -1,6 +1,15 @@
 package module.mobility.domain;
 
 
+valueType myorg.domain.util.Money as Money {
+    externalizeWith {
+        String exportAsString();
+    }
+
+    internalizeWith importFromString();
+}
+
+
 class MobilitySystem {
 }
 
@@ -25,6 +34,14 @@ class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
 class PersonalPortfolio {
+}
+
+class PersonalPortfolioInfo {
+	DateTime creationDate;
+	DateTime modificationDate;
+	MultiLanguageString carrer;
+	MultiLanguageString category;
+	Money salary;
 }
 
 class PersonalPortfolioProcess extends .module.workflow.domain.WorkflowProcess {
@@ -131,6 +148,20 @@ relation PersonalPortfolioWorkerOffer {
 relation MobilityYearWorkerOffer {
 	MobilityYear playsRole mobilityYear;
 	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
+}
+
+relation MobilitySystemPersonalPortfolioInfo {
+	MobilitySystem playsRole mobilitySystem;
+	PersonalPortfolioInfo playsRole personalPortfolioInfo {
+		multiplicity *;
+	}
+}
+
+relation PersonalPortfolioPersonalPortfolioInfo {
+	PersonalPortfolio playsRole personalPortfolio;
+	PersonalPortfolioInfo playsRole personalPortfolioInfo {
 		multiplicity *;
 	}
 }

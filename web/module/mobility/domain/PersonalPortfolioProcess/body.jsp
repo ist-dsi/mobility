@@ -11,6 +11,10 @@
 <bean:define id="personalPortfolio" name="process" property="personalPortfolio"/>
 <bean:define id="person" name="personalPortfolio" property="person"/>
 
+<h3>
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.information"/>
+</h3>
+
 <div class="infobox mtop1 mbottom1">
 	<table>
 		<tr>
@@ -55,6 +59,32 @@
 		</tr>
 	</table>
 </div>
+
+<h3>
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information"/>
+</h3>
+
+<div class="infobox mtop1 mbottom1">
+	<logic:notPresent name="personalPortfolio" property="lastPersonalPortfolioInfo">
+		<i><strong>
+			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/>
+		</strong></i>
+	</logic:notPresent>
+	<logic:present name="personalPortfolio" property="lastPersonalPortfolioInfo">
+		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo">
+			<fr:schema type="module.mobility.domain.PersonalPortfolioInfo" bundle="MOBILITY_RESOURCES">
+				<fr:slot name="carrer" key="label.mobility.carrer"/>
+				<fr:slot name="category" key="label.mobility.category"/>
+				<fr:slot name="salary" key="label.mobility.salary"/>
+				<fr:slot name="modificationDate" key="label.mobility.personalPortfolioInfo.modificationDate"/>
+			</fr:schema>
+		</fr:view>
+	</logic:present>
+</div>
+
+<h3>
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.worker.offers"/>
+</h3>
 
 <table class="tstyle3 mvert1 width100pc tdmiddle punits">
 	<tr>	

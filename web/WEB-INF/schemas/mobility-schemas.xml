@@ -11,3 +11,15 @@
 	<slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
 </schema>
+
+<schema name="activityInformation.DefineNewPersonalPortfolioInfo" type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="salary" key="label.mobility.salary"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
+
+<schema name="activityInformation.UpdatePersonalPortfolioInfo" type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="salary" key="label.mobility.salary" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+</schema>
