@@ -10,20 +10,26 @@ import module.mobility.domain.MobilitySystem;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.WorkerOffer;
+import module.mobility.domain.activity.PersonalPortfolioInfoInformation;
 import module.mobility.domain.activity.SubmitCandidacyActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
+import module.mobility.domain.activity.PersonalPortfolioInfoInformation.QualificationHolder;
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
+import module.workflow.activities.WorkflowActivity;
+import module.workflow.presentationTier.WorkflowLayoutContext;
 import module.workflow.presentationTier.actions.ProcessManagement;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
+import myorg.presentationTier.Context;
 import myorg.presentationTier.actions.ContextBaseAction;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/mobility")
@@ -129,4 +135,32 @@ public class MobilityAction extends ContextBaseAction {
 	request.setAttribute("mobilitySystem", mobilitySystem);
 	return forward(request, "/mobility/configureManagers.jsp");
     }
+
+    public ActionForward addNewQualification(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
+	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
+	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation.getActivity();
+
+	RenderUtils.invalidateViewState();
+
+	activityInformation.getQualificationHolders().add(new QualificationHolder());
+
+	final Context context = getContext(request);
+	final WorkflowLayoutContext workflowLayoutContext = personalPortfolioProcess.getLayout();
+	workflowLayoutContext.setElements(context.getPath());
+	setContext(request, workflowLayoutContext);
+
+	return ProcessManagement.performActivityPostback(activityInformation, request);
+    }
+
+    public ActionForward saveProfessionalInformation(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
+	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
+	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation.getActivity();
+	activity.execute(activityInformation);
+	return ProcessManagement.forwardToProcess(personalPortfolioProcess);
+    }
+
 }

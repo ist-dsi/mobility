@@ -25,6 +25,7 @@ public class UpdatePersonalPortfolioInfo extends WorkflowActivity<PersonalPortfo
 	} else {
 	    personalPortfolioInfo.edit(information.getCarrer(), information.getCategory(), information.getSalary());
 	}
+	information.updateQualifications(personalPortfolioInfo);
     }
 
     @Override
@@ -35,6 +36,11 @@ public class UpdatePersonalPortfolioInfo extends WorkflowActivity<PersonalPortfo
     @Override
     public String getUsedBundle() {
 	return "resources/MobilityResources";
+    }
+
+    @Override
+    public boolean isDefaultInputInterfaceUsed() {
+	return false;
     }
 
 }

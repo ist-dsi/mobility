@@ -82,6 +82,29 @@
 	</logic:present>
 </div>
 
+<h4>
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
+</h4>
+
+<logic:present name="personalPortfolio" property="lastPersonalPortfolioInfo">
+	<logic:notEmpty name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
+		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
+					<fr:schema type="module.mobility.domain.PersonalPortfolioInfoQualification" bundle="MOBILITY_RESOURCES">
+						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
+					</fr:schema>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
+						<fr:property name="columnClasses" value="width100px,,tderror" />
+					</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+</logic:present>
+
+
 <h3>
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.worker.offers"/>
 </h3>

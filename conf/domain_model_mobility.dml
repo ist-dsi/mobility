@@ -54,6 +54,14 @@ class PersonalPortfolioInfo {
 	Money salary;
 }
 
+class PersonalPortfolioInfoQualification {
+	String qualificationType;
+	String name;
+	String institution;
+	String date;
+	String classification;
+}
+
 class PersonalPortfolioProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
@@ -187,6 +195,20 @@ relation JobOfferPersonalPortfolio {
 		multiplicity *;
 	}
 	PersonalPortfolio playsRole candidatePortfolio{
+		multiplicity *;
+	}
+}
+
+relation MobilitySystemPersonalPortfolioInfoQualification {
+	MobilitySystem playsRole mobilitySystem;
+	PersonalPortfolioInfoQualification playsRole personalPortfolioInfoQualification {
+		multiplicity *;
+	}
+}
+
+relation PersonalPortfolioInfoPersonalPortfolioInfoQualification {
+	PersonalPortfolioInfo playsRole personalPortfolioInfo;
+	PersonalPortfolioInfoQualification playsRole personalPortfolioInfoQualification {
 		multiplicity *;
 	}
 }
