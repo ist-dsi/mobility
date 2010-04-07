@@ -192,11 +192,11 @@ relation PersonalPortfolioPersonalPortfolioInfo {
 	}
 }
 
-relation JobOfferPersonalPortfolio {
+relation JobOfferPersonalPortfolioInfo {
 	JobOffer playsRole jobOffer{
 		multiplicity *;
 	}
-	PersonalPortfolio playsRole candidatePortfolio{
+	PersonalPortfolioInfo playsRole candidatePortfolioInfo{
 		multiplicity *;
 	}
 }

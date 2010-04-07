@@ -7,14 +7,14 @@ import org.joda.time.DateTime;
 import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements Comparable<PersonalPortfolioInfo> {
-    
+
     public PersonalPortfolioInfo(final PersonalPortfolio personalPortfolio) {
-        super();
-        setMobilitySystem(MobilitySystem.getInstance());
-        setPersonalPortfolio(personalPortfolio);
-        final DateTime now = new DateTime();
-        setCreationDate(now);
-        setModificationDate(now);
+	super();
+	setMobilitySystem(MobilitySystem.getInstance());
+	setPersonalPortfolio(personalPortfolio);
+	final DateTime now = new DateTime();
+	setCreationDate(now);
+	setModificationDate(now);
     }
 
     public PersonalPortfolioInfo(final PersonalPortfolio personalPortfolio, final MultiLanguageString carrer,
@@ -36,7 +36,7 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
     }
 
     public boolean canBeUpdated() {
-	return !hasAnyWorkerOffer();
+	return !hasAnyWorkerOffer() && !hasAnyJobOffer();
     }
 
 }

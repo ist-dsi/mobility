@@ -20,16 +20,18 @@ import module.workflow.domain.WorkflowProcess;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 
+import org.joda.time.DateTime;
+
 public class JobOfferProcess extends JobOfferProcess_Base {
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
 	activitiesAux.add(new SubmitForApprovalActivity());
-	activitiesAux.add(new ApprovalActivity());
 	activitiesAux.add(new EditJobOfferActivity());
 	activitiesAux.add(new CancelSubmitionForApprovalActivity());
-	activitiesAux.add(new CancelJobOfferActivity());
+	activitiesAux.add(new ApprovalActivity());
 	activitiesAux.add(new CancelApprovalActivity());
+	activitiesAux.add(new CancelJobOfferActivity());
 	activitiesAux.add(new SubmitCandidacyActivity());
 	activitiesAux.add(new UnSubmitCandidacyActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
@@ -61,7 +63,7 @@ public class JobOfferProcess extends JobOfferProcess_Base {
 
     @Override
     public boolean isActive() {
-	return true;
+	return !getJobOffer().getCanceled() && getJobOffer().getEndDate().isAfter(new DateTime());
     }
 
     @Override
@@ -70,7 +72,7 @@ public class JobOfferProcess extends JobOfferProcess_Base {
 
     @Override
     public boolean isAccessible(User user) {
-	return getProcessCreator().equals(user) || getJobOffer().getIsApproved()
+	return getProcessCreator().equals(user) || (getJobOffer().isApproved() && isActive())
 		|| (MobilitySystem.getInstance().isManagementMember(user));
     }
 
@@ -87,5 +89,10 @@ public class JobOfferProcess extends JobOfferProcess_Base {
     public boolean getCanManageJobProcess() {
 	final User user = UserView.getCurrentUser();
 	return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
+    }
+
+    public boolean getCanManageJobOfferCandidacies() {
+	final User user = UserView.getCurrentUser();
+	return MobilitySystem.getInstance().isManagementMember(user) && !getJobOffer().getCandidatePortfolioInfoSet().isEmpty();
     }
 }

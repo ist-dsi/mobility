@@ -10,14 +10,9 @@ import myorg.util.BundleUtil;
 public class CancelJobOfferActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
     @Override
-    public String getLocalizedName() {
-	return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", "activity." + getClass().getSimpleName());
-    }
-
-    @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.getIsPendingApproval(user) || jobOffer.getIsUnderConstruction(user);
+	return jobOffer.isPendingApproval(user) || jobOffer.isUnderConstruction(user);
     }
 
     @Override
@@ -28,5 +23,20 @@ public class CancelJobOfferActivity extends WorkflowActivity<JobOfferProcess, Ac
     @Override
     public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
 	return new ActivityInformation(process, this);
+    }
+
+    @Override
+    public boolean isConfirmationNeeded(JobOfferProcess process) {
+	return true;
+    }
+
+    @Override
+    public String getLocalizedConfirmationMessage() {
+	return BundleUtil.getStringFromResourceBundle(getUsedBundle(), "activity.confirmation." + getClass().getSimpleName());
+    }
+
+    @Override
+    public String getUsedBundle() {
+	return "resources/MobilityResources";
     }
 }

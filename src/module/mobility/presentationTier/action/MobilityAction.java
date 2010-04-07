@@ -107,6 +107,13 @@ public class MobilityAction extends ContextBaseAction {
 	return forward(request, "/mobility/showJobOfferProcess.jsp");
     }
 
+    public ActionForward viewJobOfferCandidacies(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
+	request.setAttribute("process", jobOfferProcess);
+	return forward(request, "/mobility/showJobOfferCandidacies.jsp");
+    }
+
     public ActionForward portfolio(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	final User user = UserView.getCurrentUser();
@@ -180,11 +187,12 @@ public class MobilityAction extends ContextBaseAction {
 	return editProfessionalInfoPostback(request, activityInformation, personalPortfolioProcess);
     }
 
-    public ActionForward saveProfessionalInformation(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
+    public ActionForward saveProfessionalInformation(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
 	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
-	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation.getActivity();
+	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation
+		.getActivity();
 	activity.execute(activityInformation);
 	return ProcessManagement.forwardToProcess(personalPortfolioProcess);
     }
