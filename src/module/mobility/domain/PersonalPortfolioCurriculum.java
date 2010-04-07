@@ -1,5 +1,6 @@
 package module.mobility.domain;
 
+import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
 import myorg.util.ClassNameBundle;
 
@@ -20,6 +21,11 @@ public class PersonalPortfolioCurriculum extends PersonalPortfolioCurriculum_Bas
             final PersonalPortfolioProcess personalPortfolioProcess = (PersonalPortfolioProcess) process;
             final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
             personalPortfolio.addCurriculum(this);
+            for (final ProcessFile processFile : personalPortfolioProcess.getFilesSet()) {
+        	if (processFile instanceof PersonalPortfolioCurriculum && processFile != this) {
+        	    personalPortfolioProcess.removeFiles(processFile);
+        	}
+            }
         }
     }
 
