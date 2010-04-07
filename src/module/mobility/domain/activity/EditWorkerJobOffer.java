@@ -11,7 +11,7 @@ public class EditWorkerJobOffer extends WorkflowActivity<WorkerOfferProcess, Edi
 
     @Override
     public boolean isActive(final WorkerOfferProcess process, final User user) {
-	final PersonalPortfolio personalPortfolio = process.getWorkerOffer().getPersonalPortfolio();
+	final PersonalPortfolio personalPortfolio = process.getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio();
 	return user == personalPortfolio.getPerson().getUser() && personalPortfolio.hasAnyPersonalPortfolioInfo();
     }
 
@@ -20,11 +20,17 @@ public class EditWorkerJobOffer extends WorkflowActivity<WorkerOfferProcess, Edi
 	final WorkerOffer workerOffer = information.getProcess().getWorkerOffer();
 	workerOffer.setBeginDate(information.getBeginDate());
 	workerOffer.setEndDate(information.getEndDate());
+
+	workerOffer.setDisplayPhoto(information.getDisplaySalary());
 	workerOffer.setDisplayName(information.getDisplayName());
 	workerOffer.setDisplayDateOfBirth(information.getDisplayDateOfBirth());
+
 	workerOffer.setDisplayCarrer(information.getDisplayCarrer());
 	workerOffer.setDisplayCategory(information.getDisplayCategory());
 	workerOffer.setDisplaySalary(information.getDisplaySalary());
+
+	workerOffer.setDisplayQualifications(information.getDisplayQualifications());
+	workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
     }
 
     @Override

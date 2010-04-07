@@ -9,7 +9,8 @@
 <%@page import="myorg.domain.MyOrg"%>
 
 <bean:define id="workerOffer" name="process" property="workerOffer"/>
-<bean:define id="personalPortfolio" name="workerOffer" property="personalPortfolio"/>
+<bean:define id="personalPortfolioInfo" name="workerOffer" property="personalPortfolioInfo"/>
+<bean:define id="personalPortfolio" name="personalPortfolioInfo" property="personalPortfolio"/>
 <bean:define id="person" name="personalPortfolio" property="person"/>
 
 <h3>
@@ -21,11 +22,14 @@
 		<fr:schema type="module.mobility.domain.WorkerOffer" bundle="MOBILITY_RESOURCES">
 			<fr:slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 			<fr:slot name="endDate" key="label.mobility.endDate" layout="picker"/>
+			<fr:slot name="displayPhoto" key="label.mobility.workerJobOffer.displayPhoto"/>
 			<fr:slot name="displayName" key="label.mobility.workerJobOffer.displayName"/>
 			<fr:slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
 			<fr:slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
 			<fr:slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
 			<fr:slot name="displaySalary" key="label.mobility.workerJobOffer.displaySalary"/>
+			<fr:slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
+			<fr:slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
 		</fr:schema>
 	</fr:view>
 </div>
@@ -88,13 +92,13 @@
 </h4>
 
 <div class="infobox mtop1 mbottom1">
-	<logic:notPresent name="personalPortfolio" property="lastPersonalPortfolioInfo">
+	<logic:notPresent name="workerOffer" property="personalPortfolioInfo">
 		<i><strong>
 			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/>
 		</strong></i>
 	</logic:notPresent>
-	<logic:present name="personalPortfolio" property="lastPersonalPortfolioInfo">
-		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo">
+	<logic:present name="workerOffer" property="personalPortfolioInfo">
+		<fr:view name="workerOffer" property="personalPortfolioInfo">
 			<fr:schema type="module.mobility.domain.PersonalPortfolioInfo" bundle="MOBILITY_RESOURCES">
 				<fr:slot name="carrer" key="label.mobility.carrer"/>
 				<fr:slot name="category" key="label.mobility.category"/>
@@ -104,3 +108,24 @@
 		</fr:view>
 	</logic:present>
 </div>
+
+<h5>
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
+</h5>
+<logic:present name="workerOffer" property="personalPortfolioInfo">
+	<logic:notEmpty name="workerOffer" property="personalPortfolioInfo.personalPortfolioInfoQualification">
+		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
+					<fr:schema type="module.mobility.domain.PersonalPortfolioInfoQualification" bundle="MOBILITY_RESOURCES">
+						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+						<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
+					</fr:schema>
+					<fr:layout name="tabular">
+						<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
+						<fr:property name="columnClasses" value="width100px,,tderror" />
+					</fr:layout>
+		</fr:view>
+	</logic:notEmpty>
+</logic:present>

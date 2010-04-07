@@ -18,12 +18,11 @@ public class UpdatePersonalPortfolioInfo extends WorkflowActivity<PersonalPortfo
     protected void process(final PersonalPortfolioInfoInformation information) {
 	final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
 	final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-	final PersonalPortfolioInfo personalPortfolioInfo = personalPortfolio.getLastPersonalPortfolioInfo();
-	if (personalPortfolioInfo.isUsedInAnyClosedWorkerOffers()) {
-	    new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory(), information.getSalary());
-	    // TODO : transfer all active offers to the new personal info...
-	} else {
+	PersonalPortfolioInfo personalPortfolioInfo = personalPortfolio.getLastPersonalPortfolioInfo();
+	if (personalPortfolioInfo.canBeUpdated()) {
 	    personalPortfolioInfo.edit(information.getCarrer(), information.getCategory(), information.getSalary());
+	} else {
+	    personalPortfolioInfo = new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory(), information.getSalary());
 	}
 	information.updateQualifications(personalPortfolioInfo);
     }

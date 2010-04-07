@@ -5,7 +5,8 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
 <bean:define id="workerOffer" name="process" property="workerOffer"/>
-<bean:define id="personalPortfolio" name="workerOffer" property="personalPortfolio"/>
+<bean:define id="personalPortfolioInfo" name="workerOffer" property="personalPortfolioInfo"/>
+<bean:define id="personalPortfolio" name="personalPortfolioInfo" property="personalPortfolio"/>
 <bean:define id="person" name="personalPortfolio" property="person"/>
 
 <h2>

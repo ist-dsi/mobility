@@ -35,9 +35,8 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
 	return personalPortfolioInfo == null ? 1 : getCreationDate().compareTo(personalPortfolioInfo.getCreationDate());
     }
 
-    public boolean isUsedInAnyClosedWorkerOffers() {
-	// TODO Auto-generated method stub
-	return false;
+    public boolean canBeUpdated() {
+	return !hasAnyWorkerOffer();
     }
-    
+
 }

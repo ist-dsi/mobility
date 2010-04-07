@@ -25,6 +25,17 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 	private String date;
 	private String classification;
 
+	public QualificationHolder() {
+	}
+
+	public QualificationHolder(final PersonalPortfolioInfoQualification qualification) {
+	    qualificationType = qualification.getQualificationType();
+	    name = qualification.getName();
+	    institution = qualification.getInstitution();
+	    date = qualification.getDate();
+	    classification = qualification.getClassification();
+	}
+
 	public String getQualificationType() {
 	    return qualificationType;
 	}
@@ -72,6 +83,11 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 	    carrer = replicate(personalPortfolioInfo.getCarrer());
 	    category = replicate(personalPortfolioInfo.getCategory());
 	    salary = personalPortfolioInfo.getSalary();
+
+	    for (final PersonalPortfolioInfoQualification qualification : personalPortfolioInfo.getPersonalPortfolioInfoQualificationSet()) {
+		final QualificationHolder qualificationHolder = new QualificationHolder(qualification);
+		qualificationHolders.add(qualificationHolder);
+	    }
 	}
     }
 
@@ -129,20 +145,24 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
     }
 
     public void updateQualifications(final PersonalPortfolioInfo personalPortfolioInfo) {
+	final int currentCount = personalPortfolioInfo.getPersonalPortfolioInfoQualificationCount();
+	final int newCount = qualificationHolders.size();
+	if (currentCount > newCount) {
+	    for (int i = newCount; i++ < currentCount;
+	    	personalPortfolioInfo.getPersonalPortfolioInfoQualificationIterator().next().delete());
+	} else if (newCount > currentCount) {
+	    for (int i = currentCount; i++ < newCount;
+	    	new PersonalPortfolioInfoQualification(personalPortfolioInfo));
+	}
+
 	final Iterator<PersonalPortfolioInfoQualification> iterator = personalPortfolioInfo.getPersonalPortfolioInfoQualificationIterator();
 	for (final QualificationHolder qualificationHolder : qualificationHolders) {
-	    final PersonalPortfolioInfoQualification qualification = iterator.hasNext() ? iterator.next() : new PersonalPortfolioInfoQualification(personalPortfolioInfo);
+	    final PersonalPortfolioInfoQualification qualification = iterator.next();
 	    qualification.setQualificationType(qualificationHolder.getQualificationType());
 	    qualification.setName(qualificationHolder.getName());
 	    qualification.setInstitution(qualificationHolder.getInstitution());
 	    qualification.setDate(qualificationHolder.getDate());
 	    qualification.setClassification(qualificationHolder.getClassification());
-	}
-	int i = 0;
-	for (final PersonalPortfolioInfoQualification qualification : personalPortfolioInfo.getPersonalPortfolioInfoQualificationSet()) {
-	    if (++i > qualificationHolders.size()) {
-//		qualification.delete();
-	    }
 	}
     }
 

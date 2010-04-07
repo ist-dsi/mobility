@@ -12,11 +12,16 @@ public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOff
     private DateTime beginDate;
     private DateTime endDate;
 
-    private Boolean displayName = Boolean.FALSE;
-    private Boolean displayDateOfBirth = Boolean.FALSE;
-    private Boolean displayCarrer = Boolean.FALSE;
-    private Boolean displayCategory = Boolean.FALSE;
-    private Boolean displaySalary = Boolean.FALSE;
+    private Boolean displayPhoto;
+    private Boolean displayName;
+    private Boolean displayDateOfBirth;
+
+    private Boolean displayCarrer;
+    private Boolean displayCategory;
+    private Boolean displaySalary;
+
+    private Boolean displayQualifications;
+    private Boolean displayCurriculum;
 
     public EditWorkerJobOfferInformation(final WorkerOfferProcess process,
 	    WorkflowActivity<WorkerOfferProcess, ? extends ActivityInformation<WorkerOfferProcess>> activity) {
@@ -25,11 +30,16 @@ public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOff
         setBeginDate(workerOffer.getBeginDate());
         setEndDate(workerOffer.getEndDate());
 
-        setDisplayCarrer(workerOffer.getDisplayName());
+        setDisplayPhoto(workerOffer.getDisplayPhoto());
+        setDisplayName(workerOffer.getDisplayName());
         setDisplayDateOfBirth(workerOffer.getDisplayDateOfBirth());
+
         setDisplayCarrer(workerOffer.getDisplayCarrer());
         setDisplayCategory(workerOffer.getDisplayCategory());
         setDisplaySalary(workerOffer.getDisplaySalary());
+
+        setDisplayQualifications(workerOffer.getDisplayQualifications());
+        setDisplayCurriculum(workerOffer.getDisplayCurriculum());
     }
 
     @Override
@@ -91,6 +101,30 @@ public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOff
 
     public void setDisplaySalary(Boolean displaySalary) {
         this.displaySalary = displaySalary;
+    }
+
+    public Boolean getDisplayPhoto() {
+        return displayPhoto;
+    }
+
+    public void setDisplayPhoto(Boolean displayPhoto) {
+        this.displayPhoto = displayPhoto;
+    }
+
+    public Boolean getDisplayQualifications() {
+        return displayQualifications;
+    }
+
+    public void setDisplayQualifications(Boolean displayQualifications) {
+        this.displayQualifications = displayQualifications;
+    }
+
+    public Boolean getDisplayCurriculum() {
+        return displayCurriculum;
+    }
+
+    public void setDisplayCurriculum(Boolean displayCurriculum) {
+        this.displayCurriculum = displayCurriculum;
     }
 
 }

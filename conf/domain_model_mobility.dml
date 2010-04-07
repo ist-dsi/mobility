@@ -72,6 +72,8 @@ class WorkerOffer extends Offer {
 	Boolean displayCarrer;
 	Boolean displayCategory;
 	Boolean displaySalary;
+	Boolean displayQualifications;
+	Boolean displayCurriculum;
 }
 
 class WorkerOfferProcess extends .module.workflow.domain.WorkflowProcess {
@@ -163,7 +165,7 @@ relation WorkerOfferWorkerOfferProcess {
 }
 
 relation PersonalPortfolioWorkerOffer {
-	PersonalPortfolio playsRole personalPortfolio;
+	PersonalPortfolioInfo playsRole personalPortfolioInfo;
 	WorkerOffer playsRole workerOffer {
 		multiplicity *;
 	}

@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import module.mobility.domain.activity.EditWorkerJobOffer;
+import module.mobility.domain.activity.UpdateWorkerJobOfferProfessionalInformation;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
@@ -17,6 +18,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base {
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
 	activitiesAux.add(new EditWorkerJobOffer());
+	activitiesAux.add(new UpdateWorkerJobOfferProfessionalInformation());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 
@@ -41,7 +43,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base {
 
     @Override
     public User getProcessCreator() {
-	return getWorkerOffer().getPersonalPortfolio().getPerson().getUser();
+	return getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().getUser();
     }
 
     @Override

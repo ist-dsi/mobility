@@ -13,6 +13,7 @@
 
 	<fr:form id="activityForm" action='<%= "/mobility.do?processId=" + processId + "&activity=" + name %>'>
 		<html:hidden property="method" value="saveProfessionalInformation"/>
+		<html:hidden property="qualificationIndex" value="-1"/>
 
 		<fr:edit id="activityBean" name="information" visible="false"/>
 
@@ -43,6 +44,9 @@
 		</logic:empty>
 		<logic:notEmpty name="information" property="qualificationHolders">
 			<logic:iterate id="qualificationHolder" indexId="i" name="information" property="qualificationHolders">
+				<a href="#" onclick="<%= "javascript:getElementById('activityForm').qualificationIndex.value='" + i + "';getElementById('activityForm').method.value='removeQualification';getElementById('activityForm').submit();return" %>">
+					<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications.remove"/>
+				</a>
 				<fr:edit id="<%= "qualificationHolder" + i %>" name="qualificationHolder">
 					<fr:schema type="module.mobility.domain.activity.PersonalPortfolioInfoInformation$QualificationHolder" bundle="MOBILITY_RESOURCES">
 						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>

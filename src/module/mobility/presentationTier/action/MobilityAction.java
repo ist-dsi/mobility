@@ -136,6 +136,16 @@ public class MobilityAction extends ContextBaseAction {
 	return forward(request, "/mobility/configureManagers.jsp");
     }
 
+    private ActionForward editProfessionalInfoPostback(final HttpServletRequest request,
+	    final PersonalPortfolioInfoInformation activityInformation, final PersonalPortfolioProcess personalPortfolioProcess) {
+	final Context context = getContext(request);
+	final WorkflowLayoutContext workflowLayoutContext = personalPortfolioProcess.getLayout();
+	workflowLayoutContext.setElements(context.getPath());
+	setContext(request, workflowLayoutContext);
+
+	return ProcessManagement.performActivityPostback(activityInformation, request);
+    }
+
     public ActionForward addNewQualification(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
@@ -146,12 +156,28 @@ public class MobilityAction extends ContextBaseAction {
 
 	activityInformation.getQualificationHolders().add(new QualificationHolder());
 
-	final Context context = getContext(request);
-	final WorkflowLayoutContext workflowLayoutContext = personalPortfolioProcess.getLayout();
-	workflowLayoutContext.setElements(context.getPath());
-	setContext(request, workflowLayoutContext);
+	return editProfessionalInfoPostback(request, activityInformation, personalPortfolioProcess);
+    }
 
-	return ProcessManagement.performActivityPostback(activityInformation, request);
+    public ActionForward removeQualification(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
+	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
+	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity
+		= activityInformation.getActivity();
+	String indexToRemove = (String) request.getAttribute("qualificationIndex");
+	System.out.println("indexToRemove: " + indexToRemove);
+	System.out.println("activityForm: " + request.getAttribute("activityForm"));
+	if (indexToRemove == null) {
+	    indexToRemove = request.getParameter("qualificationIndex");
+	}
+	System.out.println("indexToRemove: " + indexToRemove);
+
+	RenderUtils.invalidateViewState();
+
+	activityInformation.getQualificationHolders().remove(Integer.parseInt(indexToRemove));
+
+	return editProfessionalInfoPostback(request, activityInformation, personalPortfolioProcess);
     }
 
     public ActionForward saveProfessionalInformation(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,

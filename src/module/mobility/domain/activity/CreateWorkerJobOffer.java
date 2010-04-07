@@ -16,10 +16,22 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
     }
 
     @Override
-    protected void process(final WorkerJobOfferInformation workerJobOfferInformation) {
-	final PersonalPortfolioProcess personalPortfolioProcess = workerJobOfferInformation.getProcess();
+    protected void process(final WorkerJobOfferInformation information) {
+	final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
 	final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-	new WorkerOffer(personalPortfolio, workerJobOfferInformation.getYear(), workerJobOfferInformation.getBeginDate(), workerJobOfferInformation.getEndDate());
+	final WorkerOffer workerOffer = new WorkerOffer(personalPortfolio, information.getYear(),
+		information.getBeginDate(), information.getEndDate());
+
+	workerOffer.setDisplayPhoto(information.getDisplayPhoto());
+	workerOffer.setDisplayName(information.getDisplayName());
+	workerOffer.setDisplayDateOfBirth(information.getDisplayName());
+
+	workerOffer.setDisplayCarrer(information.getDisplayCarrer());
+	workerOffer.setDisplayCategory(information.getDisplayCategory());
+	workerOffer.setDisplaySalary(information.getDisplaySalary());
+
+	workerOffer.setDisplayQualifications(information.getDisplayQualifications());
+	workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
     }
 
     @Override

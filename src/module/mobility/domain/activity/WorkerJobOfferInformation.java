@@ -14,11 +14,16 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
     private DateTime beginDate = new DateTime();
     private DateTime endDate;
 
+    private Boolean displayPhoto = Boolean.FALSE;
     private Boolean displayName = Boolean.FALSE;
     private Boolean displayDateOfBirth = Boolean.FALSE;
+
     private Boolean displayCarrer = Boolean.FALSE;
     private Boolean displayCategory = Boolean.FALSE;
     private Boolean displaySalary = Boolean.FALSE;
+
+    private Boolean displayQualifications = Boolean.FALSE;
+    private Boolean displayCurriculum = Boolean.FALSE;
 
     public WorkerJobOfferInformation(final PersonalPortfolioProcess process,
 	    WorkflowActivity<PersonalPortfolioProcess, ? extends ActivityInformation<PersonalPortfolioProcess>> activity) {
@@ -92,6 +97,30 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
 
     public void setDisplaySalary(Boolean displaySalary) {
         this.displaySalary = displaySalary;
+    }
+
+    public Boolean getDisplayPhoto() {
+        return displayPhoto;
+    }
+
+    public void setDisplayPhoto(Boolean displayPhoto) {
+        this.displayPhoto = displayPhoto;
+    }
+
+    public Boolean getDisplayQualifications() {
+        return displayQualifications;
+    }
+
+    public void setDisplayQualifications(Boolean displayQualifications) {
+        this.displayQualifications = displayQualifications;
+    }
+
+    public Boolean getDisplayCurriculum() {
+        return displayCurriculum;
+    }
+
+    public void setDisplayCurriculum(Boolean displayCurriculum) {
+        this.displayCurriculum = displayCurriculum;
     }
 
 }
