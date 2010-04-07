@@ -15,9 +15,11 @@ import module.mobility.domain.activity.SubmitCandidacyActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.activity.PersonalPortfolioInfoInformation.QualificationHolder;
 import module.mobility.domain.util.JobOfferBean;
+import module.mobility.domain.util.OfferSearch;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+import module.workflow.domain.WorkflowProcess;
 import module.workflow.presentationTier.WorkflowLayoutContext;
 import module.workflow.presentationTier.actions.ProcessManagement;
 import myorg.applicationTier.Authenticate.UserView;
@@ -37,6 +39,15 @@ public class MobilityAction extends ContextBaseAction {
 
     public ActionForward frontPage(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
+	OfferSearch offerSearch = getRenderedObject("offerSearch");
+	if (offerSearch == null) {
+	    offerSearch = new OfferSearch();
+	}
+	WorkflowProcess process = offerSearch.getOfferProcess(UserView.getCurrentUser());
+	if (process != null) {
+	    return ProcessManagement.forwardToProcess(process);
+	}
+	request.setAttribute("offerSearch", offerSearch);
 	return forward(request, "/mobility/frontPage.jsp");
     }
 
@@ -153,11 +164,12 @@ public class MobilityAction extends ContextBaseAction {
 	return ProcessManagement.performActivityPostback(activityInformation, request);
     }
 
-    public ActionForward addNewQualification(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
+    public ActionForward addNewQualification(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
 	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
-	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation.getActivity();
+	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation
+		.getActivity();
 
 	RenderUtils.invalidateViewState();
 
@@ -166,12 +178,12 @@ public class MobilityAction extends ContextBaseAction {
 	return editProfessionalInfoPostback(request, activityInformation, personalPortfolioProcess);
     }
 
-    public ActionForward removeQualification(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
+    public ActionForward removeQualification(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
 	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
-	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity
-		= activityInformation.getActivity();
+	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation
+		.getActivity();
 	String indexToRemove = (String) request.getAttribute("qualificationIndex");
 	System.out.println("indexToRemove: " + indexToRemove);
 	System.out.println("activityForm: " + request.getAttribute("activityForm"));
