@@ -8,7 +8,8 @@
 <%@page import="module.organization.domain.OrganizationalModel"%>
 <%@page import="myorg.domain.MyOrg"%>
 
-<bean:define id="workerOffer" name="process" property="workerOffer"/>
+
+<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%><bean:define id="workerOffer" name="process" property="workerOffer" type="module.mobility.domain.WorkerOffer"/>
 <bean:define id="personalPortfolioInfo" name="workerOffer" property="personalPortfolioInfo"/>
 <bean:define id="personalPortfolio" name="personalPortfolioInfo" property="personalPortfolio"/>
 <bean:define id="person" name="personalPortfolio" property="person"/>
@@ -46,8 +47,14 @@
 	<table>
 		<tr>
 			<td valign="middle" style="padding: 10px">
-				<bean:define id="urlPhoto" type="java.lang.String">https://fenix.ist.utl.pt/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="user.username"/></bean:define>
-				<img src="<%= urlPhoto %>">
+				<logic:equal name="workerOffer" property="displayPhoto" value="true">
+					<bean:define id="urlPhoto" type="java.lang.String">https://fenix.ist.utl.pt/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="user.username"/></bean:define>
+					<img src="<%= urlPhoto %>">
+				</logic:equal>
+				<logic:notEqual name="workerOffer" property="displayPhoto" value="true">
+					<bean:define id="urlPhoto" type="java.lang.String">https://fenix.ist.utl.pt//images/photo_placer01_<%= Language.getUserLanguage().name() %>.gif</bean:define>
+					<img src="<%= urlPhoto %>">
+				</logic:notEqual>
 			</td>
 			<td valign="top" style="padding: 10px">
 				<table width="100%">
@@ -61,14 +68,18 @@
 							<%
 								if (organizationalModel == null) {
 							%>
+								<logic:equal name="workerOffer" property="displayName" value="true">
 									<fr:view name="person" property="name"/> (<fr:view name="person" property="user.username"/>)
+								</logic:equal>
 							<%
 								} else {
 							%>
-									<bean:define id="urlOrg2" type="java.lang.String">/organizationModel.do?method=viewModel&amp;viewName=default&amp;organizationalModelOid=<%= organizationalModel.getExternalId() %></bean:define>
-									<html:link styleClass="secondaryLink" page="<%= urlOrg2 %>" paramId="partyOid" paramName="person" paramProperty="externalId">
-										<fr:view name="person" property="name"/> (<fr:view name="person" property="user.username"/>)
-									</html:link>
+									<logic:equal name="workerOffer" property="displayName" value="true">
+										<bean:define id="urlOrg2" type="java.lang.String">/organizationModel.do?method=viewModel&amp;viewName=default&amp;organizationalModelOid=<%= organizationalModel.getExternalId() %></bean:define>
+										<html:link styleClass="secondaryLink" page="<%= urlOrg2 %>" paramId="partyOid" paramName="person" paramProperty="externalId">
+											<fr:view name="person" property="name"/> (<fr:view name="person" property="user.username"/>)
+										</html:link>
+									</logic:equal>
 							<%
 								}
 							%>
@@ -78,7 +89,9 @@
 						<td style="border: none;">
 							<br/>
 							<br/>
-							Place more information here... (email, phone, address, ...).
+							<logic:equal name="workerOffer" property="displayDateOfBirth" value="true">
+								Place more information here... (email, phone, address, ...).
+							</logic:equal>
 						</td>
 					</tr>
 				</table>
@@ -100,32 +113,40 @@
 	<logic:present name="workerOffer" property="personalPortfolioInfo">
 		<fr:view name="workerOffer" property="personalPortfolioInfo">
 			<fr:schema type="module.mobility.domain.PersonalPortfolioInfo" bundle="MOBILITY_RESOURCES">
-				<fr:slot name="carrer" key="label.mobility.carrer"/>
-				<fr:slot name="category" key="label.mobility.category"/>
-				<fr:slot name="salary" key="label.mobility.salary"/>
+				<logic:equal name="workerOffer" property="displayCarrer" value="true">
+					<fr:slot name="carrer" key="label.mobility.carrer"/>
+				</logic:equal>
+				<logic:equal name="workerOffer" property="displayCategory" value="true">
+					<fr:slot name="category" key="label.mobility.category"/>
+				</logic:equal>
+				<logic:equal name="workerOffer" property="displaySalary" value="true">
+					<fr:slot name="salary" key="label.mobility.salary"/>
+				</logic:equal>
 				<fr:slot name="modificationDate" key="label.mobility.personalPortfolioInfo.modificationDate"/>
 			</fr:schema>
 		</fr:view>
 	</logic:present>
 </div>
 
-<h5>
-	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
-</h5>
-<logic:present name="workerOffer" property="personalPortfolioInfo">
-	<logic:notEmpty name="workerOffer" property="personalPortfolioInfo.personalPortfolioInfoQualification">
-		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
-					<fr:schema type="module.mobility.domain.PersonalPortfolioInfoQualification" bundle="MOBILITY_RESOURCES">
-						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
-					</fr:schema>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
-						<fr:property name="columnClasses" value="width100px,,tderror" />
-					</fr:layout>
-		</fr:view>
-	</logic:notEmpty>
-</logic:present>
+<logic:equal name="workerOffer" property="displayQualifications" value="true">
+	<h5>
+		<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
+	</h5>
+	<logic:present name="workerOffer" property="personalPortfolioInfo">
+		<logic:notEmpty name="workerOffer" property="personalPortfolioInfo.personalPortfolioInfoQualification">
+			<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
+				<fr:schema type="module.mobility.domain.PersonalPortfolioInfoQualification" bundle="MOBILITY_RESOURCES">
+					<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+					<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
+				</fr:schema>
+				<fr:layout name="tabular">
+					<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
+					<fr:property name="columnClasses" value="width100px,,tderror" />
+				</fr:layout>
+			</fr:view>
+		</logic:notEmpty>
+	</logic:present>
+</logic:equal>

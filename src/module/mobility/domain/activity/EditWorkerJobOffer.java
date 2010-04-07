@@ -21,7 +21,7 @@ public class EditWorkerJobOffer extends WorkflowActivity<WorkerOfferProcess, Edi
 	workerOffer.setBeginDate(information.getBeginDate());
 	workerOffer.setEndDate(information.getEndDate());
 
-	workerOffer.setDisplayPhoto(information.getDisplaySalary());
+	workerOffer.setDisplayPhoto(information.getDisplayPhoto());
 	workerOffer.setDisplayName(information.getDisplayName());
 	workerOffer.setDisplayDateOfBirth(information.getDisplayDateOfBirth());
 
