@@ -9,6 +9,7 @@ import module.mobility.domain.activity.DefineNewPersonalPortfolioInfo;
 import module.mobility.domain.activity.UpdatePersonalPortfolioInfo;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
 import myorg.domain.User;
 
@@ -52,6 +53,13 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
     @Override
     public boolean isCommentsSupportAvailable() {
 	return false;
+    }
+
+    @Override
+    public List<Class<? extends ProcessFile>> getAvailableFileTypes() {
+	final List<Class<? extends ProcessFile>> list = super.getAvailableFileTypes();
+	list.add(0, PersonalPortfolioCurriculum.class);
+        return list;
     }
 
 }

@@ -39,4 +39,18 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
 	return !hasAnyWorkerOffer() && !hasAnyJobOffer();
     }
 
+    public PersonalPortfolioInfo duplicate() {
+	final PersonalPortfolioInfo personalPortfolioInfo = new PersonalPortfolioInfo(getPersonalPortfolio(), getCarrer(), getCategory(), getSalary());
+	personalPortfolioInfo.setPersonalPortfolioCurriculum(getPersonalPortfolioCurriculum());
+	return personalPortfolioInfo;
+    }
+
+    @Override
+    public void setPersonalPortfolioCurriculum(PersonalPortfolioCurriculum personalPortfolioCurriculum) {
+        super.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
+        if (personalPortfolioCurriculum != null) {
+            setModificationDate(new DateTime());
+        }
+    }
+
 }

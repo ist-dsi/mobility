@@ -1,6 +1,7 @@
 package module.mobility.domain.activity;
 
 import module.mobility.domain.PersonalPortfolio;
+import module.mobility.domain.PersonalPortfolioCurriculum;
 import module.mobility.domain.PersonalPortfolioInfo;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.workflow.activities.ActivityInformation;
@@ -22,7 +23,9 @@ public class UpdatePersonalPortfolioInfo extends WorkflowActivity<PersonalPortfo
 	if (personalPortfolioInfo.canBeUpdated()) {
 	    personalPortfolioInfo.edit(information.getCarrer(), information.getCategory(), information.getSalary());
 	} else {
+	    final PersonalPortfolioCurriculum personalPortfolioCurriculum = personalPortfolioInfo.getPersonalPortfolioCurriculum();
 	    personalPortfolioInfo = new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory(), information.getSalary());
+	    personalPortfolioInfo.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
 	}
 	information.updateQualifications(personalPortfolioInfo);
     }

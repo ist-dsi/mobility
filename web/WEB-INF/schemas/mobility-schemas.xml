@@ -71,3 +71,19 @@
 	<slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
 	<slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
 </schema>
+
+<schema name="addFile-PersonalPortfolioCurriculum" type="module.workflow.util.WorkflowFileUploadBean" bundle="WORKFLOW_RESOURCES">
+	<slot name="selectedInstance" layout="menu-select-postback" key="label.selectedInstance">
+		<property name="providerClass" value="module.workflow.presentationTier.renderers.providers.AvailableFileClassesProvider"/>
+		<property name="eachLayout" value="name-resolver"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="displayName" key="label.filename">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="inputStream" key="label.document">
+		<property name="fileNameSlot" value="filename" />
+		<property name="size" value="50"/>
+	</slot>	
+</schema>

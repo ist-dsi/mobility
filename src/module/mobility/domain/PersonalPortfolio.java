@@ -33,4 +33,15 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 	return workerOffers;
     }
 
+    public void addCurriculum(final PersonalPortfolioCurriculum personalPortfolioCurriculum) {
+	PersonalPortfolioInfo personalPortfolioInfo = getLastPersonalPortfolioInfo();
+	if (personalPortfolioInfo == null) {
+	    throw new NullPointerException("no.personalPortfolioCurriculum");
+	}
+	if (!personalPortfolioInfo.canBeUpdated()) {
+	    personalPortfolioInfo = personalPortfolioInfo.duplicate();
+	}
+	personalPortfolioInfo.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
+    }
+
 }
