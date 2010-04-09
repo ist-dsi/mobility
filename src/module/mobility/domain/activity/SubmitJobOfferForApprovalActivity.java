@@ -6,17 +6,19 @@ import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import myorg.domain.User;
 
-public class CancelSubmitionForApprovalActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
+import org.joda.time.DateTime;
+
+public class SubmitJobOfferForApprovalActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isPendingApproval(user);
+	return jobOffer.isUnderConstruction(user);
     }
 
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-	activityInformation.getProcess().getJobOffer().setSubmittedForApprovalDate(null);
+	activityInformation.getProcess().getJobOffer().setSubmittedForApprovalDate(new DateTime());
     }
 
     @Override

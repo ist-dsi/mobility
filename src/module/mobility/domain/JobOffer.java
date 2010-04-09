@@ -33,7 +33,6 @@ public class JobOffer extends JobOffer_Base {
 	setEndDate(jobOfferBean.getEndDate());
 	setCreator(person);
 	setCreationDate(new DateTime());
-	setCanceled(Boolean.FALSE);
 	JobOfferProcess jobOfferProcess = new JobOfferProcess(this);
 	new LabelLog(jobOfferProcess, currentUser, "activity.CreateJobOfferActivity", MOBILITY_RESOURCES);
     }
@@ -59,34 +58,13 @@ public class JobOffer extends JobOffer_Base {
 	setProfessionalExperienceRequirements(jobOfferBean.getProfessionalExperienceRequirements());
     }
 
-    public boolean isUnderConstruction(User user) {
-	return !getCanceled() && getCreator().equals(user.getPerson()) && getSubmittedForApprovalDate() == null;
-    }
-
-    public boolean isPendingApproval(User user) {
-	return (MobilitySystem.getInstance().isManagementMember(user) || getCreator().equals(user.getPerson()))
-		&& isPendingApproval();
-    }
-
-    public boolean isPendingApproval() {
-	return !getCanceled() && getSubmittedForApprovalDate() != null && getApprovalDate() == null;
+    @Override
+    protected Person getOwner() {
+	return super.getCreator();
     }
 
     public void edit(JobOfferBean jobOfferBean) {
 	setForm(jobOfferBean);
-    }
-
-    public boolean isApproved(User user) {
-	return isApproved() && (MobilitySystem.getInstance().isManagementMember(user));
-    }
-
-    public boolean isApproved() {
-	return !getCanceled() && getApprovalDate() != null;
-    }
-
-    public void approve() {
-	setApprovalDate(new DateTime());
-	setApprover(MobilitySystem.getInstance().getManagementAccountability(UserView.getCurrentUser()));
     }
 
     public boolean getHasAllNeededInfoForSubmitCancidacy() {
@@ -112,5 +90,9 @@ public class JobOffer extends JobOffer_Base {
 	    }
 	}
 	return null;
+    }
+
+    public JobOfferProcess getOfferProcess() {
+	return super.getJobOfferProcess();
     }
 }

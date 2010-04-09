@@ -32,21 +32,21 @@
 			</td>
 		</td>
 	</logic:empty>
-	<logic:iterate id="workerOffer" name="workerOffers">
+	<logic:iterate id="workerOfferProcess" name="workerOffers">
 		<tr>
 			<td>
-				<fr:view name="workerOffer" property="workerOfferProcess.processIdentification"/>
+				<fr:view name="workerOfferProcess" property="processIdentification"/>
 			</td>
 			<td>
-				<fr:view name="workerOffer" property="beginDate"/>
+				<fr:view name="workerOfferProcess" property="workerOffer.beginDate"/>
 			</td>
 			<td>
-				<logic:present name="workerOffer" property="endDate">
-					<fr:view name="workerOffer" property="endDate"/>
+				<logic:present name="workerOfferProcess" property="workerOffer.endDate">
+					<fr:view name="workerOfferProcess" property="workerOffer.endDate"/>
 				</logic:present>
 			</td>
 			<td>
-				<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="workerOffer" paramProperty="workerOfferProcess.externalId">
+				<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="workerOfferProcess" paramProperty="externalId">
 					<bean:message bundle="MOBILITY_RESOURCES" key="label.view"/>
 				</html:link>
 			</td>

@@ -109,9 +109,9 @@ relation JobOfferRequestor {
 	}
 }
 
-relation JobOfferApprover {
+relation OfferApprover {
 	.module.organization.domain.Accountability playsRole approver;
-	JobOffer playsRole jobOffer {
+	Offer playsRole offer {
 		multiplicity *;
 	}
 }

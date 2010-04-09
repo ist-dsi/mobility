@@ -7,6 +7,7 @@ import module.organization.domain.Accountability;
 import module.organization.domain.AccountabilityType;
 import module.organization.domain.Person;
 import module.organization.domain.Unit;
+import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.MyOrg;
 import myorg.domain.User;
 import pt.ist.fenixWebFramework.services.Service;
@@ -47,6 +48,10 @@ public class MobilitySystem extends MobilitySystem_Base {
 	    }
 	}
 	return managementMembers;
+    }
+
+    public boolean isManagementMember() {
+	return getManagementAccountability(UserView.getCurrentUser()) != null;
     }
 
     public boolean isManagementMember(final User user) {

@@ -2,17 +2,17 @@ package module.mobility.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
-import module.mobility.domain.activity.ApprovalActivity;
 import module.mobility.domain.activity.CancelApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferActivity;
-import module.mobility.domain.activity.CancelSubmitionForApprovalActivity;
+import module.mobility.domain.activity.CancelJobOfferSubmitionForApprovalActivity;
 import module.mobility.domain.activity.EditJobOfferActivity;
+import module.mobility.domain.activity.JobOfferApprovalActivity;
 import module.mobility.domain.activity.SubmitCandidacyActivity;
-import module.mobility.domain.activity.SubmitForApprovalActivity;
+import module.mobility.domain.activity.SubmitJobOfferForApprovalActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
@@ -22,14 +22,14 @@ import myorg.domain.User;
 
 import org.joda.time.DateTime;
 
-public class JobOfferProcess extends JobOfferProcess_Base {
+public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<JobOfferProcess> {
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
-	activitiesAux.add(new SubmitForApprovalActivity());
+	activitiesAux.add(new SubmitJobOfferForApprovalActivity());
 	activitiesAux.add(new EditJobOfferActivity());
-	activitiesAux.add(new CancelSubmitionForApprovalActivity());
-	activitiesAux.add(new ApprovalActivity());
+	activitiesAux.add(new CancelJobOfferSubmitionForApprovalActivity());
+	activitiesAux.add(new JobOfferApprovalActivity());
 	activitiesAux.add(new CancelApprovalActivity());
 	activitiesAux.add(new CancelJobOfferActivity());
 	activitiesAux.add(new SubmitCandidacyActivity());
@@ -49,6 +49,11 @@ public class JobOfferProcess extends JobOfferProcess_Base {
 
     private MobilityYear getMobilityYear() {
 	return getJobOffer().getMobilityYear();
+    }
+
+    @Override
+    public int compareTo(JobOfferProcess otherJobOffer) {
+	return getJobOffer().compareTo(otherJobOffer.getJobOffer());
     }
 
     @Override
@@ -73,11 +78,11 @@ public class JobOfferProcess extends JobOfferProcess_Base {
     @Override
     public boolean isAccessible(User user) {
 	return getProcessCreator().equals(user) || (getJobOffer().isApproved() && isActive())
-		|| (MobilitySystem.getInstance().isManagementMember(user));
+		|| (MobilitySystem.getInstance().isManagementMember(user) && getJobOffer().isUnderConstruction(user));
     }
 
     public static Set<JobOfferProcess> getJobOfferProcessByUser(User user) {
-	Set<JobOfferProcess> processes = new HashSet<JobOfferProcess>();
+	Set<JobOfferProcess> processes = new TreeSet<JobOfferProcess>();
 	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {
 	    if (jobOffer.getJobOfferProcess().isAccessible(user)) {
 		processes.add(jobOffer.getJobOfferProcess());
