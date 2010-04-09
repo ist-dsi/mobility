@@ -1,6 +1,7 @@
 package module.mobility.domain;
 
 import module.organization.domain.Person;
+import module.workflow.domain.LabelLog;
 
 import org.joda.time.DateTime;
 
@@ -16,7 +17,7 @@ public class WorkerOffer extends WorkerOffer_Base {
 	    throw new NullPointerException("no.personalPortfolioInfo");
 	}
 	setPersonalPortfolioInfo(personalPortfolioInfo);
-	new WorkerOfferProcess(this);
+	WorkerOfferProcess workerOfferProcess = new WorkerOfferProcess(this);
 	setBeginDate(begin);
 	setEndDate(end);
 
@@ -26,6 +27,8 @@ public class WorkerOffer extends WorkerOffer_Base {
 	setDisplayCarrer(Boolean.FALSE);
 	setDisplayCategory(Boolean.FALSE);
 	setDisplaySalary(Boolean.FALSE);
+	new LabelLog(workerOfferProcess, personalPortfolioInfo.getPersonalPortfolio().getPerson().getUser(),
+		"activity.CreateWorkerJobOffer", "resources.MobilityResources");
     }
 
     @Override

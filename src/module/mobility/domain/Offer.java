@@ -24,6 +24,10 @@ public class Offer extends Offer_Base implements Comparable<Offer> {
 	return !getCanceled() && getSubmittedForApprovalDate() != null && getApprovalDate() == null;
     }
 
+    public boolean isUnderConstruction() {
+	return !getCanceled() && getSubmittedForApprovalDate() == null;
+    }
+
     public boolean isUnderConstruction(User user) {
 	return !getCanceled() && getOwner().equals(user.getPerson()) && getSubmittedForApprovalDate() == null;
     }

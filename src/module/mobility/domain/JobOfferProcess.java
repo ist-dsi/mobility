@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import module.mobility.domain.activity.CancelApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferActivity;
+import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForApprovalActivity;
 import module.mobility.domain.activity.EditJobOfferActivity;
 import module.mobility.domain.activity.JobOfferApprovalActivity;
@@ -30,7 +30,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	activitiesAux.add(new EditJobOfferActivity());
 	activitiesAux.add(new CancelJobOfferSubmitionForApprovalActivity());
 	activitiesAux.add(new JobOfferApprovalActivity());
-	activitiesAux.add(new CancelApprovalActivity());
+	activitiesAux.add(new CancelJobOfferApprovalActivity());
 	activitiesAux.add(new CancelJobOfferActivity());
 	activitiesAux.add(new SubmitCandidacyActivity());
 	activitiesAux.add(new UnSubmitCandidacyActivity());
@@ -78,7 +78,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     @Override
     public boolean isAccessible(User user) {
 	return getProcessCreator().equals(user) || (getJobOffer().isApproved() && isActive())
-		|| (MobilitySystem.getInstance().isManagementMember(user) && getJobOffer().isUnderConstruction(user));
+		|| (MobilitySystem.getInstance().isManagementMember(user) && !getJobOffer().isUnderConstruction());
     }
 
     public static Set<JobOfferProcess> getJobOfferProcessByUser(User user) {

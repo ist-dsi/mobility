@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import module.mobility.domain.activity.CancelWorkerJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerJobOfferSubmitionForApprovalActivity;
 import module.mobility.domain.activity.EditWorkerJobOffer;
 import module.mobility.domain.activity.SubmitWorkerJobOfferForApprovalActivity;
@@ -29,6 +30,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 	activitiesAux.add(new SubmitWorkerJobOfferForApprovalActivity());
 	activitiesAux.add(new CancelWorkerJobOfferSubmitionForApprovalActivity());
 	activitiesAux.add(new WorkerJobOfferApprovalActivity());
+	activitiesAux.add(new CancelWorkerJobOfferApprovalActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 
@@ -75,7 +77,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
     @Override
     public boolean isAccessible(User user) {
 	return getProcessCreator().equals(user) || (getWorkerOffer().isApproved() && isActive())
-		|| (MobilitySystem.getInstance().isManagementMember(user) && getWorkerOffer().isUnderConstruction(user));
+		|| (MobilitySystem.getInstance().isManagementMember(user) && !getWorkerOffer().isUnderConstruction());
     }
 
     public static Set<WorkerOfferProcess> getWorkerJobOfferProcessByUser(User user) {

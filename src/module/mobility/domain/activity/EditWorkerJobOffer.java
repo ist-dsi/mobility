@@ -12,7 +12,7 @@ public class EditWorkerJobOffer extends WorkflowActivity<WorkerOfferProcess, Edi
     @Override
     public boolean isActive(final WorkerOfferProcess process, final User user) {
 	final PersonalPortfolio personalPortfolio = process.getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio();
-	return user == personalPortfolio.getPerson().getUser() && personalPortfolio.hasAnyPersonalPortfolioInfo();
+	return process.getWorkerOffer().isUnderConstruction(user) && personalPortfolio.hasAnyPersonalPortfolioInfo();
     }
 
     @Override
