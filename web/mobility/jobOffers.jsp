@@ -6,9 +6,11 @@
 
 <h2><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.jobOffers" /> </h2>
 
-<html:link action="/mobility.do?method=prepareToCreateJobOffer">
-	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.jobOffers.create" />
-</html:link>
+<p class="mtop05">
+	<html:link action="/mobility.do?method=prepareToCreateJobOffer">
+		<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.jobOffers.create" />
+	</html:link>
+</p>
 
 <logic:present name="processes">
 	<fr:view name="processes">

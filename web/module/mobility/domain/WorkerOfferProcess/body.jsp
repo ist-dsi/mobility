@@ -14,7 +14,10 @@
 <bean:define id="personalPortfolio" name="personalPortfolioInfo" property="personalPortfolio"/>
 <bean:define id="person" name="personalPortfolio" property="person"/>
 
-<h3>
+
+
+
+<h3 class="separator">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerOffer.options"/>
 </h3>
 
@@ -31,19 +34,25 @@
 			<fr:slot name="displaySalary" key="label.mobility.workerJobOffer.displaySalary"/>
 			<fr:slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
 			<fr:slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
+			<fr:layout name="tabular-nonNullValues">
+				<fr:property name="classes" value="mvert05 thleft"/>
+			</fr:layout>
 		</fr:schema>
 	</fr:view>
 </div>
 
-<h3>
+
+
+
+<h3 class="separator mtop15">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.employeeOffer"/>
 </h3>
 
-<h4>
+<h4 class="mtop1">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.information"/>
 </h4>
 
-<div class="infobox mtop1 mbottom1">
+<div class="infobox mvert1">
 	<table>
 		<tr>
 			<td valign="middle" style="padding: 10px">
@@ -100,16 +109,16 @@
 	</table>
 </div>
 
-<h4>
+<h4 class="mtop1">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information"/>
 </h4>
 
-<div class="infobox mtop1 mbottom1">
+<div class="infobox mvert1">
+
 	<logic:notPresent name="workerOffer" property="personalPortfolioInfo">
-		<i><strong>
-			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/>
-		</strong></i>
+		<p><em><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/></em></p>
 	</logic:notPresent>
+	
 	<logic:present name="workerOffer" property="personalPortfolioInfo">
 		<fr:view name="workerOffer" property="personalPortfolioInfo">
 			<fr:schema type="module.mobility.domain.PersonalPortfolioInfo" bundle="MOBILITY_RESOURCES">
@@ -124,14 +133,19 @@
 				</logic:equal>
 				<fr:slot name="modificationDate" key="label.mobility.personalPortfolioInfo.modificationDate"/>
 			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="thleft mvert05" />
+			</fr:layout>
 		</fr:view>
 	</logic:present>
 </div>
 
 <logic:equal name="workerOffer" property="displayQualifications" value="true">
+
 	<h5>
 		<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
 	</h5>
+
 	<logic:present name="workerOffer" property="personalPortfolioInfo">
 		<logic:notEmpty name="workerOffer" property="personalPortfolioInfo.personalPortfolioInfoQualification">
 			<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
@@ -143,8 +157,7 @@
 					<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
 				</fr:schema>
 				<fr:layout name="tabular">
-					<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
-					<fr:property name="columnClasses" value="width100px,,tderror" />
+					<fr:property name="classes" value="thleft mvert1" />
 				</fr:layout>
 			</fr:view>
 		</logic:notEmpty>

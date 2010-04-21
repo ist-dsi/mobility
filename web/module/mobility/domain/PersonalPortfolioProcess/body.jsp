@@ -11,11 +11,12 @@
 <bean:define id="personalPortfolio" name="process" property="personalPortfolio"/>
 <bean:define id="person" name="personalPortfolio" property="person"/>
 
-<h3>
+
+<h3 class="separator">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.information"/>
 </h3>
 
-<div class="infobox mtop1 mbottom1">
+<div class="infobox mvert1">
 	<table>
 		<tr>
 			<td valign="middle" style="padding: 10px">
@@ -60,15 +61,20 @@
 	</table>
 </div>
 
-<h3>
+
+
+
+<h3 class="separator mtop2">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information"/>
 </h3>
 
-<div class="infobox mtop1 mbottom1">
+<div class="infobox mvert1">
 	<logic:notPresent name="personalPortfolio" property="lastPersonalPortfolioInfo">
-		<i><strong>
-			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/>
-		</strong></i>
+		<i>
+			<strong>
+				<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/>
+			</strong>
+		</i>
 	</logic:notPresent>
 	<logic:present name="personalPortfolio" property="lastPersonalPortfolioInfo">
 		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo">
@@ -78,34 +84,42 @@
 				<fr:slot name="salary" key="label.mobility.salary"/>
 				<fr:slot name="modificationDate" key="label.mobility.personalPortfolioInfo.modificationDate"/>
 			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="mvert05 thleft"/>
+				<%--
+				<fr:property name="classes" value="tstyle3 mvert05 thleft tdleft width100pc" />
+				<fr:property name="columnClasses" value="width100px,,," />
+				--%>
+			</fr:layout>
 		</fr:view>
 	</logic:present>
 </div>
 
-<h4>
-	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
-</h4>
+<p class="mtop15 mbottom0">
+	<strong><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/></strong>
+</p>
 
 <logic:present name="personalPortfolio" property="lastPersonalPortfolioInfo">
 	<logic:notEmpty name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
 		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
-					<fr:schema type="module.mobility.domain.PersonalPortfolioInfoQualification" bundle="MOBILITY_RESOURCES">
-						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-						<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
-					</fr:schema>
-					<fr:layout name="tabular">
-						<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
-						<fr:property name="columnClasses" value="width100px,,tderror" />
-					</fr:layout>
+			<fr:schema type="module.mobility.domain.PersonalPortfolioInfoQualification" bundle="MOBILITY_RESOURCES">
+				<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
+			</fr:schema>
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle3 mvert1 width100pc" />
+			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
 </logic:present>
 
 
-<h3>
+
+
+<h3 class="separator mtop15">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.worker.offers"/>
 </h3>
 

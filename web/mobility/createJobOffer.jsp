@@ -3,8 +3,8 @@
 <%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 
-<h2><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.jobOffers.create"/></h2>
-	
+<h2><bean:message bundle="MOBILITY_RESOURCES" key="title.module.mobility.jobOffers.create"/></h2>
+
 <fr:edit id="jobOfferBean" name="jobOfferBean" action="/mobility.do?method=createJobOffer">
 	<fr:schema type="module.mobility.domain.util.JobOfferBean" bundle="MOBILITY_RESOURCES">
 		<fr:slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>

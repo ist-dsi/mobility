@@ -11,8 +11,5 @@
 
 <h2>
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerProcessIdentification"/>
-	:
-	<strong>
-		<fr:view name="workerOffer" property="workerOfferProcess.processIdentification"/>
-	</strong>
+	<span class="processNumber">(<fr:view name="workerOffer" property="workerOfferProcess.processIdentification"/>)</span>	
 </h2>

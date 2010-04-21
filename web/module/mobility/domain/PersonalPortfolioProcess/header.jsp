@@ -9,5 +9,5 @@
 
 <h2>
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.portfolio.title"/>
-	<bean:write name="person" property="name"/>
+	<span class="processNumber">(<bean:write name="person" property="name"/>)</span>	 
 </h2>
