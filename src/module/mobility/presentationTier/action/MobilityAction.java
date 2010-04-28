@@ -53,8 +53,13 @@ public class MobilityAction extends ContextBaseAction {
 
     public ActionForward jobOffers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
-	Set<JobOfferProcess> processes = JobOfferProcess.getJobOfferProcessByUser(UserView.getCurrentUser());
-	request.setAttribute("processes", processes);
+	OfferSearch offerSearch = getRenderedObject("offerSearch");
+	if (offerSearch == null) {
+	    offerSearch = new OfferSearch();
+	    offerSearch.init();
+	}
+	request.setAttribute("offerSearch", offerSearch);
+	request.setAttribute("processes", offerSearch.doSearch());
 	return forward(request, "/mobility/jobOffers.jsp");
     }
 
@@ -83,6 +88,12 @@ public class MobilityAction extends ContextBaseAction {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
 	return ProcessManagement.forwardToProcess(jobOfferProcess);
+    }
+
+    public ActionForward viewWorkerOfferProcessToManage(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	WorkerOfferProcess workerOfferProcess = getDomainObject(request, "OID");
+	return ProcessManagement.forwardToProcess(workerOfferProcess);
     }
 
     public ActionForward viewJobOfferProcess(final ActionMapping mapping, final ActionForm form,

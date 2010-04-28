@@ -13,6 +13,9 @@ valueType myorg.domain.util.Money as Money {
 class MobilitySystem {
 }
 
+class groups.MobilityGroup extends .myorg.domain.groups.PersistentGroup {
+}
+	
 class MobilityYear {
 	Integer year;
 	Integer counter;

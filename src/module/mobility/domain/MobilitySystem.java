@@ -1,5 +1,7 @@
 package module.mobility.domain;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -48,6 +50,20 @@ public class MobilitySystem extends MobilitySystem_Base {
 	    }
 	}
 	return managementMembers;
+    }
+
+    public Set<User> getManagementUsers() {
+	final Set<User> managementUsers = new HashSet<User>();
+	if (hasManagementUnit() && hasManagementAccountabilityType()) {
+	    final Unit accountingUnit = getManagementUnit();
+	    final AccountabilityType accountabilityType = getManagementAccountabilityType();
+	    for (final Accountability accountability : accountingUnit.getChildAccountabilitiesSet()) {
+		if (accountability.getAccountabilityType() == accountabilityType && accountability.getChild().isPerson()) {
+		    managementUsers.add(((Person) accountability.getChild()).getUser());
+		}
+	    }
+	}
+	return managementUsers;
     }
 
     public boolean isManagementMember() {

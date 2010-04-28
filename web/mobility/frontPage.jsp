@@ -10,72 +10,38 @@
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.frontPage"/>
 </h2>
 
-<fr:edit id="offerSearch" name="offerSearch">
-	<fr:schema type="module.mobility.domain.util.OfferSearch" bundle="MOBILITY_RESOURCES">
-		<fr:slot name="processNumber" key="label.mobility.processIdentification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<fr:property name="size" value="10"/>
-		</fr:slot>
-	</fr:schema>
-	<fr:layout name="tabular">
-		<fr:property name="classes" value="form" />
-		<fr:property name="columnClasses" value=",,tderror" />
-	</fr:layout>
-</fr:edit>
-
+<fr:form action="/mobility.do?method=frontPage">
+	<fr:edit id="offerSearch" name="offerSearch">
+		<fr:schema type="module.mobility.domain.util.OfferSearch" bundle="MOBILITY_RESOURCES">
+			<fr:slot name="processNumber" key="label.mobility.processIdentification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="size" value="10"/>
+			</fr:slot>
+		</fr:schema>
+		<fr:layout name="tabular">
+			<fr:property name="classes" value="form" />
+			<fr:property name="columnClasses" value=",,tderror" />
+		</fr:layout>
+	</fr:edit>
+	<html:submit styleClass="inputbutton">
+		<bean:message  bundle="MOBILITY_RESOURCES" key="label.mobility.submit"/>
+	</html:submit>
+</fr:form>
+<br/>
 <logic:notEmpty name="offerSearch" property="processNumber">
 	<bean:message bundle="MOBILITY_RESOURCES" key="message.mobility.invalid.processIdentification"/>
 </logic:notEmpty>
 
 
-<div style="float: left; width: 100%">
-	<table style="width: 100%; margin: 1em 0;">
-		<tr>
-			<td style="border: 1px dotted #aaa; padding: 10px 15px; width: 48%; vertical-align: top;">
-				<p class="mtop0 mbottom05">
-					<b>
-						<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.myJobOffers"/>
-					</b>
-				</p>
-				<bean:define id="offerList" name="offerSearch" property="jobOfferSet" toScope="request"/>
-				<jsp:include page="offerList.jsp"/>
-			<td style="border: none; width: 2%; padding: 0;"></td>
-			<td style="border: 1px dotted #aaa; padding: 10px 15px; width: 48%; vertical-align: top;">
-				<p class="mtop0 mbottom05">
-					<b>
-						<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.myWorkerOffers"/>
-					</b>
-				</p>
-				<bean:define id="offerList" name="offerSearch" property="workerOfferSet" toScope="request"/>
-				<jsp:include page="offerList.jsp"/>
-			</td>
-		</tr>
-	</table>
+<%  module.mobility.domain.MobilitySystem mobilitySystem = module.mobility.domain.MobilitySystem.getInstance();
+if (mobilitySystem.isManagementMember()) { %>
+	<h3 class="separator mbottom15" ><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.pendingApproval"/></h3>
+	<p><strong><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.pendingApproval.jobOffers"/></strong></p>
+<bean:define id="offerList" name="offerSearch" property="pendingApprovalJobOfferSet" toScope="request"/>	
+	<jsp:include page="jobOfferList.jsp"/>
 
-	<%  module.mobility.domain.MobilitySystem mobilitySystem = module.mobility.domain.MobilitySystem.getInstance();
-	if (mobilitySystem.isManagementMember()) { %>
-	<table style="width: 100%; margin: 1em 0;">
-			<tr>
-				<td style="border: 1px dotted #aaa; padding: 10px 15px; width: 48%; vertical-align: top;">
-					<p class="mtop0 mbottom05">
-						<b>
-							<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.pendingApproval.jobOffers"/>
-						</b>
-					</p>
-					<bean:define id="offerList" name="offerSearch" property="pendingApprovalJobOfferSet" toScope="request"/>
-					<jsp:include page="offerList.jsp"/>
-				<td style="border: none; width: 2%; padding: 0;"></td>
-				<td style="border: 1px dotted #aaa; padding: 10px 15px; width: 48%; vertical-align: top;">
-					<p class="mtop0 mbottom05">
-						<b>
-							<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.pendingApproval.workerOffers"/>
-						</b>
-					</p>
-					<bean:define id="offerList" name="offerSearch" property="pendingApprovalWorkerJobOfferSet" toScope="request"/>
-					<jsp:include page="offerList.jsp"/>
-				</td>
-			</tr>
-		</table>
-	<%}%>
-</div>
+	<p><strong><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.pendingApproval.workerOffers"/></strong></p>
+	<bean:define id="offerList" name="offerSearch" property="pendingApprovalWorkerJobOfferSet" toScope="request"/>
+	<jsp:include page="workerOfferList.jsp"/>
+<%}%>
 
 

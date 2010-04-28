@@ -95,4 +95,8 @@ public class JobOffer extends JobOffer_Base {
     public JobOfferProcess getOfferProcess() {
 	return super.getJobOfferProcess();
     }
+
+    public DateTime getPublicationDate() {
+	return isApproved() ? getBeginDate() : null;
+    }
 }

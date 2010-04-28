@@ -17,6 +17,18 @@ import org.apache.commons.lang.StringUtils;
 
 public class OfferSearch implements Serializable {
 
+    public enum OfferSearchOwner {
+	ALL, MINE, WITH_MY_CANDIDACY;
+    }
+
+    public enum OfferSearchState {
+	ALL, ACTIVE, INACTIVE;
+    }
+
+    private OfferSearchOwner offerSearchOwner;
+
+    private OfferSearchState offerSearchState;
+
     private String processNumber;
 
     public String getProcessNumber() {
@@ -25,6 +37,27 @@ public class OfferSearch implements Serializable {
 
     public void setProcessNumber(String processNumber) {
 	this.processNumber = processNumber;
+    }
+
+    public OfferSearchOwner getOfferSearchOwner() {
+	return offerSearchOwner;
+    }
+
+    public void setOfferSearchOwner(OfferSearchOwner offerSearchOwner) {
+	this.offerSearchOwner = offerSearchOwner;
+    }
+
+    public OfferSearchState getOfferSearchState() {
+	return offerSearchState;
+    }
+
+    public void setOfferSearchState(OfferSearchState offerSearchState) {
+	this.offerSearchState = offerSearchState;
+    }
+
+    public void init() {
+	setOfferSearchOwner(OfferSearchOwner.ALL);
+	setOfferSearchState(OfferSearchState.ALL);
     }
 
     public WorkflowProcess getOfferProcess(User user) {
@@ -87,4 +120,32 @@ public class OfferSearch implements Serializable {
 	return result;
     }
 
+    public Set<JobOfferProcess> doSearch() {
+	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
+	User user = UserView.getCurrentUser();
+	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
+	    if (jobOffer.getJobOfferProcess().isAccessible(user) && isSatisfiedOwner(jobOffer, user)
+		    && isSatisfiedState(jobOffer, user) && isSatisfiedProcessNumber(jobOffer)) {
+		result.add(jobOffer.getJobOfferProcess());
+	    }
+	}
+	return result;
+    }
+
+    private boolean isSatisfiedProcessNumber(JobOffer jobOffer) {
+	return StringUtils.isEmpty(getProcessNumber())
+		|| jobOffer.getJobOfferProcess().getProcessIdentification().contains(getProcessNumber());
+    }
+
+    private boolean isSatisfiedState(JobOffer jobOffer, User user) {
+	return getOfferSearchState().equals(OfferSearchState.ALL)
+		|| (getOfferSearchState().equals(OfferSearchState.ACTIVE) && jobOffer.getJobOfferProcess().isActive())
+		|| (getOfferSearchState().equals(OfferSearchState.INACTIVE) && !jobOffer.getJobOfferProcess().isActive());
+    }
+
+    private boolean isSatisfiedOwner(JobOffer jobOffer, User user) {
+	return getOfferSearchOwner().equals(OfferSearchOwner.ALL)
+		|| (getOfferSearchOwner().equals(OfferSearchOwner.MINE) && jobOffer.getCreator().equals(user.getPerson()))
+		|| (getOfferSearchOwner().equals(OfferSearchOwner.WITH_MY_CANDIDACY) && jobOffer.hasCandidacy(user));
+    }
 }

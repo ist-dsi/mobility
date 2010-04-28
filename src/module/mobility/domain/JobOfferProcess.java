@@ -68,7 +68,8 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 
     @Override
     public boolean isActive() {
-	return !getJobOffer().getCanceled() && getJobOffer().getEndDate().isAfter(new DateTime());
+	return !getJobOffer().getCanceled() && getJobOffer().getEndDate().isAfter(new DateTime())
+		&& getJobOffer().getBeginDate().isBefore(new DateTime());
     }
 
     @Override
