@@ -19,8 +19,8 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
     protected void process(final WorkerJobOfferInformation information) {
 	final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
 	final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-	final WorkerOffer workerOffer = new WorkerOffer(personalPortfolio, information.getYear(),
-		information.getBeginDate(), information.getEndDate());
+	final WorkerOffer workerOffer = new WorkerOffer(personalPortfolio, information.getYear(), information.getBeginDate(),
+		information.getEndDate());
 
 	workerOffer.setDisplayPhoto(information.getDisplayPhoto());
 	workerOffer.setDisplayName(information.getDisplayName());
@@ -32,6 +32,8 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
 
 	workerOffer.setDisplayQualifications(information.getDisplayQualifications());
 	workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
+
+	information.setWorkerOffer(workerOffer);
     }
 
     @Override
@@ -42,6 +44,11 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
     @Override
     public String getUsedBundle() {
 	return "resources/MobilityResources";
+    }
+
+    @Override
+    public boolean isDefaultInputInterfaceUsed() {
+	return false;
     }
 
 }

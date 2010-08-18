@@ -20,9 +20,7 @@ import module.workflow.domain.WorkflowProcess;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 
-import org.joda.time.DateTime;
-
-public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<JobOfferProcess> {
+public class JobOfferProcess extends JobOfferProcess_Base {
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
@@ -43,19 +41,6 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	setProcessNumber(jobOffer.getMobilityYear().nextNumber().toString());
     }
 
-    public String getProcessIdentification() {
-	return getMobilityYear().getYear() + "/" + getProcessNumber();
-    }
-
-    private MobilityYear getMobilityYear() {
-	return getJobOffer().getMobilityYear();
-    }
-
-    @Override
-    public int compareTo(JobOfferProcess otherJobOffer) {
-	return getJobOffer().compareTo(otherJobOffer.getJobOffer());
-    }
-
     @Override
     public <T extends WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> List<T> getActivities() {
 	return (List) activities;
@@ -64,22 +49,6 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     @Override
     public User getProcessCreator() {
 	return getJobOffer().getCreator().getUser();
-    }
-
-    @Override
-    public boolean isActive() {
-	return !getJobOffer().getCanceled() && getJobOffer().getEndDate().isAfter(new DateTime())
-		&& getJobOffer().getBeginDate().isBefore(new DateTime());
-    }
-
-    @Override
-    public void notifyUserDueToComment(User user, String comment) {
-    }
-
-    @Override
-    public boolean isAccessible(User user) {
-	return getProcessCreator().equals(user) || (getJobOffer().isApproved() && isActive())
-		|| (MobilitySystem.getInstance().isManagementMember(user) && !getJobOffer().isUnderConstruction());
     }
 
     public static Set<JobOfferProcess> getJobOfferProcessByUser(User user) {
@@ -92,13 +61,14 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	return processes;
     }
 
-    public boolean getCanManageJobProcess() {
-	final User user = UserView.getCurrentUser();
-	return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
-    }
-
     public boolean getCanManageJobOfferCandidacies() {
 	final User user = UserView.getCurrentUser();
 	return MobilitySystem.getInstance().isManagementMember(user) && !getJobOffer().getCandidatePortfolioInfoSet().isEmpty();
     }
+
+    @Override
+    protected Offer getOffer() {
+	return getJobOffer();
+    }
+
 }

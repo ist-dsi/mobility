@@ -45,12 +45,21 @@ public class Offer extends Offer_Base implements Comparable<Offer> {
 	return !getCanceled() && getApprovalDate() != null;
     }
 
+    public boolean isActive() {
+	DateTime now = new DateTime();
+	return !getCanceled() && (getEndDate() == null || getEndDate().isAfter(new DateTime())) && getBeginDate().isBefore(now);
+    }
+
     public void approve() {
 	setApprovalDate(new DateTime());
 	setApprover(MobilitySystem.getInstance().getManagementAccountability(UserView.getCurrentUser()));
     }
 
-    protected Person getOwner() {
+    public Person getOwner() {
+	return null;
+    }
+
+    public OfferProcess getProcess() {
 	return null;
     }
 }

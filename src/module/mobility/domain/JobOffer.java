@@ -46,6 +46,8 @@ public class JobOffer extends JobOffer_Base {
 
     private void setForm(JobOfferBean jobOfferBean) {
 	checkDates(jobOfferBean.getBeginDate(), jobOfferBean.getEndDate());
+	setBeginDate(jobOfferBean.getBeginDate());
+	setEndDate(jobOfferBean.getEndDate());
 	setTitle(jobOfferBean.getTitle());
 	setJobProfile(jobOfferBean.getJobProfile());
 	setKnowledgeRequirements(jobOfferBean.getKnowledgeRequirements());
@@ -59,7 +61,7 @@ public class JobOffer extends JobOffer_Base {
     }
 
     @Override
-    protected Person getOwner() {
+    public Person getOwner() {
 	return super.getCreator();
     }
 
@@ -92,11 +94,12 @@ public class JobOffer extends JobOffer_Base {
 	return null;
     }
 
-    public JobOfferProcess getOfferProcess() {
-	return super.getJobOfferProcess();
-    }
-
     public DateTime getPublicationDate() {
 	return isApproved() ? getBeginDate() : null;
+    }
+
+    @Override
+    public OfferProcess getProcess() {
+	return getJobOfferProcess();
     }
 }

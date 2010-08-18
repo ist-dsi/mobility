@@ -18,17 +18,11 @@
 			<fr:slot name="processNumber" key="label.mobility.processIdentification">
 				<fr:property name="size" value="10"/>
 			</fr:slot>
-			<fr:slot name="offerSearchOwner" key="label.mobility.processIdentification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:layout name="menu-select">
-					<fr:property name="choiceType" value="module.mobility.domain.util.OfferSearch$OfferSearchOwner"/>
-					<fr:property name="nullOptionHidden" value="true"/>
-				</fr:layout>
+			<fr:slot name="offerSearchOwner" key="label.module.mobility.jobOffers" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="defaultOptionHidden" value="true"/>
 			</fr:slot>
-			<fr:slot name="offerSearchState" key="label.mobility.processIdentification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:layout name="menu-select">
-					<fr:property name="choiceType" value="module.mobility.domain.util.OfferSearch$OfferSearchState"/>
-					<fr:property name="nullOptionHidden" value="true"/>
-				</fr:layout>
+			<fr:slot name="offerSearchState" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="defaultOptionHidden" value="true"/>
 			</fr:slot>
 		</fr:schema>
 		<fr:layout name="tabular">
@@ -46,11 +40,17 @@
 	<fr:view name="processes">
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits"/>
+			
+			<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
+			<fr:property name="key(view)" value="label.mobility.view" />
+			<fr:property name="param(view)" value="OID" />
+			<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
+			
 			<fr:property name="link(manage)" value="/mobility.do?method=viewJobOfferProcessToManage" />
-			<fr:property name="key(manage)" value="label.mobility.view" />
+			<fr:property name="key(manage)" value="label.mobility.manage" />
 			<fr:property name="param(manage)" value="OID" />
 			<fr:property name="bundle(manage)" value="MOBILITY_RESOURCES" />
-			<fr:property name="visibleIf(manage)" value="canManageJobProcess" />
+			<fr:property name="visibleIf(manage)" value="canManageProcess" />
 			
 			<fr:property name="link(candidacies)" value="/mobility.do?method=viewJobOfferCandidacies" />
 			<fr:property name="key(candidacies)" value="label.mobility.jobOffer.candidacies" />
@@ -58,11 +58,6 @@
 			<fr:property name="bundle(candidacies)" value="MOBILITY_RESOURCES" />
 			<fr:property name="visibleIf(candidacies)" value="canManageJobOfferCandidacies" />
 			
-			<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
-			<fr:property name="key(view)" value="label.mobility.view" />
-			<fr:property name="param(view)" value="OID" />
-			<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
-			<fr:property name="visibleIfNot(view)" value="canManageJobProcess" />
 		</fr:layout>
 		<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
 			<fr:slot name="jobOffer.jobOfferProcess.processIdentification" key="label.mobility.jobOfferProcessIdentification" />

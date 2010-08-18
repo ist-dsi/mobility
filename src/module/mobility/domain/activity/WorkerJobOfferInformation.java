@@ -3,6 +3,7 @@ package module.mobility.domain.activity;
 import java.util.Calendar;
 
 import module.mobility.domain.PersonalPortfolioProcess;
+import module.mobility.domain.WorkerOffer;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 
@@ -25,6 +26,8 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
     private Boolean displayQualifications = Boolean.FALSE;
     private Boolean displayCurriculum = Boolean.FALSE;
 
+    private WorkerOffer workerOffer;
+
     public WorkerJobOfferInformation(final PersonalPortfolioProcess process,
 	    WorkflowActivity<PersonalPortfolioProcess, ? extends ActivityInformation<PersonalPortfolioProcess>> activity) {
 	super(process, activity);
@@ -36,91 +39,99 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
     }
 
     public DateTime getBeginDate() {
-        return beginDate;
+	return beginDate;
     }
 
     public void setBeginDate(DateTime beginDate) {
-        this.beginDate = beginDate;
+	this.beginDate = beginDate;
     }
 
     public DateTime getEndDate() {
-        return endDate;
+	return endDate;
     }
 
     public void setEndDate(DateTime endDate) {
-        this.endDate = endDate;
+	this.endDate = endDate;
     }
 
     public int getYear() {
-        return year;
+	return year;
     }
 
     public void setYear(int year) {
-        this.year = year;
+	this.year = year;
     }
 
     public Boolean getDisplayName() {
-        return displayName;
+	return displayName;
     }
 
     public void setDisplayName(Boolean displayName) {
-        this.displayName = displayName;
+	this.displayName = displayName;
     }
 
     public Boolean getDisplayDateOfBirth() {
-        return displayDateOfBirth;
+	return displayDateOfBirth;
     }
 
     public void setDisplayDateOfBirth(Boolean displayDateOfBirth) {
-        this.displayDateOfBirth = displayDateOfBirth;
+	this.displayDateOfBirth = displayDateOfBirth;
     }
 
     public Boolean getDisplayCarrer() {
-        return displayCarrer;
+	return displayCarrer;
     }
 
     public void setDisplayCarrer(Boolean displayCarrer) {
-        this.displayCarrer = displayCarrer;
+	this.displayCarrer = displayCarrer;
     }
 
     public Boolean getDisplayCategory() {
-        return displayCategory;
+	return displayCategory;
     }
 
     public void setDisplayCategory(Boolean displayCategory) {
-        this.displayCategory = displayCategory;
+	this.displayCategory = displayCategory;
     }
 
     public Boolean getDisplaySalary() {
-        return displaySalary;
+	return displaySalary;
     }
 
     public void setDisplaySalary(Boolean displaySalary) {
-        this.displaySalary = displaySalary;
+	this.displaySalary = displaySalary;
     }
 
     public Boolean getDisplayPhoto() {
-        return displayPhoto;
+	return displayPhoto;
     }
 
     public void setDisplayPhoto(Boolean displayPhoto) {
-        this.displayPhoto = displayPhoto;
+	this.displayPhoto = displayPhoto;
     }
 
     public Boolean getDisplayQualifications() {
-        return displayQualifications;
+	return displayQualifications;
     }
 
     public void setDisplayQualifications(Boolean displayQualifications) {
-        this.displayQualifications = displayQualifications;
+	this.displayQualifications = displayQualifications;
     }
 
     public Boolean getDisplayCurriculum() {
-        return displayCurriculum;
+	return displayCurriculum;
     }
 
     public void setDisplayCurriculum(Boolean displayCurriculum) {
-        this.displayCurriculum = displayCurriculum;
+	this.displayCurriculum = displayCurriculum;
+    }
+
+    public WorkerOffer getWorkerOffer() {
+	return workerOffer;
+    }
+
+    public void setWorkerOffer(WorkerOffer workerOffer) {
+	this.workerOffer = workerOffer;
     }
 
 }

@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import module.mobility.domain.activity.CancelWorkerJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerJobOfferSubmitionForApprovalActivity;
+import module.mobility.domain.activity.CancelWorkerOfferActivity;
 import module.mobility.domain.activity.EditWorkerJobOffer;
 import module.mobility.domain.activity.SubmitWorkerJobOfferForApprovalActivity;
 import module.mobility.domain.activity.UpdateWorkerJobOfferProfessionalInformation;
@@ -17,9 +18,7 @@ import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
 import myorg.domain.User;
 
-import org.joda.time.DateTime;
-
-public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Comparable<WorkerOfferProcess> {
+public class WorkerOfferProcess extends WorkerOfferProcess_Base {
 
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
 
@@ -31,6 +30,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 	activitiesAux.add(new CancelWorkerJobOfferSubmitionForApprovalActivity());
 	activitiesAux.add(new WorkerJobOfferApprovalActivity());
 	activitiesAux.add(new CancelWorkerJobOfferApprovalActivity());
+	activitiesAux.add(new CancelWorkerOfferActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 
@@ -40,17 +40,9 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 	setProcessNumber(workerOffer.getMobilityYear().nextNumber().toString());
     }
 
-    public String getProcessIdentification() {
-	return getMobilityYear().getYear() + "/" + getProcessNumber();
-    }
-
-    private MobilityYear getMobilityYear() {
-	return getWorkerOffer().getMobilityYear();
-    }
-
     @Override
-    public int compareTo(WorkerOfferProcess otherWorkerOfferProcess) {
-	return getWorkerOffer().compareTo(otherWorkerOfferProcess.getWorkerOffer());
+    protected MobilityYear getMobilityYear() {
+	return getWorkerOffer().getMobilityYear();
     }
 
     @Override
@@ -63,23 +55,6 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 	return getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().getUser();
     }
 
-    @Override
-    public boolean isActive() {
-	return !getWorkerOffer().getCanceled()
-		&& (getWorkerOffer().getEndDate() != null && getWorkerOffer().getEndDate().isAfter(new DateTime()));
-    }
-
-    @Override
-    public void notifyUserDueToComment(User user, String comment) {
-	// do nothing.
-    }
-
-    @Override
-    public boolean isAccessible(User user) {
-	return getProcessCreator().equals(user) || (getWorkerOffer().isApproved() && isActive())
-		|| (MobilitySystem.getInstance().isManagementMember(user) && !getWorkerOffer().isUnderConstruction());
-    }
-
     public static Set<WorkerOfferProcess> getWorkerJobOfferProcessByUser(User user) {
 	Set<WorkerOfferProcess> processes = new TreeSet<WorkerOfferProcess>();
 	for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
@@ -90,4 +65,8 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 	return processes;
     }
 
+    @Override
+    protected Offer getOffer() {
+	return getWorkerOffer();
+    }
 }

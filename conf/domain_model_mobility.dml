@@ -43,7 +43,10 @@ class JobOffer extends Offer {
 	MultiLanguageString professionalExperienceRequirements;
 }
 
-class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
+class OfferProcess extends .module.workflow.domain.WorkflowProcess {
+}
+
+class JobOfferProcess extends OfferProcess {
 }
 
 class PersonalPortfolio {
@@ -82,7 +85,7 @@ class WorkerOffer extends Offer {
 	Boolean displayCurriculum;
 }
 
-class WorkerOfferProcess extends .module.workflow.domain.WorkflowProcess {
+class WorkerOfferProcess extends OfferProcess {
 }
 
 
@@ -124,9 +127,9 @@ relation JobOfferProcessJobOffer {
 	JobOffer playsRole jobOffer;
 }
 
-relation MobilityYearJobOffer {
+relation MobilityYearOffer {
 	MobilityYear playsRole mobilityYear;
-	JobOffer playsRole jobOffer {
+	Offer playsRole offer {
 		multiplicity *;
 	}
 }
@@ -172,13 +175,6 @@ relation WorkerOfferWorkerOfferProcess {
 
 relation PersonalPortfolioWorkerOffer {
 	PersonalPortfolioInfo playsRole personalPortfolioInfo;
-	WorkerOffer playsRole workerOffer {
-		multiplicity *;
-	}
-}
-
-relation MobilityYearWorkerOffer {
-	MobilityYear playsRole mobilityYear;
 	WorkerOffer playsRole workerOffer {
 		multiplicity *;
 	}

@@ -10,7 +10,7 @@
 		<fr:slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<fr:slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 		<fr:slot name="endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-		<fr:slot name="title" key="label.mobility.jobOffer.title" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
+		<fr:slot name="title" key="label.mobility.jobOffer.title" layout="short" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">
 			<fr:property name="size" value="50"/>
 		</fr:slot>		
 		<fr:slot name="jobProfile" key="label.mobility.jobOffer.jobProfile" layout="area" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredMultiLanguageStringValidator">

@@ -1,25 +1,25 @@
 package module.mobility.presentationTier.action;
 
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
+import module.mobility.domain.OfferProcess;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioProcess;
+import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
 import module.mobility.domain.activity.PersonalPortfolioInfoInformation;
 import module.mobility.domain.activity.SubmitCandidacyActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
+import module.mobility.domain.activity.WorkerJobOfferInformation;
 import module.mobility.domain.activity.PersonalPortfolioInfoInformation.QualificationHolder;
 import module.mobility.domain.util.JobOfferBean;
 import module.mobility.domain.util.OfferSearch;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import module.workflow.domain.WorkflowProcess;
 import module.workflow.presentationTier.WorkflowLayoutContext;
 import module.workflow.presentationTier.actions.ProcessManagement;
 import myorg.applicationTier.Authenticate.UserView;
@@ -43,7 +43,7 @@ public class MobilityAction extends ContextBaseAction {
 	if (offerSearch == null) {
 	    offerSearch = new OfferSearch();
 	}
-	WorkflowProcess process = offerSearch.getOfferProcess(UserView.getCurrentUser());
+	OfferProcess process = offerSearch.getOfferProcess(UserView.getCurrentUser());
 	if (process != null) {
 	    return ProcessManagement.forwardToProcess(process);
 	}
@@ -59,14 +59,19 @@ public class MobilityAction extends ContextBaseAction {
 	    offerSearch.init();
 	}
 	request.setAttribute("offerSearch", offerSearch);
-	request.setAttribute("processes", offerSearch.doSearch());
+	request.setAttribute("processes", offerSearch.doJobOfferSearch());
 	return forward(request, "/mobility/jobOffers.jsp");
     }
 
     public ActionForward employeeOffers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
-	Set<WorkerOfferProcess> workerOffers = WorkerOfferProcess.getWorkerJobOfferProcessByUser(UserView.getCurrentUser());
-	request.setAttribute("workerOffers", workerOffers);
+	OfferSearch offerSearch = getRenderedObject("offerSearch");
+	if (offerSearch == null) {
+	    offerSearch = new OfferSearch();
+	    offerSearch.init();
+	}
+	request.setAttribute("offerSearch", offerSearch);
+	request.setAttribute("processes", offerSearch.doWorkerOfferSearch());
 	return forward(request, "/mobility/employeeOffers.jsp");
     }
 
@@ -101,6 +106,13 @@ public class MobilityAction extends ContextBaseAction {
 	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
 	request.setAttribute("process", jobOfferProcess);
 	return forward(request, "/mobility/showJobOfferProcess.jsp");
+    }
+
+    public ActionForward viewWorkerOfferProcess(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	WorkerOfferProcess workerOfferProcess = getDomainObject(request, "OID");
+	request.setAttribute("process", workerOfferProcess);
+	return forward(request, "/mobility/showWorkerOfferProcess.jsp");
     }
 
     public ActionForward submitCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -218,6 +230,14 @@ public class MobilityAction extends ContextBaseAction {
 		.getActivity();
 	activity.execute(activityInformation);
 	return ProcessManagement.forwardToProcess(personalPortfolioProcess);
+    }
+
+    public ActionForward updatePersonalPortfolioInfo(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final WorkerJobOfferInformation workerJobOfferInformation = getRenderedObject("CreateWorkerJobOffer");
+	workerJobOfferInformation.getActivity().execute(workerJobOfferInformation);
+	WorkerOffer workerOffer = workerJobOfferInformation.getWorkerOffer();
+	return ProcessManagement.forwardToProcess(workerOffer.getWorkerOfferProcess());
     }
 
 }

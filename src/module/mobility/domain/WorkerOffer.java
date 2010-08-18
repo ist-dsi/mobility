@@ -32,12 +32,13 @@ public class WorkerOffer extends WorkerOffer_Base {
     }
 
     @Override
-    protected Person getOwner() {
+    public Person getOwner() {
 	return super.getPersonalPortfolioInfo().getPersonalPortfolio().getPerson();
     }
 
-    public WorkerOfferProcess getOfferProcess() {
-	return super.getWorkerOfferProcess();
+    @Override
+    public OfferProcess getProcess() {
+	return getWorkerOfferProcess();
     }
 
 }

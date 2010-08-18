@@ -18,7 +18,7 @@
 				<fr:property name="key(view)" value="label.mobility.view" />
 				<fr:property name="param(view)" value="OID" />
 				<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
-				<fr:property name="visibleIf(view)" value="canManageJobProcess" />
+				<fr:property name="visibleIf(view)" value="canManageProcess" />
 			</fr:layout>
 			<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
 				<fr:slot name="processIdentification" key="label.mobility.jobOfferProcessIdentification" />

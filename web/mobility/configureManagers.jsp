@@ -17,7 +17,7 @@
 		</fr:slot>
     	<fr:slot name="managementAccountabilityType" layout="menu-select" key="label.accountability.type" bundle="ORGANIZATION_RESOURCES">
         	<fr:property name="providerClass" value="module.organization.presentationTier.renderers.providers.AccountabilityTypesProvider"/>
-        	<fr:property name="eachSchema" value="accountabilityType-name"/>
+        	<fr:property name="eachSchema" value="module.organization.domain.AccountabilityType.name"/>
         	<fr:property name="eachLayout" value="values"/>
         	<fr:property name="classes" value="nobullet noindent"/>
         	<fr:property name="sortBy" value="name"/>

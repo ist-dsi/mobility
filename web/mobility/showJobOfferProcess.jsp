@@ -5,14 +5,12 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/workflow.tld" prefix="wf"%>
 
-<bean:define id="jobOffer" name="process" property="jobOffer"/>
-
 <h2>
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOfferProcessIdentification"/>
-	<span class="processNumber">(<bean:write name="jobOffer" property="jobOfferProcess.processIdentification"/>)</span>	 
+	<span class="processNumber">(<bean:write name="process" property="processIdentification"/>)</span>	 
 </h2>
 
-<jsp:include page="../module/mobility/domain/JobOfferProcess/body.jsp"/>
+<jsp:include page="../module/mobility/domain/JobOfferProcess/jobOfferBody.jsp"/>
 
 
 <bean:define id="OID" name="process" property="OID"/>

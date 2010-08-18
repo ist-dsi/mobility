@@ -7,22 +7,46 @@ import java.util.TreeSet;
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
+import module.mobility.domain.Offer;
+import module.mobility.domain.OfferProcess;
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
-import module.workflow.domain.WorkflowProcess;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
+import myorg.util.BundleUtil;
 
 import org.apache.commons.lang.StringUtils;
 
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+
 public class OfferSearch implements Serializable {
 
-    public enum OfferSearchOwner {
+    public enum OfferSearchOwner implements IPresentableEnum {
 	ALL, MINE, WITH_MY_CANDIDACY;
+
+	public String getQualifiedName() {
+	    return this.getClass().getName() + "." + this.name();
+	}
+
+	@Override
+	public String getLocalizedName() {
+	    return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+	}
+
     }
 
-    public enum OfferSearchState {
+    public enum OfferSearchState implements IPresentableEnum {
 	ALL, ACTIVE, INACTIVE;
+
+	public String getQualifiedName() {
+	    return this.getClass().getName() + "." + this.name();
+	}
+
+	@Override
+	public String getLocalizedName() {
+	    return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+	}
+
     }
 
     private OfferSearchOwner offerSearchOwner;
@@ -60,7 +84,7 @@ public class OfferSearch implements Serializable {
 	setOfferSearchState(OfferSearchState.ALL);
     }
 
-    public WorkflowProcess getOfferProcess(User user) {
+    public OfferProcess getOfferProcess(User user) {
 	if (!StringUtils.isEmpty(getProcessNumber())) {
 	    for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
 		if (jobOffer.getJobOfferProcess().getProcessIdentification().equalsIgnoreCase(getProcessNumber())) {
@@ -120,7 +144,7 @@ public class OfferSearch implements Serializable {
 	return result;
     }
 
-    public Set<JobOfferProcess> doSearch() {
+    public Set<JobOfferProcess> doJobOfferSearch() {
 	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
 	User user = UserView.getCurrentUser();
 	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
@@ -132,20 +156,33 @@ public class OfferSearch implements Serializable {
 	return result;
     }
 
-    private boolean isSatisfiedProcessNumber(JobOffer jobOffer) {
+    public Set<WorkerOfferProcess> doWorkerOfferSearch() {
+	Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
+	User user = UserView.getCurrentUser();
+	for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
+	    if (workerOffer.getWorkerOfferProcess().isAccessible(user) && isSatisfiedOwner(workerOffer, user)
+		    && isSatisfiedState(workerOffer, user) && isSatisfiedProcessNumber(workerOffer)) {
+		result.add(workerOffer.getWorkerOfferProcess());
+	    }
+	}
+	return result;
+    }
+
+    private boolean isSatisfiedProcessNumber(Offer offer) {
 	return StringUtils.isEmpty(getProcessNumber())
-		|| jobOffer.getJobOfferProcess().getProcessIdentification().contains(getProcessNumber());
+		|| offer.getProcess().getProcessIdentification().contains(getProcessNumber());
     }
 
-    private boolean isSatisfiedState(JobOffer jobOffer, User user) {
+    private boolean isSatisfiedState(Offer offer, User user) {
 	return getOfferSearchState().equals(OfferSearchState.ALL)
-		|| (getOfferSearchState().equals(OfferSearchState.ACTIVE) && jobOffer.getJobOfferProcess().isActive())
-		|| (getOfferSearchState().equals(OfferSearchState.INACTIVE) && !jobOffer.getJobOfferProcess().isActive());
+		|| (getOfferSearchState().equals(OfferSearchState.ACTIVE) && offer.isActive())
+		|| (getOfferSearchState().equals(OfferSearchState.INACTIVE) && !offer.isActive());
     }
 
-    private boolean isSatisfiedOwner(JobOffer jobOffer, User user) {
+    private boolean isSatisfiedOwner(Offer offer, User user) {
 	return getOfferSearchOwner().equals(OfferSearchOwner.ALL)
-		|| (getOfferSearchOwner().equals(OfferSearchOwner.MINE) && jobOffer.getCreator().equals(user.getPerson()))
-		|| (getOfferSearchOwner().equals(OfferSearchOwner.WITH_MY_CANDIDACY) && jobOffer.hasCandidacy(user));
+		|| (getOfferSearchOwner().equals(OfferSearchOwner.MINE) && offer.getOwner().equals(user.getPerson()))
+		|| (offer instanceof JobOffer && getOfferSearchOwner().equals(OfferSearchOwner.WITH_MY_CANDIDACY) && ((JobOffer) offer)
+			.hasCandidacy(user));
     }
 }
