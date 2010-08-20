@@ -1,10 +1,15 @@
 package module.mobility.domain;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import module.organization.domain.Person;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 
 import org.joda.time.DateTime;
+
+import pt.ist.emailNotifier.domain.Email;
 
 public class Offer extends Offer_Base implements Comparable<Offer> {
 

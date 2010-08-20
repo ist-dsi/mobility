@@ -50,6 +50,7 @@ class JobOfferProcess extends OfferProcess {
 }
 
 class PersonalPortfolio {
+	Boolean notificationService;
 }
 
 class PersonalPortfolioInfo {

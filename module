@@ -1,2 +1,2 @@
 name=mobility
-depends=core,organization-ist,workflow-module
+depends=core,organization-ist,workflow-module,email-module

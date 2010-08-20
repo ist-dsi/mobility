@@ -1,5 +1,6 @@
 package module.mobility.domain;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -93,5 +94,15 @@ public class MobilitySystem extends MobilitySystem_Base {
 	    }
 	}
 	return null;
+    }
+
+    public Collection<String> getServiceNotificationEmails() {
+	Collection<String> emails = new HashSet<String>();
+	for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
+	    if (personalPortfolio.getNotificationService()) {
+		emails.add(personalPortfolio.getEmail());
+	    }
+	}
+	return emails;
     }
 }

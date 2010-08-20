@@ -1,19 +1,26 @@
 package module.mobility.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import module.organization.domain.AccountabilityType;
+import module.organization.domain.Party;
 import module.organization.domain.Person;
+import module.organizationIst.domain.IstAccountabilityType;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonalPortfolio extends PersonalPortfolio_Base {
-    
+
     public PersonalPortfolio(final Person person) {
-        super();
-        setMobilitySystem(MobilitySystem.getInstance());
-        setPerson(person);
-        new PersonalPortfolioProcess(this);
+	super();
+	setMobilitySystem(MobilitySystem.getInstance());
+	setPerson(person);
+	setNotificationService(Boolean.FALSE);
+	new PersonalPortfolioProcess(this);
     }
 
     @Service
@@ -44,4 +51,22 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 	personalPortfolioInfo.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
     }
 
+    public String getEmail() {
+	// final RemotePerson remotePerson = getPerson().getRemotePerson();
+	return getPerson().getUser().getUsername().equals("ist24439") ? "susana.fernandes@ist.utl.pt" : null;// remotePerson
+	// ==
+	// null
+	// ?
+	// null
+	// :
+	// remotePerson.getEmailForSendingEmails();
+    }
+
+    public Collection<Party> getWorkingPlaces() {
+	List<AccountabilityType> accountabilityTypes = new ArrayList<AccountabilityType>();
+	accountabilityTypes.add(IstAccountabilityType.PERSONNEL.readAccountabilityType());
+	accountabilityTypes.add(IstAccountabilityType.TEACHING_PERSONNEL.readAccountabilityType());
+	accountabilityTypes.add(IstAccountabilityType.RESEARCH_PERSONNEL.readAccountabilityType());
+	return getPerson().getParents(accountabilityTypes);
+    }
 }

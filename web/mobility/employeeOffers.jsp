@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean"%>
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
-<%@ taglib uri="/WEB-INF/workflow.tld" prefix="wf"%>
 
 <h2>
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.employeeOffers"/>

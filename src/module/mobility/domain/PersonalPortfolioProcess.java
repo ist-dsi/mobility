@@ -6,6 +6,8 @@ import java.util.List;
 
 import module.mobility.domain.activity.CreateWorkerJobOffer;
 import module.mobility.domain.activity.DefineNewPersonalPortfolioInfo;
+import module.mobility.domain.activity.DisableNotificationServiceActivity;
+import module.mobility.domain.activity.EnableNotificationServiceActivity;
 import module.mobility.domain.activity.UpdatePersonalPortfolioInfo;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
@@ -22,12 +24,14 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
 	activitiesAux.add(new DefineNewPersonalPortfolioInfo());
 	activitiesAux.add(new UpdatePersonalPortfolioInfo());
 	activitiesAux.add(new CreateWorkerJobOffer());
+	activitiesAux.add(new EnableNotificationServiceActivity());
+	activitiesAux.add(new DisableNotificationServiceActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
     }
 
     public PersonalPortfolioProcess(final PersonalPortfolio personalPortfolio) {
-        super();
-        setPersonalPortfolio(personalPortfolio);
+	super();
+	setPersonalPortfolio(personalPortfolio);
     }
 
     @Override
@@ -59,7 +63,7 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
     public List<Class<? extends ProcessFile>> getAvailableFileTypes() {
 	final List<Class<? extends ProcessFile>> list = super.getAvailableFileTypes();
 	list.add(0, PersonalPortfolioCurriculum.class);
-        return list;
+	return list;
     }
 
 }

@@ -1,5 +1,6 @@
 package module.mobility.domain;
 
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 import module.mobility.domain.util.JobOfferBean;
@@ -8,9 +9,11 @@ import module.workflow.domain.LabelLog;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 import myorg.domain.exceptions.DomainException;
+import myorg.util.BundleUtil;
 
 import org.joda.time.DateTime;
 
+import pt.ist.emailNotifier.domain.Email;
 import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class JobOffer extends JobOffer_Base {
@@ -101,5 +104,18 @@ public class JobOffer extends JobOffer_Base {
     @Override
     public OfferProcess getProcess() {
 	return getJobOfferProcess();
+    }
+
+    @Override
+    public void approve() {
+	super.approve();
+	String fromName = BundleUtil.getStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailFromName");
+	String emailSubject = BundleUtil
+		.getStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject");
+	String messageBody = BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES,
+		"message.mobility.jobOffer.emailBody", getTitle().getContent(Language.getLanguage()), getProcess()
+			.getProcessIdentification());
+	new Email(fromName, "noreply@ist.utl.pt", new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST, MobilitySystem
+		.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
     }
 }
