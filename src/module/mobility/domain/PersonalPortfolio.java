@@ -11,6 +11,7 @@ import module.organization.domain.AccountabilityType;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
 import module.organizationIst.domain.IstAccountabilityType;
+import net.sourceforge.fenixedu.domain.RemotePerson;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonalPortfolio extends PersonalPortfolio_Base {
@@ -52,14 +53,8 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     public String getEmail() {
-	// final RemotePerson remotePerson = getPerson().getRemotePerson();
-	return getPerson().getUser().getUsername().equals("ist24439") ? "susana.fernandes@ist.utl.pt" : null;// remotePerson
-	// ==
-	// null
-	// ?
-	// null
-	// :
-	// remotePerson.getEmailForSendingEmails();
+	final RemotePerson remotePerson = getPerson().getRemotePerson();
+	return remotePerson == null ? null : remotePerson.getEmailForSendingEmails();
     }
 
     public Collection<Party> getWorkingPlaces() {
