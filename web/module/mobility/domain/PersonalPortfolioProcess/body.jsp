@@ -52,7 +52,18 @@
 						<td style="border: none;">
 							<br/>
 							<br/>
-							Place more information here... (email, phone, address, ...).
+							<fr:view name="personalPortfolio" >
+								<fr:schema type="module.mobility.domain.PersonalPortfolio" bundle="MOBILITY_RESOURCES">
+									<fr:slot name="email" key="label.mobility.email"/>
+									<fr:slot name="workingPlaces" key="label.mobility.workingPlace" layout="tabular-list">
+										<fr:property name="subLayout" value="values-with-br" />
+										<fr:property name="subSchema" value="module.organization.domain.Party.view.presentationName" />
+									</fr:slot>
+								</fr:schema>
+								<fr:layout>
+									<fr:property name="classes" value="mvert05 thleft"/>
+								</fr:layout>
+							</fr:view>
 						</td>
 					</tr>
 				</table>
