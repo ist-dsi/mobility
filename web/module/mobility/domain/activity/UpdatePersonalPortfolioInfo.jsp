@@ -30,9 +30,6 @@
 				<fr:slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="60" />
 				</fr:slot>
-				<fr:slot name="salary" key="label.mobility.salary" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="size" value="20" />
-				</fr:slot>
 			</fr:schema>
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="form listInsideClear" />

@@ -21,7 +21,6 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
 
     private Boolean displayCarrer = Boolean.FALSE;
     private Boolean displayCategory = Boolean.FALSE;
-    private Boolean displaySalary = Boolean.FALSE;
 
     private Boolean displayQualifications = Boolean.FALSE;
     private Boolean displayCurriculum = Boolean.FALSE;
@@ -92,14 +91,6 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
 
     public void setDisplayCategory(Boolean displayCategory) {
 	this.displayCategory = displayCategory;
-    }
-
-    public Boolean getDisplaySalary() {
-	return displaySalary;
-    }
-
-    public void setDisplaySalary(Boolean displaySalary) {
-	this.displaySalary = displaySalary;
     }
 
     public Boolean getDisplayPhoto() {

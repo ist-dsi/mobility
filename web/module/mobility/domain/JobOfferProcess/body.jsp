@@ -5,5 +5,5 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/workflow.tld" prefix="wf"%>
 
-<jsp:include page="../processStageView.jsp"/>
+<jsp:include page="processStageView.jsp"/>
 <jsp:include page="jobOfferBody.jsp"/>

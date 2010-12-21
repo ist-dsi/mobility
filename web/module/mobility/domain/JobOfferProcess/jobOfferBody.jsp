@@ -12,15 +12,13 @@
 		<fr:schema type="module.mobility.domain.JobOffer" bundle="MOBILITY_RESOURCES">
 			<fr:slot name="jobOfferProcess.processIdentification" key="label.mobility.jobOfferProcessIdentification"/>
 			<fr:slot name="mobilityYear.year" key="label.mobility.year"/>
-			<fr:slot name="beginDate" key="label.mobility.beginDate"/>
-			<fr:slot name="endDate" key="label.mobility.endDate"/>
+			<fr:slot name="vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber"/>
 			<fr:slot name="title" key="label.mobility.jobOffer.title"/>
 			<fr:slot name="jobProfile" key="label.mobility.jobOffer.jobProfile" />
 			<fr:slot name="knowledgeRequirements" key="label.mobility.jobOffer.knowledgeRequirements" />
 			<fr:slot name="skillRequirements" key="label.mobility.jobOffer.skillRequirements" />
 			<fr:slot name="careerRequirements" key="label.mobility.jobOffer.careerRequirements" />
 			<fr:slot name="categoryRequirements" key="label.mobility.jobOffer.categoryRequirements" />
-			<fr:slot name="salaryPositionRequirements" key="label.mobility.jobOffer.salaryPositionRequirements" />
 			<fr:slot name="qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" />
 			<fr:slot name="formationRequirements" key="label.mobility.jobOffer.formationRequirements" />
 			<fr:slot name="professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" />

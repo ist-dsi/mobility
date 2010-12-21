@@ -13,7 +13,7 @@ public class SubmitJobOfferForApprovalActivity extends WorkflowActivity<JobOffer
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isUnderConstruction(user);
+	return jobOffer.isPendingJuryDefinition() && jobOffer.hasJuryDefined() && jobOffer.getOwner().equals(user.getPerson());
     }
 
     @Override

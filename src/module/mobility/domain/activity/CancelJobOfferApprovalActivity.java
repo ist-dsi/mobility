@@ -17,7 +17,7 @@ public class CancelJobOfferApprovalActivity extends WorkflowActivity<JobOfferPro
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
 	activityInformation.getProcess().getJobOffer().setApprovalDate(null);
-	activityInformation.getProcess().getJobOffer().setApprover(null);
+	activityInformation.getProcess().getJobOffer().setJobOfferApprover(null);
     }
 
     @Override

@@ -12,7 +12,8 @@ public class UpdatePersonalPortfolioInfo extends WorkflowActivity<PersonalPortfo
 
     @Override
     public boolean isActive(final PersonalPortfolioProcess process, final User user) {
-	return user == process.getPersonalPortfolio().getPerson().getUser() && process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
+	return user == process.getPersonalPortfolio().getPerson().getUser()
+		&& process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
     }
 
     @Override
@@ -21,10 +22,12 @@ public class UpdatePersonalPortfolioInfo extends WorkflowActivity<PersonalPortfo
 	final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
 	PersonalPortfolioInfo personalPortfolioInfo = personalPortfolio.getLastPersonalPortfolioInfo();
 	if (personalPortfolioInfo.canBeUpdated()) {
-	    personalPortfolioInfo.edit(information.getCarrer(), information.getCategory(), information.getSalary());
+	    personalPortfolioInfo.edit(information.getCarrer(), information.getCategory());
 	} else {
-	    final PersonalPortfolioCurriculum personalPortfolioCurriculum = personalPortfolioInfo.getPersonalPortfolioCurriculum();
-	    personalPortfolioInfo = new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory(), information.getSalary());
+	    final PersonalPortfolioCurriculum personalPortfolioCurriculum = personalPortfolioInfo
+		    .getPersonalPortfolioCurriculum();
+	    personalPortfolioInfo = new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(),
+		    information.getCategory());
 	    personalPortfolioInfo.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
 	}
 	information.updateQualifications(personalPortfolioInfo);

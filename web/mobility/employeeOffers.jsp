@@ -59,7 +59,6 @@
 			<fr:slot name="workerOffer.approvalDate" key="label.mobility.approvalDate" layout="null-as-label"/>
 			<fr:slot name="workerOffer.personalPortfolioInfo.carrer" key="label.mobility.carrer" />
 			<fr:slot name="workerOffer.personalPortfolioInfo.category" key="label.mobility.category" />
-			<fr:slot name="workerOffer.personalPortfolioInfo.salary" key="label.mobility.salary" />
 		</fr:schema>
 	</fr:view>
 </logic:notEmpty>

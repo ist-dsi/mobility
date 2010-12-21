@@ -1,14 +1,13 @@
 package module.mobility.domain;
 
-
-valueType myorg.domain.util.Money as Money {
-    externalizeWith {
-        String exportAsString();
-    }
-
-    internalizeWith importFromString();
+valueType java.util.EnumSet as EnumSet {
+	externalizeWith {
+		String module.mobility.domain.EnumSetConverter.externalize();
+	}
+	internalizeWith module.mobility.domain.EnumSetConverter.internalize();
 }
 
+enum CareerType as CareerType;
 
 class MobilitySystem {
 }
@@ -18,35 +17,42 @@ class groups.MobilityGroup extends .myorg.domain.groups.PersistentGroup {
 	
 class MobilityYear {
 	Integer year;
-	Integer counter;
+	Integer jobOfferCounter;
+	Integer workerOfferCounter;
 }
 
-class Offer {
-	DateTime beginDate;
-	DateTime endDate;
+class JobOffer{
 	DateTime creationDate;
+	Boolean canceled;
+	DateTime submittedForSelectionDate;
+	DateTime submittedForEvaluationDate;
+	DateTime conclusionDate;
+	DateTime arquivedDate;
+	DateTime submittedForJuryDefinitionDate;
 	DateTime submittedForApprovalDate;
 	DateTime approvalDate;
-	Boolean canceled;	
+	DateTime publicationBeginDate;
+	DateTime publicationEndDate;
+	String title;
+	String jobProfile;
+	String knowledgeRequirements;
+	String skillRequirements;
+	EnumSet<CareerType> careerRequirements;
+	String categoryRequirements;
+	String qualificationRequirements;
+	String formationRequirements;
+	String professionalExperienceRequirements;
+	Integer vacanciesNumber;
 }
 
-class JobOffer extends Offer {
-	MultiLanguageString title;
-	MultiLanguageString jobProfile;
-	MultiLanguageString knowledgeRequirements;
-	MultiLanguageString skillRequirements;
-	MultiLanguageString careerRequirements;
-	MultiLanguageString categoryRequirements;
-	MultiLanguageString salaryPositionRequirements;
-	MultiLanguageString qualificationRequirements;
-	MultiLanguageString formationRequirements;
-	MultiLanguageString professionalExperienceRequirements;
+class Minutes extends .module.workflow.domain.ProcessFile {
 }
 
-class OfferProcess extends .module.workflow.domain.WorkflowProcess {
+class JuryMember {
+	Boolean juryPresident;
 }
 
-class JobOfferProcess extends OfferProcess {
+class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
 class PersonalPortfolio {
@@ -56,9 +62,8 @@ class PersonalPortfolio {
 class PersonalPortfolioInfo {
 	DateTime creationDate;
 	DateTime modificationDate;
-	MultiLanguageString carrer;
-	MultiLanguageString category;
-	Money salary;
+	String carrer;
+	String category;
 }
 
 class PersonalPortfolioCurriculum extends .module.workflow.domain.ProcessFile {
@@ -75,18 +80,23 @@ class PersonalPortfolioInfoQualification {
 class PersonalPortfolioProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
-class WorkerOffer extends Offer {
+class WorkerOffer {
+	DateTime beginDate;
+	DateTime endDate;
+	DateTime creationDate;
+	DateTime submittedForApprovalDate;
+	DateTime approvalDate;
+	Boolean canceled;
 	Boolean displayPhoto;
 	Boolean displayName;
 	Boolean displayDateOfBirth;
 	Boolean displayCarrer;
 	Boolean displayCategory;
-	Boolean displaySalary;
 	Boolean displayQualifications;
 	Boolean displayCurriculum;
 }
 
-class WorkerOfferProcess extends OfferProcess {
+class WorkerOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
 
@@ -116,9 +126,35 @@ relation JobOfferRequestor {
 	}
 }
 
-relation OfferApprover {
-	.module.organization.domain.Accountability playsRole approver;
-	Offer playsRole offer {
+relation JobOfferJuryMember {
+	JuryMember playsRole juryMember{
+		multiplicity *;
+	}
+	JobOffer playsRole jobOffer;
+}
+
+relation JuryMemberPerson {
+	.module.organization.domain.Person playsRole person;
+	JuryMember playsRole juryMember{
+		multiplicity *;
+	}
+}
+
+relation JobOfferMinutes {
+	JobOffer playsRole jobOffer;
+	Minutes playsRole minutes;
+}
+
+relation JobOfferApprover {
+	.module.organization.domain.Accountability playsRole jobOfferApprover;
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
+}
+
+relation WorkerOfferApprover {
+	.module.organization.domain.Accountability playsRole workerOfferApprover;
+	WorkerOffer playsRole workerOffer {
 		multiplicity *;
 	}
 }
@@ -128,9 +164,16 @@ relation JobOfferProcessJobOffer {
 	JobOffer playsRole jobOffer;
 }
 
-relation MobilityYearOffer {
+relation MobilityYearJobOffer {
 	MobilityYear playsRole mobilityYear;
-	Offer playsRole offer {
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
+}
+
+relation MobilityYearWorkerOffer {
+	MobilityYear playsRole mobilityYear;
+	WorkerOffer playsRole workerOffer {
 		multiplicity *;
 	}
 }
@@ -200,6 +243,24 @@ relation JobOfferPersonalPortfolioInfo {
 		multiplicity *;
 	}
 	PersonalPortfolioInfo playsRole candidatePortfolioInfo{
+		multiplicity *;
+	}
+}
+
+relation JobOfferWorkerOffer {
+	JobOffer playsRole selectedJobOffer{
+		multiplicity *;
+	}
+	WorkerOffer playsRole candidateWorkerOffer{
+		multiplicity *;
+	}
+}
+
+relation JobOfferSelectedWorkerOffer {
+	JobOffer playsRole jobOffer{
+		multiplicity *;
+	}
+	WorkerOffer playsRole selectedWorkerOffer{
 		multiplicity *;
 	}
 }

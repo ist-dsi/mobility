@@ -1,48 +1,48 @@
 package module.mobility.domain.util;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
+import module.mobility.domain.CareerType;
 import module.mobility.domain.JobOffer;
-
-import org.joda.time.DateTime;
-
 import pt.ist.fenixWebFramework.services.Service;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class JobOfferBean implements Serializable {
 
     private int year = Calendar.getInstance().get(Calendar.YEAR);
-    private DateTime beginDate;
-    private DateTime endDate;
-    private MultiLanguageString title;
-    private MultiLanguageString jobProfile;
-    private MultiLanguageString knowledgeRequirements;
-    private MultiLanguageString skillRequirements;
-    private MultiLanguageString careerRequirements;
-    private MultiLanguageString categoryRequirements;
-    private MultiLanguageString salaryPositionRequirements;
-    private MultiLanguageString qualificationRequirements;
-    private MultiLanguageString formationRequirements;
-    private MultiLanguageString professionalExperienceRequirements;
+    private String title;
+    private String jobProfile;
+    private String knowledgeRequirements;
+    private String skillRequirements;
+    private List<CareerType> careerRequirements;
+    private String categoryRequirements;
+    private String qualificationRequirements;
+    private String formationRequirements;
+    private String professionalExperienceRequirements;
+    private Integer vacanciesNumber;
 
     public JobOfferBean() {
     }
 
     public JobOfferBean(JobOffer jobOffer) {
 	setYear(jobOffer.getMobilityYear().getYear());
-	setBeginDate(jobOffer.getBeginDate());
-	setEndDate(jobOffer.getEndDate());
 	setTitle(jobOffer.getTitle());
 	setJobProfile(jobOffer.getJobProfile());
 	setKnowledgeRequirements(jobOffer.getKnowledgeRequirements());
 	setSkillRequirements(jobOffer.getSkillRequirements());
-	setCareerRequirements(jobOffer.getCareerRequirements());
+	List<CareerType> careerList = new ArrayList<CareerType>();
+	if (jobOffer.getCareerRequirements() != null) {
+	    careerList = Arrays.asList(jobOffer.getCareerRequirements().toArray(new CareerType[] {}));
+	}
+	setCareerRequirements(careerList);
 	setCategoryRequirements(jobOffer.getCategoryRequirements());
-	setSalaryPositionRequirements(jobOffer.getSalaryPositionRequirements());
 	setQualificationRequirements(jobOffer.getQualificationRequirements());
 	setFormationRequirements(jobOffer.getFormationRequirements());
 	setProfessionalExperienceRequirements(jobOffer.getProfessionalExperienceRequirements());
+	setVacanciesNumber(jobOffer.getVacanciesNumber());
     }
 
     @Service
@@ -50,27 +50,11 @@ public class JobOfferBean implements Serializable {
 	return new JobOffer(this);
     }
 
-    public DateTime getBeginDate() {
-	return beginDate;
-    }
-
-    public void setBeginDate(DateTime beginDate) {
-	this.beginDate = beginDate;
-    }
-
-    public DateTime getEndDate() {
-	return endDate;
-    }
-
-    public void setEndDate(DateTime endDate) {
-	this.endDate = endDate;
-    }
-
-    public MultiLanguageString getTitle() {
+    public String getTitle() {
 	return title;
     }
 
-    public void setTitle(MultiLanguageString title) {
+    public void setTitle(String title) {
 	this.title = title;
     }
 
@@ -82,76 +66,76 @@ public class JobOfferBean implements Serializable {
 	this.year = year;
     }
 
-    public MultiLanguageString getJobProfile() {
+    public String getJobProfile() {
 	return jobProfile;
     }
 
-    public void setJobProfile(MultiLanguageString jobProfile) {
+    public void setJobProfile(String jobProfile) {
 	this.jobProfile = jobProfile;
     }
 
-    public MultiLanguageString getKnowledgeRequirements() {
+    public String getKnowledgeRequirements() {
 	return knowledgeRequirements;
     }
 
-    public void setKnowledgeRequirements(MultiLanguageString knowledgeRequirements) {
+    public void setKnowledgeRequirements(String knowledgeRequirements) {
 	this.knowledgeRequirements = knowledgeRequirements;
     }
 
-    public MultiLanguageString getSkillRequirements() {
+    public String getSkillRequirements() {
 	return skillRequirements;
     }
 
-    public void setSkillRequirements(MultiLanguageString skillRequirements) {
+    public void setSkillRequirements(String skillRequirements) {
 	this.skillRequirements = skillRequirements;
     }
 
-    public MultiLanguageString getCareerRequirements() {
+    public List<CareerType> getCareerRequirements() {
 	return careerRequirements;
     }
 
-    public void setCareerRequirements(MultiLanguageString careerRequirements) {
+    public void setCareerRequirements(List<CareerType> careerRequirements) {
 	this.careerRequirements = careerRequirements;
     }
 
-    public MultiLanguageString getCategoryRequirements() {
+    public String getCategoryRequirements() {
 	return categoryRequirements;
     }
 
-    public void setCategoryRequirements(MultiLanguageString categoryRequirements) {
+    public void setCategoryRequirements(String categoryRequirements) {
 	this.categoryRequirements = categoryRequirements;
     }
 
-    public MultiLanguageString getSalaryPositionRequirements() {
-	return salaryPositionRequirements;
-    }
-
-    public void setSalaryPositionRequirements(MultiLanguageString salaryPositionRequirements) {
-	this.salaryPositionRequirements = salaryPositionRequirements;
-    }
-
-    public MultiLanguageString getQualificationRequirements() {
+    public String getQualificationRequirements() {
 	return qualificationRequirements;
     }
 
-    public void setQualificationRequirements(MultiLanguageString qualificationRequirements) {
+    public void setQualificationRequirements(String qualificationRequirements) {
 	this.qualificationRequirements = qualificationRequirements;
     }
 
-    public MultiLanguageString getFormationRequirements() {
+    public String getFormationRequirements() {
 	return formationRequirements;
     }
 
-    public void setFormationRequirements(MultiLanguageString formationRequirements) {
+    public void setFormationRequirements(String formationRequirements) {
 	this.formationRequirements = formationRequirements;
     }
 
-    public MultiLanguageString getProfessionalExperienceRequirements() {
+    public String getProfessionalExperienceRequirements() {
 	return professionalExperienceRequirements;
     }
 
-    public void setProfessionalExperienceRequirements(MultiLanguageString professionalExperienceRequirements) {
+    public void setProfessionalExperienceRequirements(String professionalExperienceRequirements) {
 	this.professionalExperienceRequirements = professionalExperienceRequirements;
+    }
+
+    public Integer getVacanciesNumber() {
+	return vacanciesNumber;
+    }
+
+    public void setVacanciesNumber(Integer vacanciesNumber) {
+	this.vacanciesNumber = vacanciesNumber;
     }
 
 }

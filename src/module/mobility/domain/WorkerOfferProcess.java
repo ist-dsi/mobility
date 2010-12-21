@@ -13,13 +13,16 @@ import module.mobility.domain.activity.EditWorkerJobOffer;
 import module.mobility.domain.activity.SubmitWorkerJobOfferForApprovalActivity;
 import module.mobility.domain.activity.UpdateWorkerJobOfferProfessionalInformation;
 import module.mobility.domain.activity.WorkerJobOfferApprovalActivity;
+import module.mobility.domain.util.MobilityWorkerOfferProcessStageView;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
+import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 
-public class WorkerOfferProcess extends WorkerOfferProcess_Base {
+public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Comparable<WorkerOfferProcess> {
 
+    private static final String WORKER_OFFER_SIGLA = "PRO";
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
 
     static {
@@ -37,10 +40,9 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base {
     public WorkerOfferProcess(final WorkerOffer workerOffer) {
 	super();
 	setWorkerOffer(workerOffer);
-	setProcessNumber(workerOffer.getMobilityYear().nextNumber().toString());
+	setProcessNumber(workerOffer.getMobilityYear().nextWorkerOfferNumber().toString());
     }
 
-    @Override
     protected MobilityYear getMobilityYear() {
 	return getWorkerOffer().getMobilityYear();
     }
@@ -65,8 +67,41 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base {
 	return processes;
     }
 
-    @Override
-    protected Offer getOffer() {
-	return getWorkerOffer();
+    public boolean isActive() {
+	return getWorkerOffer().isActive();
     }
+
+    @Override
+    public void notifyUserDueToComment(User user, String comment) {
+	// TODO Auto-generated method stub
+    }
+
+    @Override
+    public boolean isAccessible(User user) {
+	return getProcessCreator().equals(user) || (getWorkerOffer().isApproved() && isActive())
+		|| (MobilitySystem.getInstance().isManagementMember(user) && !getWorkerOffer().isUnderConstruction());
+    }
+
+    public int compareTo(WorkerOfferProcess otherOfferProcess) {
+	return getWorkerOffer().compareTo(otherOfferProcess.getWorkerOffer());
+    }
+
+    public String getProcessIdentification() {
+	return WORKER_OFFER_SIGLA + getMobilityYear().getYear() + "/" + getProcessNumber();
+    }
+
+    public MobilityWorkerOfferProcessStageView getMobilityProcessStageView() {
+	return new MobilityWorkerOfferProcessStageView(getWorkerOffer());
+    }
+
+    public boolean getCanManageProcess() {
+	final User user = UserView.getCurrentUser();
+	return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
+    }
+
+    @Override
+    public boolean isTicketSupportAvailable() {
+	return false;
+    }
+
 }

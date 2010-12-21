@@ -3,18 +3,21 @@ package module.mobility.presentationTier.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
+import module.mobility.domain.JuryMember;
 import module.mobility.domain.MobilitySystem;
-import module.mobility.domain.OfferProcess;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
+import module.mobility.domain.activity.JobOfferJuryDefinitionActivity;
+import module.mobility.domain.activity.JobOfferJuryInformation;
 import module.mobility.domain.activity.PersonalPortfolioInfoInformation;
+import module.mobility.domain.activity.PersonalPortfolioInfoInformation.QualificationHolder;
 import module.mobility.domain.activity.SubmitCandidacyActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.activity.WorkerJobOfferInformation;
-import module.mobility.domain.activity.PersonalPortfolioInfoInformation.QualificationHolder;
 import module.mobility.domain.util.JobOfferBean;
 import module.mobility.domain.util.OfferSearch;
 import module.organization.domain.Person;
@@ -43,7 +46,7 @@ public class MobilityAction extends ContextBaseAction {
 	if (offerSearch == null) {
 	    offerSearch = new OfferSearch();
 	}
-	OfferProcess process = offerSearch.getOfferProcess(UserView.getCurrentUser());
+	JobOfferProcess process = offerSearch.getJobOfferProcess(UserView.getCurrentUser());
 	if (process != null) {
 	    return ProcessManagement.forwardToProcess(process);
 	}
@@ -85,8 +88,8 @@ public class MobilityAction extends ContextBaseAction {
     public ActionForward createJobOffer(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	JobOfferBean jobOfferBean = getRenderedObject();
-	jobOfferBean.create();
-	return jobOffers(mapping, form, request, response);
+	JobOffer jobOffer = jobOfferBean.create();
+	return ProcessManagement.forwardToProcess(jobOffer.getJobOfferProcess());
     }
 
     public ActionForward viewJobOfferProcessToManage(final ActionMapping mapping, final ActionForm form,
@@ -240,4 +243,62 @@ public class MobilityAction extends ContextBaseAction {
 	return ProcessManagement.forwardToProcess(workerOffer.getWorkerOfferProcess());
     }
 
+    public ActionForward addPersonToJobOfferJury(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final JobOfferJuryInformation jobOfferJuryInformation = getRenderedObject();
+	jobOfferJuryInformation.addJuryMember();
+	return jobOfferJuryInfoPostback(request, jobOfferJuryInformation);
+    }
+
+    public ActionForward removePersonToJobOfferJury(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final JuryMember juryMember = getDomainObject(request, "OID");
+	JobOfferJuryDefinitionActivity jobOfferJuryDefinitionActivity = new JobOfferJuryDefinitionActivity();
+	JobOfferProcess jobOfferProcess = juryMember.getJobOffer().getJobOfferProcess();
+	if (jobOfferJuryDefinitionActivity.isActive(jobOfferProcess)) {
+	    JobOfferJuryInformation jobOfferJuryInformation = (JobOfferJuryInformation) jobOfferJuryDefinitionActivity
+		    .getActivityInformation(jobOfferProcess);
+	    jobOfferJuryInformation.removeJuryMember(juryMember);
+	    return jobOfferJuryInfoPostback(request, jobOfferJuryInformation);
+	}
+	return ProcessManagement.forwardToProcess(jobOfferProcess);
+    }
+
+    public ActionForward setJuryPresident(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	final JuryMember juryMember = getDomainObject(request, "OID");
+	JobOfferJuryDefinitionActivity jobOfferJuryDefinitionActivity = new JobOfferJuryDefinitionActivity();
+	JobOfferProcess jobOfferProcess = juryMember.getJobOffer().getJobOfferProcess();
+	if (jobOfferJuryDefinitionActivity.isActive(jobOfferProcess)) {
+	    JobOfferJuryInformation jobOfferJuryInformation = (JobOfferJuryInformation) jobOfferJuryDefinitionActivity
+		    .getActivityInformation(jobOfferProcess);
+	    jobOfferJuryInformation.setJuryPresident(juryMember);
+	    return jobOfferJuryInfoPostback(request, jobOfferJuryInformation);
+	}
+	return ProcessManagement.forwardToProcess(jobOfferProcess);
+    }
+
+    public ActionForward removeJuryPresident(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final JuryMember juryMember = getDomainObject(request, "OID");
+	JobOfferJuryDefinitionActivity jobOfferJuryDefinitionActivity = new JobOfferJuryDefinitionActivity();
+	JobOfferProcess jobOfferProcess = juryMember.getJobOffer().getJobOfferProcess();
+	if (jobOfferJuryDefinitionActivity.isActive(jobOfferProcess)) {
+	    JobOfferJuryInformation jobOfferJuryInformation = (JobOfferJuryInformation) jobOfferJuryDefinitionActivity
+		    .getActivityInformation(jobOfferProcess);
+	    jobOfferJuryInformation.removeJuryPresident(juryMember);
+	    return jobOfferJuryInfoPostback(request, jobOfferJuryInformation);
+	}
+	return ProcessManagement.forwardToProcess(jobOfferProcess);
+    }
+
+    private ActionForward jobOfferJuryInfoPostback(final HttpServletRequest request,
+	    final JobOfferJuryInformation jobOfferJuryInformation) {
+	final Context context = getContext(request);
+	final WorkflowLayoutContext workflowLayoutContext = jobOfferJuryInformation.getProcess().getLayout();
+	workflowLayoutContext.setElements(context.getPath());
+	setContext(request, workflowLayoutContext);
+
+	return ProcessManagement.performActivityPostback(jobOfferJuryInformation, request);
+    }
 }

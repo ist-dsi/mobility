@@ -7,7 +7,7 @@ import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import myorg.domain.User;
 
-public class JobOfferApprovalActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
+public class JobOfferApprovalActivity extends WorkflowActivity<JobOfferProcess, JobOfferApprovalInformation> {
 
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
@@ -16,13 +16,14 @@ public class JobOfferApprovalActivity extends WorkflowActivity<JobOfferProcess, 
     }
 
     @Override
-    protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-	activityInformation.getProcess().getJobOffer().approve();
+    protected void process(JobOfferApprovalInformation activityInformation) {
+	activityInformation.getProcess().getJobOffer()
+		.approve(activityInformation.getPublicationBeginDate(), activityInformation.getPublicationEndDate());
     }
 
     @Override
     public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-	return new ActivityInformation(process, this);
+	return new JobOfferApprovalInformation(process, this);
     }
 
     @Override

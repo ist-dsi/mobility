@@ -54,7 +54,7 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 
     public String getEmail() {
 	final RemotePerson remotePerson = getPerson().getRemotePerson();
-	return remotePerson == null ? null : remotePerson.getEmailForSendingEmails();
+	return remotePerson == null ? "" : remotePerson.getEmailForSendingEmails();
     }
 
     public Collection<Party> getWorkingPlaces() {
@@ -63,5 +63,14 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 	accountabilityTypes.add(IstAccountabilityType.TEACHING_PERSONNEL.readAccountabilityType());
 	accountabilityTypes.add(IstAccountabilityType.RESEARCH_PERSONNEL.readAccountabilityType());
 	return getPerson().getParents(accountabilityTypes);
+    }
+
+    public boolean hasAnyActiveWorkerOffer() {
+	for (WorkerOffer workerOffer : getWorkerOffer()) {
+	    if (workerOffer.isActive()) {
+		return true;
+	    }
+	}
+	return false;
     }
 }

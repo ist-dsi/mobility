@@ -22,6 +22,5 @@
 		<fr:slot name="personalPortfolio.person.name" key="label.name" bundle="ORGANIZATION_RESOURCES"/>
 		<fr:slot name="carrer" key="label.mobility.carrer" />
 		<fr:slot name="category" key="label.mobility.category" />
-		<fr:slot name="salary" key="label.mobility.salary" />
 	</fr:schema>
 </fr:view>

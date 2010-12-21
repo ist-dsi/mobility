@@ -13,14 +13,15 @@ public class SubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess, A
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isApproved() && jobOffer.getHasAllNeededInfoForSubmitCancidacy() && !jobOffer.hasCandidacy(user);
+	return jobOffer.isApproved() && jobOffer.isInCandidacyEvaluationPeriod()
+		&& jobOffer.getHasAllNeededInfoForSubmitCancidacy() && !jobOffer.hasCandidacy(user);
     }
 
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
 	Person person = UserView.getCurrentUser().getPerson();
-	activityInformation.getProcess().getJobOffer().getCandidatePortfolioInfo().add(
-		person.getPersonalPortfolio().getLastPersonalPortfolioInfo());
+	activityInformation.getProcess().getJobOffer().getCandidatePortfolioInfo()
+		.add(person.getPersonalPortfolio().getLastPersonalPortfolioInfo());
     }
 
     @Override

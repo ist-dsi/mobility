@@ -1,73 +1,72 @@
 <schema name="activityInformation.EditJobOfferActivity" type="module.mobility.domain.activity.JobOfferInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="jobOfferBean.beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="jobOfferBean.endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="jobOfferBean.title" key="label.mobility.jobOffer.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
+		<property name="size" value="60"/>
 	</slot>
-	<slot name="jobOfferBean.jobProfile" key="label.mobility.jobOffer.jobProfile" layout="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="2"/>
+	</slot>	
+	<slot name="jobOfferBean.jobProfile" key="label.mobility.jobOffer.jobProfile" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.knowledgeRequirements" key="label.mobility.jobOffer.knowledgeRequirements" layout="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.knowledgeRequirements" key="label.mobility.jobOffer.knowledgeRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.skillRequirements" key="label.mobility.jobOffer.skillRequirements" layout="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.skillRequirements" key="label.mobility.jobOffer.skillRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.careerRequirements" key="label.mobility.jobOffer.careerRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
+	<slot name="jobOfferBean.careerRequirements" layout="option-select" key="label.mobility.jobOffer.careerRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
 	</slot>
 	<slot name="jobOfferBean.categoryRequirements" key="label.mobility.jobOffer.categoryRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.salaryPositionRequirements" key="label.mobility.jobOffer.salaryPositionRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="50"/>
-	</slot>
-	<slot name="jobOfferBean.qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" layout="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.formationRequirements" key="label.mobility.jobOffer.formationRequirements" layout="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.formationRequirements" key="label.mobility.jobOffer.formationRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" layout="area" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
+</schema>
+
+<schema name="activityInformation.JobOfferApprovalActivity" type="module.mobility.domain.activity.JobOfferApprovalInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="publicationBeginDate" key="label.mobility.approvalDate" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="publicationEndDate" key="label.mobility.candicaciesDeadline" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="activityInformation.DefineNewPersonalPortfolioInfo" type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="salary" key="label.mobility.salary"  validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 </schema>
 
 <schema name="activityInformation.CreateWorkerJobOffer" type="module.mobility.domain.activity.WorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" read-only="true" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
 	<slot name="displayPhoto" key="label.mobility.workerJobOffer.displayPhoto"/>
 	<slot name="displayName" key="label.mobility.workerJobOffer.displayName"/>
 	<slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
 	<slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
 	<slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
-	<slot name="displaySalary" key="label.mobility.workerJobOffer.displaySalary"/>
 	<slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
 	<slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
 </schema>
 
 <schema name="activityInformation.EditWorkerJobOffer" type="module.mobility.domain.activity.EditWorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="beginDate" read-only="true" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
 	<slot name="displayPhoto" key="label.mobility.workerJobOffer.displayPhoto"/>
 	<slot name="displayName" key="label.mobility.workerJobOffer.displayName"/>
 	<slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
 	<slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
 	<slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
-	<slot name="displaySalary" key="label.mobility.workerJobOffer.displaySalary"/>
 	<slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
 	<slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
 </schema>
@@ -86,4 +85,35 @@
 		<property name="fileNameSlot" value="filename" />
 		<property name="size" value="50"/>
 	</slot>	
+</schema>
+
+<schema name="activityInformation.JobOfferSelectionActivity" type="module.mobility.domain.activity.JobOfferSelectionInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="candidateWorkerOffers" key="label.mobility.beginDate" layout="tabular-option" schema="show.WorkerOffer">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.WorkerOffersCandidatesForJobOffer" />
+	</slot>
+</schema>
+
+<schema name="show.WorkerOffer" type="module.mobility.domain.WorkerOffer" bundle="MOBILITY_RESOURCES">
+	<slot name="approvalDate" key="label.mobility.approvalDate" layout="null-as-label"/>
+	<slot name="personalPortfolioInfo.carrer" key="label.mobility.carrer" />
+	<slot name="personalPortfolioInfo.category" key="label.mobility.category" />
+</schema>
+
+<schema name="activityInformation.ChooseJobOfferCandidatesActivity" type="module.mobility.domain.activity.ChooseJobOfferCandidatesInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="selectedWorkerOffers" key="label.mobility.beginDate" layout="tabular-option" schema="show.WorkerOffer">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.WorkerOffersForJobOfferSelection" />
+	</slot>
+</schema>
+
+<schema name="activityInformation.JuryDefinition" type="module.mobility.domain.activity.JobOfferJuryInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="presidentJuryMember" key="label.mobility.juryPresident" layout="radio-select">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.JobOfferPresidentForJury" />
+		<property name="eachSchema" value="show.juryMember" />
+		<property name="eachLayout" value="values" />
+	</slot>
+</schema>
+
+<schema name="show.juryMember" type="module.mobility.domain.JuryMember" bundle="MOBILITY_RESOURCES">
+	<slot name="juryPresident" key="label.mobility.juryPresident"/>
+	<slot name="person" read-only="true" key="label.mobility.jury" layout="values" schema="organization.domain.Person.view.short"/>	
 </schema>

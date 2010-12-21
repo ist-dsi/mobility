@@ -11,9 +11,8 @@ import module.mobility.domain.PersonalPortfolioInfoQualification;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import myorg.domain.util.Money;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
+
+import org.apache.commons.lang.StringUtils;
 
 public class PersonalPortfolioInfoInformation extends ActivityInformation<PersonalPortfolioProcess> {
 
@@ -39,38 +38,46 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 	public String getQualificationType() {
 	    return qualificationType;
 	}
+
 	public void setQualificationType(String qualificationType) {
 	    this.qualificationType = qualificationType;
 	}
+
 	public String getName() {
 	    return name;
 	}
+
 	public void setName(String name) {
 	    this.name = name;
 	}
+
 	public String getInstitution() {
 	    return institution;
 	}
+
 	public void setInstitution(String institution) {
 	    this.institution = institution;
 	}
+
 	public String getDate() {
 	    return date;
 	}
+
 	public void setDate(String date) {
 	    this.date = date;
 	}
+
 	public String getClassification() {
 	    return classification;
 	}
+
 	public void setClassification(String classification) {
 	    this.classification = classification;
 	}
     }
 
-    private MultiLanguageString carrer;
-    private MultiLanguageString category;
-    private Money salary;
+    private String carrer;
+    private String category;
 
     private List<QualificationHolder> qualificationHolders = new ArrayList<QualificationHolder>();
 
@@ -80,82 +87,59 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 	final PersonalPortfolio personalPortfolio = process.getPersonalPortfolio();
 	final PersonalPortfolioInfo personalPortfolioInfo = personalPortfolio.getLastPersonalPortfolioInfo();
 	if (personalPortfolioInfo != null) {
-	    carrer = replicate(personalPortfolioInfo.getCarrer());
-	    category = replicate(personalPortfolioInfo.getCategory());
-	    salary = personalPortfolioInfo.getSalary();
-
-	    for (final PersonalPortfolioInfoQualification qualification : personalPortfolioInfo.getPersonalPortfolioInfoQualificationSet()) {
+	    carrer = personalPortfolioInfo.getCarrer();
+	    category = personalPortfolioInfo.getCategory();
+	    for (final PersonalPortfolioInfoQualification qualification : personalPortfolioInfo
+		    .getPersonalPortfolioInfoQualificationSet()) {
 		final QualificationHolder qualificationHolder = new QualificationHolder(qualification);
 		qualificationHolders.add(qualificationHolder);
 	    }
 	}
     }
 
-    private MultiLanguageString replicate(final MultiLanguageString multiLanguageString) {
-	if (multiLanguageString == null) {
-	    return null;
-	}
-	final MultiLanguageString result = new MultiLanguageString();
-	for (final Language language : multiLanguageString.getAllLanguages()) {
-	    final String content = multiLanguageString.getContent(language);
-	    result.setContent(language, content);
-	}
-	return result;
-    }
-
     @Override
     public boolean hasAllneededInfo() {
-	return isForwardedFromInput() && notEmpty(carrer) && notEmpty(category) && salary != null;
+	return isForwardedFromInput() && !StringUtils.isEmpty(carrer) && !StringUtils.isEmpty(category);
     }
 
-    private boolean notEmpty(final MultiLanguageString multiLanguageString) {
-	return multiLanguageString != null && !multiLanguageString.isEmpty();
+    public String getCarrer() {
+	return carrer;
     }
 
-    public MultiLanguageString getCarrer() {
-        return carrer;
+    public void setCarrer(String carrer) {
+	this.carrer = carrer;
     }
 
-    public void setCarrer(MultiLanguageString carrer) {
-        this.carrer = carrer;
+    public String getCategory() {
+	return category;
     }
 
-    public MultiLanguageString getCategory() {
-        return category;
-    }
-
-    public void setCategory(MultiLanguageString category) {
-        this.category = category;
-    }
-
-    public Money getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Money salary) {
-        this.salary = salary;
+    public void setCategory(String category) {
+	this.category = category;
     }
 
     public List<QualificationHolder> getQualificationHolders() {
-        return qualificationHolders;
+	return qualificationHolders;
     }
 
     public void setQualificationHolders(List<QualificationHolder> qualificationHolders) {
-        this.qualificationHolders = qualificationHolders;
+	this.qualificationHolders = qualificationHolders;
     }
 
     public void updateQualifications(final PersonalPortfolioInfo personalPortfolioInfo) {
 	final int currentCount = personalPortfolioInfo.getPersonalPortfolioInfoQualificationCount();
 	final int newCount = qualificationHolders.size();
 	if (currentCount > newCount) {
-	    for (int i = newCount; i++ < currentCount;
-	    	personalPortfolioInfo.getPersonalPortfolioInfoQualificationIterator().next().delete());
+	    for (int i = newCount; i++ < currentCount; personalPortfolioInfo.getPersonalPortfolioInfoQualificationIterator()
+		    .next().delete())
+		;
 	} else if (newCount > currentCount) {
-	    for (int i = currentCount; i++ < newCount;
-	    	new PersonalPortfolioInfoQualification(personalPortfolioInfo));
+	    for (int i = currentCount; i++ < newCount; new PersonalPortfolioInfoQualification(personalPortfolioInfo))
+		;
 	}
 
-	final Iterator<PersonalPortfolioInfoQualification> iterator = personalPortfolioInfo.getPersonalPortfolioInfoQualificationIterator();
+	final Iterator<PersonalPortfolioInfoQualification> iterator = personalPortfolioInfo
+		.getPersonalPortfolioInfoQualificationIterator();
 	for (final QualificationHolder qualificationHolder : qualificationHolders) {
 	    final PersonalPortfolioInfoQualification qualification = iterator.next();
 	    qualification.setQualificationType(qualificationHolder.getQualificationType());

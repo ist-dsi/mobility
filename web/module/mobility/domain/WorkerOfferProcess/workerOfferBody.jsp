@@ -99,9 +99,6 @@
 				<logic:equal name="workerOffer" property="displayCategory" value="true">
 					<fr:slot name="category" key="label.mobility.category"/>
 				</logic:equal>
-				<logic:equal name="workerOffer" property="displaySalary" value="true">
-					<fr:slot name="salary" key="label.mobility.salary"/>
-				</logic:equal>
 				<fr:slot name="modificationDate" key="label.mobility.personalPortfolioInfo.modificationDate"/>
 			</fr:schema>
 			<fr:layout name="tabular">

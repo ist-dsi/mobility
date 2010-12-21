@@ -18,7 +18,6 @@ public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOff
 
     private Boolean displayCarrer;
     private Boolean displayCategory;
-    private Boolean displaySalary;
 
     private Boolean displayQualifications;
     private Boolean displayCurriculum;
@@ -36,7 +35,6 @@ public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOff
 
         setDisplayCarrer(workerOffer.getDisplayCarrer());
         setDisplayCategory(workerOffer.getDisplayCategory());
-        setDisplaySalary(workerOffer.getDisplaySalary());
 
         setDisplayQualifications(workerOffer.getDisplayQualifications());
         setDisplayCurriculum(workerOffer.getDisplayCurriculum());
@@ -93,14 +91,6 @@ public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOff
 
     public void setDisplayCategory(Boolean displayCategory) {
         this.displayCategory = displayCategory;
-    }
-
-    public Boolean getDisplaySalary() {
-        return displaySalary;
-    }
-
-    public void setDisplaySalary(Boolean displaySalary) {
-        this.displaySalary = displaySalary;
     }
 
     public Boolean getDisplayPhoto() {

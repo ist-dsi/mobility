@@ -7,10 +7,9 @@ import java.util.TreeSet;
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
-import module.mobility.domain.Offer;
-import module.mobility.domain.OfferProcess;
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
+import module.organization.domain.Person;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 import myorg.util.BundleUtil;
@@ -84,13 +83,19 @@ public class OfferSearch implements Serializable {
 	setOfferSearchState(OfferSearchState.ALL);
     }
 
-    public OfferProcess getOfferProcess(User user) {
+    public JobOfferProcess getJobOfferProcess(User user) {
 	if (!StringUtils.isEmpty(getProcessNumber())) {
 	    for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
 		if (jobOffer.getJobOfferProcess().getProcessIdentification().equalsIgnoreCase(getProcessNumber())) {
 		    return jobOffer.getJobOfferProcess().isAccessible(user) ? jobOffer.getJobOfferProcess() : null;
 		}
 	    }
+	}
+	return null;
+    }
+
+    public WorkerOfferProcess getWorkerOfferProcess(User user) {
+	if (!StringUtils.isEmpty(getProcessNumber())) {
 	    for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOffer()) {
 		if (workerOffer.getWorkerOfferProcess().getProcessIdentification().equalsIgnoreCase(getProcessNumber())) {
 		    return workerOffer.getWorkerOfferProcess();
@@ -100,6 +105,7 @@ public class OfferSearch implements Serializable {
 	return null;
     }
 
+    //
     public Set<JobOfferProcess> getJobOfferSet() {
 	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
 	User user = UserView.getCurrentUser();
@@ -126,7 +132,7 @@ public class OfferSearch implements Serializable {
 	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
 	User user = UserView.getCurrentUser();
 	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
-	    if (jobOffer.isPendingApproval(user)) {
+	    if (jobOffer.getJobOfferProcess().hasAnyAvailableActivity(user, false) && jobOffer.isActive()) {
 		result.add(jobOffer.getJobOfferProcess());
 	    }
 	}
@@ -148,8 +154,9 @@ public class OfferSearch implements Serializable {
 	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
 	User user = UserView.getCurrentUser();
 	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
-	    if (jobOffer.getJobOfferProcess().isAccessible(user) && isSatisfiedOwner(jobOffer, user)
-		    && isSatisfiedState(jobOffer, user) && isSatisfiedProcessNumber(jobOffer)) {
+	    if (jobOffer.getJobOfferProcess().isAccessible(user) && isSatisfiedJobOfferOwner(jobOffer, user)
+		    && isSatisfiedState(jobOffer.isActive(), user)
+		    && isSatisfiedProcessNumber(jobOffer.getJobOfferProcess().getProcessIdentification())) {
 		result.add(jobOffer.getJobOfferProcess());
 	    }
 	}
@@ -160,29 +167,32 @@ public class OfferSearch implements Serializable {
 	Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
 	User user = UserView.getCurrentUser();
 	for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
-	    if (workerOffer.getWorkerOfferProcess().isAccessible(user) && isSatisfiedOwner(workerOffer, user)
-		    && isSatisfiedState(workerOffer, user) && isSatisfiedProcessNumber(workerOffer)) {
+	    if (workerOffer.getWorkerOfferProcess().isAccessible(user) && isSatisfiedOwner(workerOffer.getOwner(), user)
+		    && isSatisfiedState(workerOffer.isActive(), user)
+		    && isSatisfiedProcessNumber(workerOffer.getWorkerOfferProcess().getProcessIdentification())) {
 		result.add(workerOffer.getWorkerOfferProcess());
 	    }
 	}
 	return result;
     }
 
-    private boolean isSatisfiedProcessNumber(Offer offer) {
-	return StringUtils.isEmpty(getProcessNumber())
-		|| offer.getProcess().getProcessIdentification().contains(getProcessNumber());
+    private boolean isSatisfiedProcessNumber(String processIdentification) {
+	return StringUtils.isEmpty(getProcessNumber()) || processIdentification.contains(getProcessNumber());
     }
 
-    private boolean isSatisfiedState(Offer offer, User user) {
+    private boolean isSatisfiedState(Boolean isActive, User user) {
 	return getOfferSearchState().equals(OfferSearchState.ALL)
-		|| (getOfferSearchState().equals(OfferSearchState.ACTIVE) && offer.isActive())
-		|| (getOfferSearchState().equals(OfferSearchState.INACTIVE) && !offer.isActive());
+		|| (getOfferSearchState().equals(OfferSearchState.ACTIVE) && isActive)
+		|| (getOfferSearchState().equals(OfferSearchState.INACTIVE) && !isActive);
     }
 
-    private boolean isSatisfiedOwner(Offer offer, User user) {
+    private boolean isSatisfiedJobOfferOwner(JobOffer jobOffer, User user) {
+	return isSatisfiedOwner(jobOffer.getOwner(), user)
+		|| (getOfferSearchOwner().equals(OfferSearchOwner.WITH_MY_CANDIDACY) && jobOffer.hasCandidacy(user));
+    }
+
+    private boolean isSatisfiedOwner(Person offerPerson, User user) {
 	return getOfferSearchOwner().equals(OfferSearchOwner.ALL)
-		|| (getOfferSearchOwner().equals(OfferSearchOwner.MINE) && offer.getOwner().equals(user.getPerson()))
-		|| (offer instanceof JobOffer && getOfferSearchOwner().equals(OfferSearchOwner.WITH_MY_CANDIDACY) && ((JobOffer) offer)
-			.hasCandidacy(user));
+		|| (getOfferSearchOwner().equals(OfferSearchOwner.MINE) && offerPerson.equals(user.getPerson()));
     }
 }

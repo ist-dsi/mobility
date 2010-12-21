@@ -10,7 +10,7 @@
 
 
 
-<jsp:include page="../processStageView.jsp"/>
+<jsp:include page="processStageView.jsp"/>
 
 <h3 class="separator">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerOffer.options"/>
@@ -26,7 +26,6 @@
 			<fr:slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
 			<fr:slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
 			<fr:slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
-			<fr:slot name="displaySalary" key="label.mobility.workerJobOffer.displaySalary"/>
 			<fr:slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
 			<fr:slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
 			<fr:layout name="tabular-nonNullValues">

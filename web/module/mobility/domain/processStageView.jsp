@@ -4,6 +4,8 @@
 <%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@ taglib uri="/WEB-INF/workflow.tld" prefix="wf"%>
+<%@ taglib uri="/WEB-INF/workflowProcessGraph.tld" prefix="wpg" %>
+
 <%@page import="module.mobility.domain.util.MobilityProcessStageState"%>
 
 <bean:define id="mobilityProcessStageView" name="process" property="mobilityProcessStageView" type="module.mobility.domain.util.MobilityProcessStageView"/>
@@ -11,6 +13,11 @@
 <logic:equal name="mobilityProcessStageView" property="offer.canceled" value="true">
 	<div class="highlightBox"><p class="mvert025"><bean:message key="message.mobility.process.canceled" bundle="MOBILITY_RESOURCES"/></p></div>
 </logic:equal>
+
+
+<wpg:viewWorkflowProcessGraph workflowProcess="process">
+</wpg:viewWorkflowProcessGraph>
+
 <table style="text-align: center; width: 100%;">
 	<tr>
 		<td align="center">

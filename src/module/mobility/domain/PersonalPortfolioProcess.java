@@ -66,4 +66,8 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
 	return list;
     }
 
+    @Override
+    public boolean isTicketSupportAvailable() {
+	return false;
+    }
 }

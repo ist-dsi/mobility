@@ -18,7 +18,7 @@ public class CancelWorkerJobOfferApprovalActivity extends
     @Override
     protected void process(ActivityInformation<WorkerOfferProcess> activityInformation) {
 	activityInformation.getProcess().getWorkerOffer().setApprovalDate(null);
-	activityInformation.getProcess().getWorkerOffer().setApprover(null);
+	activityInformation.getProcess().getWorkerOffer().setWorkerOfferApprover(null);
     }
 
     @Override

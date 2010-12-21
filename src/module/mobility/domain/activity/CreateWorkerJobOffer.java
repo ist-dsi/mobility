@@ -12,7 +12,8 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
     @Override
     public boolean isActive(final PersonalPortfolioProcess process, final User user) {
 	final PersonalPortfolio personalPortfolio = process.getPersonalPortfolio();
-	return user == personalPortfolio.getPerson().getUser() && personalPortfolio.hasAnyPersonalPortfolioInfo();
+	return user == personalPortfolio.getPerson().getUser() && personalPortfolio.hasAnyPersonalPortfolioInfo()
+		&& !personalPortfolio.hasAnyActiveWorkerOffer();
     }
 
     @Override
@@ -28,7 +29,6 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
 
 	workerOffer.setDisplayCarrer(information.getDisplayCarrer());
 	workerOffer.setDisplayCategory(information.getDisplayCategory());
-	workerOffer.setDisplaySalary(information.getDisplaySalary());
 
 	workerOffer.setDisplayQualifications(information.getDisplayQualifications());
 	workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());

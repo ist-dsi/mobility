@@ -11,14 +11,15 @@ public class DefineNewPersonalPortfolioInfo extends WorkflowActivity<PersonalPor
 
     @Override
     public boolean isActive(final PersonalPortfolioProcess process, final User user) {
-	return user == process.getPersonalPortfolio().getPerson().getUser() && !process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
+	return user == process.getPersonalPortfolio().getPerson().getUser()
+		&& !process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
     }
 
     @Override
     protected void process(final PersonalPortfolioInfoInformation information) {
 	final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
 	final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-	new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory(), information.getSalary());
+	new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory());
     }
 
     @Override

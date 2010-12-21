@@ -1,10 +1,7 @@
+
 package module.mobility.domain;
 
-import myorg.domain.util.Money;
-
 import org.joda.time.DateTime;
-
-import pt.utl.ist.fenix.tools.util.i18n.MultiLanguageString;
 
 public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements Comparable<PersonalPortfolioInfo> {
 
@@ -17,17 +14,16 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
 	setModificationDate(now);
     }
 
-    public PersonalPortfolioInfo(final PersonalPortfolio personalPortfolio, final MultiLanguageString carrer,
-	    final MultiLanguageString category, final Money salary) {
+    public PersonalPortfolioInfo(final PersonalPortfolio personalPortfolio, final String carrer,
+	    final String category) {
 	this(personalPortfolio);
-	edit(carrer, category, salary);
+	edit(carrer, category);
     }
 
-    public void edit(final MultiLanguageString carrer, final MultiLanguageString category, final Money salary) {
+    public void edit(final String carrer, final String category) {
 	setModificationDate(new DateTime());
 	setCarrer(carrer);
 	setCategory(category);
-	setSalary(salary);
     }
 
     @Override
@@ -40,7 +36,7 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
     }
 
     public PersonalPortfolioInfo duplicate() {
-	final PersonalPortfolioInfo personalPortfolioInfo = new PersonalPortfolioInfo(getPersonalPortfolio(), getCarrer(), getCategory(), getSalary());
+	final PersonalPortfolioInfo personalPortfolioInfo = new PersonalPortfolioInfo(getPersonalPortfolio(), getCarrer(), getCategory());
 	personalPortfolioInfo.setPersonalPortfolioCurriculum(getPersonalPortfolioCurriculum());
 	return personalPortfolioInfo;
     }

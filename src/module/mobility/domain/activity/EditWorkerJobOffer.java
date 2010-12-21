@@ -27,8 +27,6 @@ public class EditWorkerJobOffer extends WorkflowActivity<WorkerOfferProcess, Edi
 
 	workerOffer.setDisplayCarrer(information.getDisplayCarrer());
 	workerOffer.setDisplayCategory(information.getDisplayCategory());
-	workerOffer.setDisplaySalary(information.getDisplaySalary());
-
 	workerOffer.setDisplayQualifications(information.getDisplayQualifications());
 	workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
     }
