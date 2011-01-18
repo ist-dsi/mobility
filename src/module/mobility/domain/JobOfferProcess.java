@@ -37,13 +37,15 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     static {
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
 	activitiesAux.add(new EditJobOfferActivity());
+	activitiesAux.add(new CancelJobOfferActivity());
+
 	activitiesAux.add(new SubmitJobOfferForSelectionActivity());
 	activitiesAux.add(new JobOfferSelectionActivity());
 	activitiesAux.add(new SubmitJobOfferForEvaluationActivity());
 	activitiesAux.add(new CancelJobOfferSubmitionForEvaluationActivity());
-	activitiesAux.add(new ChooseJobOfferCandidatesActivity());
 	activitiesAux.add(new JobOfferConclusionActivity());
 	activitiesAux.add(new JobOfferArchiveActivity());
+
 	activitiesAux.add(new SubmitJobOfferForJuryDefinitionActivity());
 	activitiesAux.add(new CancelJobOfferSubmitionForJuryDefinitionActivity());
 	activitiesAux.add(new JobOfferJuryDefinitionActivity());
@@ -52,7 +54,8 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	activitiesAux.add(new CancelJobOfferSubmitionForApprovalActivity());
 	activitiesAux.add(new JobOfferApprovalActivity());
 	activitiesAux.add(new CancelJobOfferApprovalActivity());
-	activitiesAux.add(new CancelJobOfferActivity());
+	activitiesAux.add(new ChooseJobOfferCandidatesActivity());
+
 	activitiesAux.add(new SubmitCandidacyActivity());
 	activitiesAux.add(new UnSubmitCandidacyActivity());
 	activities = Collections.unmodifiableList(activitiesAux);

@@ -247,20 +247,20 @@ relation JobOfferPersonalPortfolioInfo {
 	}
 }
 
-relation JobOfferWorkerOffer {
+relation JobOfferSelectedPersonalPortfolioInfo {
 	JobOffer playsRole selectedJobOffer{
 		multiplicity *;
 	}
-	WorkerOffer playsRole candidateWorkerOffer{
+	PersonalPortfolioInfo playsRole selectedWorkerPortfolioInfo{
 		multiplicity *;
 	}
 }
 
-relation JobOfferSelectedWorkerOffer {
+relation JobOfferCandidateWorkerOffer {
 	JobOffer playsRole jobOffer{
 		multiplicity *;
 	}
-	WorkerOffer playsRole selectedWorkerOffer{
+	WorkerOffer playsRole candidateWorkerOffer{
 		multiplicity *;
 	}
 }

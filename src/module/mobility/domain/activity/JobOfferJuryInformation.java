@@ -65,13 +65,13 @@ public class JobOfferJuryInformation extends ActivityInformation<JobOfferProcess
     }
 
     @Service
-    public void setJuryPresident(JuryMember juryMember) {
-	juryMember.setJuryPresident(true);
+    public void setJuryPresident(JuryMember presidentJuryMember) {
+	for (JuryMember juryMember : juryMembers) {
+	    juryMember.setJuryPresident(juryMember.equals(presidentJuryMember));
+	}
     }
 
-    @Service
-    public void removeJuryPresident(JuryMember juryMember) {
-	juryMember.setJuryPresident(false);
+    public boolean getHasPresidentDefined() {
+	return true;
     }
-
 }

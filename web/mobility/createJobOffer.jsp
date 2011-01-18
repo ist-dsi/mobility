@@ -7,9 +7,6 @@
 
 <fr:edit id="jobOfferBean" name="jobOfferBean" action="/mobility.do?method=createJobOffer">
 	<fr:schema type="module.mobility.domain.util.JobOfferBean" bundle="MOBILITY_RESOURCES">
-		<fr:slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<fr:property name="size" value="4"/>
-		</fr:slot>
 		<fr:slot name="vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<fr:property name="size" value="2"/>
 		</fr:slot>	
@@ -31,18 +28,15 @@
 		<fr:slot name="careerRequirements" layout="option-select" key="label.mobility.jobOffer.careerRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<fr:property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
 		</fr:slot>
-		<fr:slot name="categoryRequirements" key="label.mobility.jobOffer.categoryRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-			<fr:property name="size" value="60"/>
-		</fr:slot>
-		<fr:slot name="qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" layout="longText">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
-		<fr:slot name="formationRequirements" key="label.mobility.jobOffer.formationRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="formationRequirements" key="label.mobility.jobOffer.formationRequirements" layout="longText">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
-		<fr:slot name="professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" layout="longText">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>

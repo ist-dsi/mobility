@@ -37,30 +37,29 @@
 		<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.selectJuryPresident"/>
 	</h3>
 
-	
+	<div class="warning3">
+		<p class="mvert05"><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.juryMembers.message"/></p>
+	</div>
 	
 	<fr:view name="information" property="juryMembers" schema="show.juryMember">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
+			<fr:property name="classes" value="tstyle3 mvert1 width100pc tdleft" />
 			<fr:property name="link(remove)" value="/mobility.do?method=removePersonToJobOfferJury" />
 			<fr:property name="param(remove)" value="OID" />
 			<fr:property name="key(remove)" value="label.mobility.remove" />
 			<fr:property name="bundle(remove)" value="MOBILITY_RESOURCES" />
+			<fr:property name="order(remove)" value="1" />
 			
 			<fr:property name="link(setJuryPresident)" value="/mobility.do?method=setJuryPresident" />
 			<fr:property name="param(setJuryPresident)" value="OID" />
 			<fr:property name="key(setJuryPresident)" value="label.mobility.setJuryPresident" />
 			<fr:property name="bundle(setJuryPresident)" value="MOBILITY_RESOURCES" />
-			<fr:property name="vidibleIfNot(setJuryPresident)" value="hasPresidentDefined" />
-
-			<fr:property name="link(removeJuryPresident)" value="/mobility.do?method=removeJuryPresident" />
-			<fr:property name="param(removeJuryPresident)" value="OID" />
-			<fr:property name="key(removeJuryPresident)" value="label.mobility.removeJuryPresident" />
-			<fr:property name="bundle(removeJuryPresident)" value="MOBILITY_RESOURCES" />
-			<fr:property name="vidibleIf(removeJuryPresident)" value="juryPresident" />
+			<fr:property name="visibleIfNot(setJuryPresident)" value="juryPresident" />
+			<fr:property name="order(setJuryPresident)" value="2" />
 		</fr:layout>
 	</fr:view>
 </logic:notEmpty>
+
 <br/>
 <html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="information" paramProperty="process.externalId">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.backToProcess"/>

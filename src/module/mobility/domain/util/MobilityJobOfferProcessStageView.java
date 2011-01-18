@@ -66,9 +66,9 @@ public class MobilityJobOfferProcessStageView {
 
     private MobilityProcessStageState getEvaluationState() {
 	return jobOffer.getCanceled() ? MobilityProcessStageState.NOT_YET_UNDER_WAY
-		: jobOffer.isPendingEvaluation() ? MobilityProcessStageState.UNDER_WAY : (jobOffer.isConcluded() || jobOffer
-			.isInInternalRecruitment()) ? MobilityProcessStageState.COMPLETED
-			: MobilityProcessStageState.NOT_YET_UNDER_WAY;
+		: jobOffer.isUnderSelectionEvaluation() ? MobilityProcessStageState.UNDER_WAY
+			: (jobOffer.isConcluded() || jobOffer.isInInternalRecruitment()) ? MobilityProcessStageState.COMPLETED
+				: MobilityProcessStageState.NOT_YET_UNDER_WAY;
     }
 
     protected MobilityProcessStageState getConcludedState() {
@@ -94,10 +94,11 @@ public class MobilityJobOfferProcessStageView {
 
     private MobilityProcessStageState getCandidacyEvaluationState() {
 	return jobOffer.getCanceled() ? MobilityProcessStageState.NOT_YET_UNDER_WAY : (!jobOffer.isApproved() || !jobOffer
-		.isCandidacyPeriodFinish()) ? MobilityProcessStageState.NOT_YET_UNDER_WAY : jobOffer
-		.isPendingCandidacyEvaluation() ? MobilityProcessStageState.UNDER_WAY : MobilityProcessStageState.COMPLETED;
+		.isCandidacyPeriodFinish()) ? MobilityProcessStageState.NOT_YET_UNDER_WAY
+		: jobOffer.isUnderCandidacyEvaluation() ? MobilityProcessStageState.UNDER_WAY
+			: MobilityProcessStageState.COMPLETED;
     }
-    
+
     public boolean getCanceled() {
 	return jobOffer.getCanceled();
     }

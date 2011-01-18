@@ -16,10 +16,9 @@ public class SubmitJobOfferForJuryDefinitionActivity extends
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
 	return !jobOffer.isInInternalRecruitment()
-		&& ((jobOffer.getCandidateWorkerOffer().isEmpty() && MobilitySystem.getInstance().isManagementMember(user)) || jobOffer
-			.isPendingEvaluation()
-			&& jobOffer.getSelectedWorkerOfferSet().isEmpty()
-			&& jobOffer.getOwner().getUser().equals(user));
+		&& ((jobOffer.isPendingSelection() && jobOffer.getCandidateWorkerOffer().isEmpty() && MobilitySystem
+			.getInstance().isManagementMember(user)) || jobOffer.isUnderSelectionEvaluation()
+			&& jobOffer.getSelectedWorkerPortfolioInfo().isEmpty() && jobOffer.getOwner().getUser().equals(user));
     }
 
     @Override

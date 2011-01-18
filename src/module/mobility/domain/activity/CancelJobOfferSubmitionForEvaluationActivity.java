@@ -13,7 +13,7 @@ public class CancelJobOfferSubmitionForEvaluationActivity extends
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isPendingEvaluation() && MobilitySystem.getInstance().isManagementMember(user);
+	return jobOffer.isUnderSelectionEvaluation() && MobilitySystem.getInstance().isManagementMember(user);
     }
 
     @Override

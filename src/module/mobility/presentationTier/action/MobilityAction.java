@@ -278,20 +278,6 @@ public class MobilityAction extends ContextBaseAction {
 	return ProcessManagement.forwardToProcess(jobOfferProcess);
     }
 
-    public ActionForward removeJuryPresident(final ActionMapping mapping, final ActionForm form,
-	    final HttpServletRequest request, final HttpServletResponse response) {
-	final JuryMember juryMember = getDomainObject(request, "OID");
-	JobOfferJuryDefinitionActivity jobOfferJuryDefinitionActivity = new JobOfferJuryDefinitionActivity();
-	JobOfferProcess jobOfferProcess = juryMember.getJobOffer().getJobOfferProcess();
-	if (jobOfferJuryDefinitionActivity.isActive(jobOfferProcess)) {
-	    JobOfferJuryInformation jobOfferJuryInformation = (JobOfferJuryInformation) jobOfferJuryDefinitionActivity
-		    .getActivityInformation(jobOfferProcess);
-	    jobOfferJuryInformation.removeJuryPresident(juryMember);
-	    return jobOfferJuryInfoPostback(request, jobOfferJuryInformation);
-	}
-	return ProcessManagement.forwardToProcess(jobOfferProcess);
-    }
-
     private ActionForward jobOfferJuryInfoPostback(final HttpServletRequest request,
 	    final JobOfferJuryInformation jobOfferJuryInformation) {
 	final Context context = getContext(request);

@@ -17,4 +17,7 @@ public class JuryMember extends JuryMember_Base {
 	deleteDomainObject();
     }
 
+    public boolean getHasPresidentDefined() {
+	return true;
+    }
 }

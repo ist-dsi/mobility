@@ -11,14 +11,15 @@ public class ChooseJobOfferCandidatesActivity extends WorkflowActivity<JobOfferP
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isPendingEvaluation() && jobOffer.getOwner().equals(user.getPerson());
+	return (jobOffer.isUnderSelectionEvaluation() || jobOffer.isUnderCandidacyEvaluation())
+		&& jobOffer.getOwner().equals(user.getPerson());
     }
 
     @Override
     protected void process(ChooseJobOfferCandidatesInformation activityInformation) {
-	activityInformation.getProcess().getJobOffer().getSelectedWorkerOfferSet().clear();
-	activityInformation.getProcess().getJobOffer().getSelectedWorkerOfferSet()
-		.addAll(activityInformation.getSelectedWorkerOffers());
+	activityInformation.getProcess().getJobOffer().getSelectedWorkerPortfolioInfo().clear();
+	activityInformation.getProcess().getJobOffer().getSelectedWorkerPortfolioInfo()
+		.addAll(activityInformation.getSelectedWorkers());
     }
 
     @Override

@@ -20,17 +20,15 @@
 	<slot name="jobOfferBean.careerRequirements" layout="option-select" key="label.mobility.jobOffer.careerRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
 	</slot>
-	<slot name="jobOfferBean.categoryRequirements" key="label.mobility.jobOffer.categoryRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-	</slot>
-	<slot name="jobOfferBean.qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" layout="longText">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.formationRequirements" key="label.mobility.jobOffer.formationRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.formationRequirements" key="label.mobility.jobOffer.formationRequirements" layout="longText">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
-	<slot name="jobOfferBean.professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+	<slot name="jobOfferBean.professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" layout="longText">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
@@ -99,11 +97,19 @@
 	<slot name="personalPortfolioInfo.category" key="label.mobility.category" />
 </schema>
 
+
 <schema name="activityInformation.ChooseJobOfferCandidatesActivity" type="module.mobility.domain.activity.ChooseJobOfferCandidatesInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="selectedWorkerOffers" key="label.mobility.beginDate" layout="tabular-option" schema="show.WorkerOffer">
-		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.WorkerOffersForJobOfferSelection" />
+	<slot name="selectedWorkers" key="label.mobility.beginDate" layout="tabular-option" schema="show.PersonalPortfolioInfo">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.WorkersForJobOfferSelection" />
 	</slot>
 </schema>
+
+<schema name="show.PersonalPortfolioInfo" type="module.mobility.domain.PersonalPortfolioInfo" bundle="MOBILITY_RESOURCES">
+	<slot name="personalPortfolio.person.name" key="label.mobility.carrer" />
+	<slot name="carrer" key="label.mobility.carrer" />
+	<slot name="category" key="label.mobility.category" />
+</schema>
+
 
 <schema name="activityInformation.JuryDefinition" type="module.mobility.domain.activity.JobOfferJuryInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="presidentJuryMember" key="label.mobility.juryPresident" layout="radio-select">

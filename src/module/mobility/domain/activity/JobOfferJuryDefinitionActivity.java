@@ -2,6 +2,7 @@ package module.mobility.domain.activity;
 
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
+import module.mobility.domain.MobilitySystem;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import myorg.domain.User;
@@ -11,7 +12,8 @@ public class JobOfferJuryDefinitionActivity extends WorkflowActivity<JobOfferPro
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isPendingJuryDefinition() && jobOffer.getOwner().equals(user.getPerson());
+	return jobOffer.isPendingJuryDefinition()
+		&& (jobOffer.getOwner().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user));
     }
 
     @Override

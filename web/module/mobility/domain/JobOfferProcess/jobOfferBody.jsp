@@ -18,7 +18,6 @@
 			<fr:slot name="knowledgeRequirements" key="label.mobility.jobOffer.knowledgeRequirements" />
 			<fr:slot name="skillRequirements" key="label.mobility.jobOffer.skillRequirements" />
 			<fr:slot name="careerRequirements" key="label.mobility.jobOffer.careerRequirements" />
-			<fr:slot name="categoryRequirements" key="label.mobility.jobOffer.categoryRequirements" />
 			<fr:slot name="qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" />
 			<fr:slot name="formationRequirements" key="label.mobility.jobOffer.formationRequirements" />
 			<fr:slot name="professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" />

@@ -20,6 +20,7 @@ import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 
+    private static final int MINIMUM_JURY_ELEMENTS = 3;
     private static final String MOBILITY_RESOURCES = "resources.MobilityResources";
 
     @Override
@@ -133,15 +134,15 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 		&& !isInInternalRecruitment();
     }
 
-    public boolean isPendingEvaluation() {
-	return !getCanceled() && getSubmittedForEvaluationDate() != null && (!isConcluded() && !isInInternalRecruitment());
+    public boolean isUnderSelectionEvaluation() {
+	return !getCanceled() && getSubmittedForEvaluationDate() != null && !isConcluded() && !isInInternalRecruitment();
     }
 
     public boolean isPendingConclusion() {
 	return !getCanceled()
 		&& getConclusionDate() == null
-		&& (isInInternalRecruitment() ? (isApproved() && !isPendingCandidacyEvaluation()) : !getSelectedWorkerOffer()
-			.isEmpty());
+		&& (isInInternalRecruitment() ? (isApproved() && isUnderCandidacyEvaluation())
+			: !getSelectedWorkerPortfolioInfo().isEmpty());
     }
 
     public boolean isConcluded() {
@@ -158,7 +159,8 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     }
 
     public boolean hasJuryDefined() {
-	return !getCanceled() && getJuryMemberCount() != 0 && hasJuryPresident();
+	return !getCanceled() && getJuryMemberCount() >= MINIMUM_JURY_ELEMENTS && getJuryMemberCount() % 2 == 1
+		&& hasJuryPresident();
     }
 
     private boolean hasJuryPresident() {
@@ -187,7 +189,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	return !getCanceled() && getApprovalDate() != null;
     }
 
-    public boolean isPendingCandidacyEvaluation() {
+    public boolean isUnderCandidacyEvaluation() {
 	return !getCanceled() && getConclusionDate() == null && isCandidacyPeriodFinish()
 		&& getCandidatePortfolioInfoCount() != 0;
     }
