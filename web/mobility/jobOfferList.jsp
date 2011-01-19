@@ -22,10 +22,11 @@
 			</fr:layout>
 			<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
 				<fr:slot name="processIdentification" key="label.mobility.jobOfferProcessIdentification" />
-				<fr:slot name="jobOffer.publicationBeginDate" key="label.mobility.approvalDate" layout="null-as-label"/>
-				<fr:slot name="jobOffer.publicationEndDate" key="label.mobility.candicaciesDeadline" />
 				<fr:slot name="jobOffer.title" key="label.mobility.jobOffer.title" />
+				<fr:slot name="jobOffer.careerRequirements" key="label.mobility.jobOffer.title" />
 				<fr:slot name="jobOffer.jobProfile" key="label.mobility.jobOffer.jobProfile" />
+				<fr:slot name="jobOffer.skillRequirements" key="label.mobility.jobOffer.jobProfile" />
+				<fr:slot name="jobOffer.publicationEndDate" key="label.mobility.candicaciesDeadline" />
 				<fr:slot name="jobOffer.candidatePortfolioInfoCount" key="label.mobility.jobOffer.candidacies" />
 			</fr:schema>
 		</fr:view>
