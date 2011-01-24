@@ -1,9 +1,20 @@
 <schema name="activityInformation.EditJobOfferActivity" type="module.mobility.domain.activity.JobOfferInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="jobOfferBean.title" key="label.mobility.jobOffer.title" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="60"/>
-	</slot>
 	<slot name="jobOfferBean.vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="size" value="2"/>
+	</slot>
+	<slot name="jobOfferBean.workplace" key="label.mobility.jobOffer.workplace" layout="autoComplete" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator">
+       	<property name="labelField" value="presentationName"/>
+		<property name="format" value="${presentationName}"/>
+		<property name="minChars" value="3"/>
+		<property name="args" value="provider=module.organization.presentationTier.renderers.providers.UnitAutoCompleteProvider" />
+		<property name="size" value="60"/>
+	</slot>
+	<slot name="jobOfferBean.careerRequirements" layout="option-select" key="label.mobility.jobOffer.careerRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
+	</slot>
+	<slot name="jobOfferBean.skillRequirements" key="label.mobility.jobOffer.skillRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="rows" value="5"/>
+		<property name="columns" value="50"/>
 	</slot>	
 	<slot name="jobOfferBean.jobProfile" key="label.mobility.jobOffer.jobProfile" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
@@ -12,13 +23,6 @@
 	<slot name="jobOfferBean.knowledgeRequirements" key="label.mobility.jobOffer.knowledgeRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
-	</slot>
-	<slot name="jobOfferBean.skillRequirements" key="label.mobility.jobOffer.skillRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="rows" value="5"/>
-		<property name="columns" value="50"/>
-	</slot>
-	<slot name="jobOfferBean.careerRequirements" layout="option-select" key="label.mobility.jobOffer.careerRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
 	</slot>
 	<slot name="jobOfferBean.qualificationRequirements" key="label.mobility.jobOffer.qualificationRequirements" layout="longText">
 		<property name="rows" value="5"/>
@@ -32,6 +36,10 @@
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>
+	<slot name="jobOfferBean.requiredDocumentsForCandidacy" key="label.mobility.jobOffer.requiredDocumentsForCandidacy" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="rows" value="5"/>
+		<property name="columns" value="50"/>
+	</slot>	
 </schema>
 
 <schema name="activityInformation.JobOfferApprovalActivity" type="module.mobility.domain.activity.JobOfferApprovalInformation" bundle="MOBILITY_RESOURCES">
@@ -122,4 +130,30 @@
 <schema name="show.juryMember" type="module.mobility.domain.JuryMember" bundle="MOBILITY_RESOURCES">
 	<slot name="juryPresident" key="label.mobility.juryPresident"/>
 	<slot name="person" read-only="true" key="label.mobility.jury" layout="values" schema="organization.domain.Person.view.short"/>	
+</schema>
+
+<schema name="activityInformation.JobOfferConclusionActivity" type="module.mobility.domain.activity.JobOfferConclusionInformation" bundle="WORKFLOW_RESOURCES">
+	<slot name="displayName" key="label.filename">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="inputStream" key="label.document">
+		<property name="fileNameSlot" value="filename" />
+		<property name="size" value="50"/>
+	</slot>	
+</schema>
+
+<schema name="addFile-MinutesFile" type="module.workflow.util.WorkflowFileUploadBean" bundle="WORKFLOW_RESOURCES">
+	<slot name="selectedInstance" layout="menu-select-postback" key="label.selectedInstance">
+		<property name="providerClass" value="module.workflow.presentationTier.renderers.providers.AvailableFileClassesProvider"/>
+		<property name="eachLayout" value="name-resolver"/>
+		<property name="nullOptionHidden" value="true"/>
+		<property name="saveOptions" value="true"/>
+	</slot>
+	<slot name="displayName" key="label.filename">
+		<property name="size" value="50"/>
+	</slot>
+	<slot name="inputStream" key="label.document">
+		<property name="fileNameSlot" value="filename" />
+		<property name="size" value="50"/>
+	</slot>	
 </schema>

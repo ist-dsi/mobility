@@ -63,7 +63,7 @@
 			<fr:slot name="jobOffer.jobOfferProcess.processIdentification" key="label.mobility.jobOfferProcessIdentification" />
 			<fr:slot name="jobOffer.publicationBeginDate" key="label.mobility.approvalDate" layout="null-as-label"/>
 			<fr:slot name="jobOffer.publicationEndDate" key="label.mobility.candicaciesDeadline" layout="null-as-label"/>
-			<fr:slot name="jobOffer.title" key="label.mobility.jobOffer.title" />
+			<fr:slot name="jobOffer.workplacePath" key="label.mobility.jobOffer.workplace" />
 			<fr:slot name="jobOffer.jobProfile" key="label.mobility.jobOffer.jobProfile" />
 		</fr:schema>
 	</fr:view>

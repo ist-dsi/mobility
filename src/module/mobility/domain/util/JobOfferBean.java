@@ -8,12 +8,22 @@ import java.util.List;
 
 import module.mobility.domain.CareerType;
 import module.mobility.domain.JobOffer;
+import module.organization.domain.Unit;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class JobOfferBean implements Serializable {
 
     private int year = Calendar.getInstance().get(Calendar.YEAR);
-    private String title;
+    private Unit workplace;
+
+    public Unit getWorkplace() {
+	return workplace;
+    }
+
+    public void setWorkplace(Unit workplace) {
+	this.workplace = workplace;
+    }
+
     private String jobProfile;
     private String knowledgeRequirements;
     private String skillRequirements;
@@ -23,13 +33,22 @@ public class JobOfferBean implements Serializable {
     private String formationRequirements;
     private String professionalExperienceRequirements;
     private Integer vacanciesNumber;
+    private String requiredDocumentsForCandidacy;
+
+    public String getRequiredDocumentsForCandidacy() {
+	return requiredDocumentsForCandidacy;
+    }
+
+    public void setRequiredDocumentsForCandidacy(String requiredDocumentsForCandidacy) {
+	this.requiredDocumentsForCandidacy = requiredDocumentsForCandidacy;
+    }
 
     public JobOfferBean() {
     }
 
     public JobOfferBean(JobOffer jobOffer) {
 	setYear(jobOffer.getMobilityYear().getYear());
-	setTitle(jobOffer.getTitle());
+	setWorkplace(jobOffer.getWorkplace());
 	setJobProfile(jobOffer.getJobProfile());
 	setKnowledgeRequirements(jobOffer.getKnowledgeRequirements());
 	setSkillRequirements(jobOffer.getSkillRequirements());
@@ -43,19 +62,12 @@ public class JobOfferBean implements Serializable {
 	setFormationRequirements(jobOffer.getFormationRequirements());
 	setProfessionalExperienceRequirements(jobOffer.getProfessionalExperienceRequirements());
 	setVacanciesNumber(jobOffer.getVacanciesNumber());
+	setRequiredDocumentsForCandidacy(jobOffer.getRequiredDocumentsForCandidacy());
     }
 
     @Service
     public JobOffer create() {
 	return new JobOffer(this);
-    }
-
-    public String getTitle() {
-	return title;
-    }
-
-    public void setTitle(String title) {
-	this.title = title;
     }
 
     public int getYear() {

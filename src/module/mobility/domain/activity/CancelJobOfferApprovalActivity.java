@@ -11,7 +11,7 @@ public class CancelJobOfferApprovalActivity extends WorkflowActivity<JobOfferPro
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isApproved(user);
+	return jobOffer.isApproved(user) && !jobOffer.isArchived();
     }
 
     @Override

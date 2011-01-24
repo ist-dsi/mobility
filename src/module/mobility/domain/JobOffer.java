@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
+import module.organization.domain.Unit;
+import module.organizationIst.domain.IstAccountabilityType;
 import module.workflow.domain.LabelLog;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
@@ -59,7 +61,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 
     private void setForm(JobOfferBean jobOfferBean) {
 	// checkDates(jobOfferBean.getBeginDate(), jobOfferBean.getEndDate());
-	setTitle(jobOfferBean.getTitle());
+	setWorkplace(jobOfferBean.getWorkplace());
 	setJobProfile(jobOfferBean.getJobProfile());
 	setKnowledgeRequirements(jobOfferBean.getKnowledgeRequirements());
 	setSkillRequirements(jobOfferBean.getSkillRequirements());
@@ -68,6 +70,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	setQualificationRequirements(jobOfferBean.getQualificationRequirements());
 	setFormationRequirements(jobOfferBean.getFormationRequirements());
 	setProfessionalExperienceRequirements(jobOfferBean.getProfessionalExperienceRequirements());
+	setRequiredDocumentsForCandidacy(jobOfferBean.getRequiredDocumentsForCandidacy());
     }
 
     public Person getOwner() {
@@ -116,9 +119,20 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	String emailSubject = BundleUtil
 		.getStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject");
 	String messageBody = BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES,
-		"message.mobility.jobOffer.emailBody", getTitle(), getJobOfferProcess().getProcessIdentification());
+		"message.mobility.jobOffer.emailBody", getWorkplacePath(), getJobOfferProcess().getProcessIdentification());
 	new Email(fromName, "noreply@ist.utl.pt", new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST, MobilitySystem
 		.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
+    }
+
+    public String getWorkplacePath() {
+	StringBuilder workplacePath = new StringBuilder();
+	if (getWorkplace() != null) {
+	    workplacePath.append(getWorkplace().getPartyName().getContent());
+	    for (Unit unit : getWorkplace().getParentUnits(IstAccountabilityType.ORGANIZATIONAL.readAccountabilityType())) {
+		workplacePath.append(" (").append(unit.getPartyName().getContent()).append(")");
+	    }
+	}
+	return workplacePath.toString();
     }
 
     public boolean isUnderConstruction() {

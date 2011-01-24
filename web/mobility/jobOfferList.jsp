@@ -22,7 +22,7 @@
 			</fr:layout>
 			<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
 				<fr:slot name="processIdentification" key="label.mobility.jobOfferProcessIdentification" />
-				<fr:slot name="jobOffer.title" key="label.mobility.jobOffer.title" />
+				<fr:slot name="jobOffer.workplacePath" key="label.mobility.jobOffer.workplace" />
 				<fr:slot name="jobOffer.careerRequirements" key="label.mobility.jobOffer.careerRequirements" />
 				<fr:slot name="jobOffer.jobProfile" key="label.mobility.jobOffer.jobProfile" />
 				<fr:slot name="jobOffer.skillRequirements" key="label.mobility.jobOffer.skillRequirements" />

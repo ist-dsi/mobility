@@ -27,6 +27,7 @@ import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.util.MobilityJobOfferProcessStageView;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
@@ -133,6 +134,13 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     @Override
     public boolean isTicketSupportAvailable() {
 	return false;
+    }
+
+    @Override
+    public List<Class<? extends ProcessFile>> getAvailableFileTypes() {
+	final List<Class<? extends ProcessFile>> list = super.getAvailableFileTypes();
+	list.add(0, MinutesFile.class);
+	return list;
     }
 
 }

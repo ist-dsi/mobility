@@ -33,7 +33,6 @@ class JobOffer{
 	DateTime approvalDate;
 	DateTime publicationBeginDate;
 	DateTime publicationEndDate;
-	String title;
 	String jobProfile;
 	String knowledgeRequirements;
 	String skillRequirements;
@@ -43,9 +42,10 @@ class JobOffer{
 	String formationRequirements;
 	String professionalExperienceRequirements;
 	Integer vacanciesNumber;
+	String requiredDocumentsForCandidacy;
 }
 
-class Minutes extends .module.workflow.domain.ProcessFile {
+class MinutesFile extends .module.workflow.domain.ProcessFile {
 }
 
 class JuryMember {
@@ -126,6 +126,13 @@ relation JobOfferRequestor {
 	}
 }
 
+relation JobOfferWorkplace {
+	.module.organization.domain.Unit playsRole workplace;
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
+}
+
 relation JobOfferJuryMember {
 	JuryMember playsRole juryMember{
 		multiplicity *;
@@ -138,11 +145,6 @@ relation JuryMemberPerson {
 	JuryMember playsRole juryMember{
 		multiplicity *;
 	}
-}
-
-relation JobOfferMinutes {
-	JobOffer playsRole jobOffer;
-	Minutes playsRole minutes;
 }
 
 relation JobOfferApprover {
