@@ -90,7 +90,9 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 
     public boolean getCanManageJobOfferCandidacies() {
 	final User user = UserView.getCurrentUser();
-	return MobilitySystem.getInstance().isManagementMember(user) && !getJobOffer().getCandidatePortfolioInfoSet().isEmpty();
+	return getJobOffer().hasAnyJobOfferCandidacy()
+		&& (MobilitySystem.getInstance().isManagementMember(user) || (getProcessCreator().equals(user) && getJobOffer()
+			.isCandidacyPeriodFinish()));
     }
 
     public MobilityJobOfferProcessStageView getMobilityProcessStageView() {

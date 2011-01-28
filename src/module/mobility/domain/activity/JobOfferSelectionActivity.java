@@ -17,9 +17,9 @@ public class JobOfferSelectionActivity extends WorkflowActivity<JobOfferProcess,
 
     @Override
     protected void process(JobOfferSelectionInformation activityInformation) {
-	activityInformation.getProcess().getJobOffer().getCandidateWorkerOfferSet().clear();
-	activityInformation.getProcess().getJobOffer().getCandidateWorkerOfferSet()
-		.addAll(activityInformation.getCandidateWorkerOffers());
+	activityInformation.getProcess().getJobOffer().getSelectedWorkerOfferCandidateSet().clear();
+	activityInformation.getProcess().getJobOffer().getSelectedWorkerOfferCandidateSet()
+		.addAll(activityInformation.getSelectedWorkerOffers());
     }
 
     @Override

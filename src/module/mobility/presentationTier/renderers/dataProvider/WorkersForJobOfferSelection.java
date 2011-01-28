@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import module.mobility.domain.JobOffer;
+import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.PersonalPortfolioInfo;
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.activity.ChooseJobOfferCandidatesInformation;
@@ -26,9 +27,11 @@ public class WorkersForJobOfferSelection implements DataProvider {
 
 	JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
 	if (jobOffer.isInInternalRecruitment()) {
-	    result.addAll(jobOffer.getCandidatePortfolioInfo());
+	    for (JobOfferCandidacy jobOfferCandidacy : jobOffer.getJobOfferCandidacy()) {
+		result.add(jobOfferCandidacy.getPersonalPortfolioInfo());
+	    }
 	} else {
-	    for (WorkerOffer workerOffer : jobOffer.getCandidateWorkerOffer()) {
+	    for (WorkerOffer workerOffer : jobOffer.getSelectedWorkerOfferCandidateSet()) {
 		result.add(workerOffer.getPersonalPortfolioInfo());
 	    }
 	}

@@ -43,11 +43,6 @@
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
 
-			<fr:property name="link(view)" value="/mobility.do?method=viewWorkerOfferProcess" />
-			<fr:property name="key(view)" value="label.mobility.view" />
-			<fr:property name="param(view)" value="OID" />
-			<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
-			
 			<fr:property name="link(manage)" value="/mobility.do?method=viewWorkerOfferProcessToManage" />
 			<fr:property name="key(manage)" value="label.mobility.manage" />
 			<fr:property name="param(manage)" value="OID" />

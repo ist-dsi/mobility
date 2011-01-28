@@ -14,7 +14,7 @@ public class SubmitJobOfferForEvaluationActivity extends WorkflowActivity<JobOff
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return (!jobOffer.getCandidateWorkerOffer().isEmpty()) && (jobOffer.getSubmittedForEvaluationDate() == null)
+	return jobOffer.hasAnySelectedWorkerOfferCandidate() && jobOffer.getSubmittedForEvaluationDate() == null
 		&& MobilitySystem.getInstance().isManagementMember(user);
     }
 

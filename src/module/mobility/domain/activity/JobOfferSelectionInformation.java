@@ -9,12 +9,12 @@ import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 
 public class JobOfferSelectionInformation extends ActivityInformation<JobOfferProcess> {
-    private List<WorkerOffer> candidateWorkerOffers;
+    private List<WorkerOffer> selectedWorkerOffers;
 
     public JobOfferSelectionInformation(final JobOfferProcess jobOfferProcess,
 	    WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
 	super(jobOfferProcess, activity);
-	setCandidateWorkerOffers(new ArrayList<WorkerOffer>(jobOfferProcess.getJobOffer().getCandidateWorkerOffer()));
+	setSelectedWorkerOffers(new ArrayList<WorkerOffer>(jobOfferProcess.getJobOffer().getSelectedWorkerOfferCandidateSet()));
     }
 
     @Override
@@ -22,12 +22,12 @@ public class JobOfferSelectionInformation extends ActivityInformation<JobOfferPr
 	return isForwardedFromInput();
     }
 
-    public List<WorkerOffer> getCandidateWorkerOffers() {
-	return candidateWorkerOffers;
+    public List<WorkerOffer> getSelectedWorkerOffers() {
+	return selectedWorkerOffers;
     }
 
-    public void setCandidateWorkerOffers(List<WorkerOffer> candidateWorkerOffers) {
-	this.candidateWorkerOffers = candidateWorkerOffers;
+    public void setSelectedWorkerOffers(List<WorkerOffer> selectedWorkerOffers) {
+	this.selectedWorkerOffers = selectedWorkerOffers;
     }
 
 }

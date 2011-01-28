@@ -1,4 +1,3 @@
-
 package module.mobility.domain;
 
 import org.joda.time.DateTime;
@@ -14,13 +13,12 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
 	setModificationDate(now);
     }
 
-    public PersonalPortfolioInfo(final PersonalPortfolio personalPortfolio, final String carrer,
-	    final String category) {
+    public PersonalPortfolioInfo(final PersonalPortfolio personalPortfolio, final CareerType carrer, final String category) {
 	this(personalPortfolio);
 	edit(carrer, category);
     }
 
-    public void edit(final String carrer, final String category) {
+    public void edit(final CareerType carrer, final String category) {
 	setModificationDate(new DateTime());
 	setCarrer(carrer);
 	setCategory(category);
@@ -32,21 +30,22 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
     }
 
     public boolean canBeUpdated() {
-	return !hasAnyWorkerOffer() && !hasAnyJobOffer();
+	return !hasAnyWorkerOffer() && !hasAnyJobOfferCandidacy();
     }
 
     public PersonalPortfolioInfo duplicate() {
-	final PersonalPortfolioInfo personalPortfolioInfo = new PersonalPortfolioInfo(getPersonalPortfolio(), getCarrer(), getCategory());
+	final PersonalPortfolioInfo personalPortfolioInfo = new PersonalPortfolioInfo(getPersonalPortfolio(), getCarrer(),
+		getCategory());
 	personalPortfolioInfo.setPersonalPortfolioCurriculum(getPersonalPortfolioCurriculum());
 	return personalPortfolioInfo;
     }
 
     @Override
     public void setPersonalPortfolioCurriculum(PersonalPortfolioCurriculum personalPortfolioCurriculum) {
-        super.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
-        if (personalPortfolioCurriculum != null) {
-            setModificationDate(new DateTime());
-        }
+	super.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
+	if (personalPortfolioCurriculum != null) {
+	    setModificationDate(new DateTime());
+	}
     }
 
 }

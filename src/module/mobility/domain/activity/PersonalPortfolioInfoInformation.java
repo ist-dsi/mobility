@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import module.mobility.domain.CareerType;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioInfo;
 import module.mobility.domain.PersonalPortfolioInfoQualification;
@@ -76,7 +77,7 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 	}
     }
 
-    private String carrer;
+    private CareerType carrer;
     private String category;
 
     private List<QualificationHolder> qualificationHolders = new ArrayList<QualificationHolder>();
@@ -99,14 +100,14 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 
     @Override
     public boolean hasAllneededInfo() {
-	return isForwardedFromInput() && !StringUtils.isEmpty(carrer) && !StringUtils.isEmpty(category);
+	return isForwardedFromInput() && carrer != null && !StringUtils.isEmpty(category);
     }
 
-    public String getCarrer() {
+    public CareerType getCarrer() {
 	return carrer;
     }
 
-    public void setCarrer(String carrer) {
+    public void setCarrer(CareerType carrer) {
 	this.carrer = carrer;
     }
 

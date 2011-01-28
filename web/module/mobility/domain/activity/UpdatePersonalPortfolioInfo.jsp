@@ -25,7 +25,7 @@
 		<fr:edit id="UpdatePersonalPortfolioInfo" name="information">
 			<fr:schema type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
 				<fr:slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-					<fr:property name="size" value="60" />
+					<fr:property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
 				</fr:slot>
 				<fr:slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 					<fr:property name="size" value="60" />

@@ -1,7 +1,9 @@
 package module.mobility.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import module.mobility.domain.util.JobOfferBean;
@@ -14,6 +16,7 @@ import myorg.domain.User;
 import myorg.domain.exceptions.DomainException;
 import myorg.util.BundleUtil;
 
+import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -91,16 +94,16 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     }
 
     public void removeCandidacy(Person person) {
-	PersonalPortfolioInfo candidatePortfolioInfo = getCandidacy(person);
-	if (candidatePortfolioInfo != null) {
-	    getCandidatePortfolioInfoSet().remove(candidatePortfolioInfo);
+	JobOfferCandidacy jobOfferCandidacy = getCandidacy(person);
+	if (jobOfferCandidacy != null) {
+	    getJobOfferCandidacySet().remove(jobOfferCandidacy);
 	}
     }
 
-    public PersonalPortfolioInfo getCandidacy(Person person) {
-	for (PersonalPortfolioInfo candidatePortfolioInfo : getCandidatePortfolioInfoSet()) {
-	    if (candidatePortfolioInfo.getPersonalPortfolio().getPerson().equals(person)) {
-		return candidatePortfolioInfo;
+    public JobOfferCandidacy getCandidacy(Person person) {
+	for (JobOfferCandidacy jobOfferCandidacy : getJobOfferCandidacySet()) {
+	    if (jobOfferCandidacy.getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().equals(person)) {
+		return jobOfferCandidacy;
 	    }
 	}
 	return null;
@@ -116,10 +119,18 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	setPublicationEndDate(publicationEndDate);
 	setJobOfferApprover(MobilitySystem.getInstance().getManagementAccountability(UserView.getCurrentUser()));
 	String fromName = BundleUtil.getStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailFromName");
-	String emailSubject = BundleUtil
-		.getStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject");
+	String emailSubject = BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES,
+		"message.mobility.jobOffer.emailSubject", getWorkplace().getPartyName().getContent());
+
+	List<String> carrerRequirements = new ArrayList<String>();
+	for (CareerType careerType : getCareerRequirements()) {
+	    carrerRequirements.add(careerType.getLocalizedName());
+	}
+
 	String messageBody = BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES,
-		"message.mobility.jobOffer.emailBody", getWorkplacePath(), getJobOfferProcess().getProcessIdentification());
+		"message.mobility.jobOffer.emailBody", getWorkplacePath(), getJobOfferProcess().getProcessIdentification(),
+		getVacanciesNumber().toString(), StringUtils.join(carrerRequirements, ", "));
+
 	new Email(fromName, "noreply@ist.utl.pt", new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST, MobilitySystem
 		.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
     }
@@ -129,7 +140,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	if (getWorkplace() != null) {
 	    workplacePath.append(getWorkplace().getPartyName().getContent());
 	    for (Unit unit : getWorkplace().getParentUnits(IstAccountabilityType.ORGANIZATIONAL.readAccountabilityType())) {
-		workplacePath.append(" (").append(unit.getPartyName().getContent()).append(")");
+		workplacePath.append(" / ").append(unit.getPartyName().getContent());
 	    }
 	}
 	return workplacePath.toString();
@@ -153,15 +164,12 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     }
 
     public boolean isPendingConclusion() {
-	return !getCanceled()
-		&& getConclusionDate() == null
-		&& (isInInternalRecruitment() ? (isApproved() && isUnderCandidacyEvaluation())
-			: !getSelectedWorkerPortfolioInfo().isEmpty());
+	return !getCanceled() && getConclusionDate() == null
+		&& (isInInternalRecruitment() ? (isApproved() && isUnderCandidacyEvaluation()) : hasAnyChosenCandidate());
     }
 
     public boolean isConcluded() {
-	return !getCanceled()
-		&& (getConclusionDate() != null || (isCandidacyPeriodFinish() && getCandidatePortfolioInfoCount() == 0));
+	return !getCanceled() && (getConclusionDate() != null || (isCandidacyPeriodFinish() && getJobOfferCandidacyCount() == 0));
     }
 
     public boolean isInInternalRecruitment() {
@@ -204,8 +212,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     }
 
     public boolean isUnderCandidacyEvaluation() {
-	return !getCanceled() && getConclusionDate() == null && isCandidacyPeriodFinish()
-		&& getCandidatePortfolioInfoCount() != 0;
+	return !getCanceled() && getConclusionDate() == null && isCandidacyPeriodFinish() && hasAnyJobOfferCandidacy();
     }
 
     public boolean isInCandidacyEvaluationPeriod() {

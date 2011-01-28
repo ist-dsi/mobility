@@ -139,6 +139,9 @@
 			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerProcessIdentification"/>
 		</th>
 		<th>
+			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.active"/>
+		</th>
+		<th>
 			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.beginDate"/>
 		</th>
 		<th>
@@ -160,6 +163,9 @@
 		<tr>
 			<td>
 				<fr:view name="workerOffer" property="workerOfferProcess.processIdentification"/>
+			</td>
+			<td>
+				<fr:view name="workerOffer" property="activeOrPendingApproval"/>
 			</td>
 			<td>
 				<fr:view name="workerOffer" property="beginDate"/>

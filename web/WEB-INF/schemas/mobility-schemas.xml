@@ -49,32 +49,22 @@
 
 <schema name="activityInformation.DefineNewPersonalPortfolioInfo" type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<property name="size" value="60" />
+	</slot>
 </schema>
 
 <schema name="activityInformation.CreateWorkerJobOffer" type="module.mobility.domain.activity.WorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="year" key="label.mobility.year" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="beginDate" read-only="true" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
-	<slot name="displayPhoto" key="label.mobility.workerJobOffer.displayPhoto"/>
-	<slot name="displayName" key="label.mobility.workerJobOffer.displayName"/>
-	<slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
-	<slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
-	<slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
-	<slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
-	<slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
+	<slot name="endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.FutureDateTimeValidator"/>
+	<slot name="files" key="label.mobility.jobOffer.candidacyDocuments" layout="tabular-option" schema="show.processFile">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.PersonDocumentsForCandidacy" />*
+	</slot>
 </schema>
 
 <schema name="activityInformation.EditWorkerJobOffer" type="module.mobility.domain.activity.EditWorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="beginDate" read-only="true" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-	<slot name="endDate" key="label.mobility.endDate" layout="picker"/>
-	<slot name="displayPhoto" key="label.mobility.workerJobOffer.displayPhoto"/>
-	<slot name="displayName" key="label.mobility.workerJobOffer.displayName"/>
-	<slot name="displayDateOfBirth" key="label.mobility.workerJobOffer.displayDateOfBirth"/>
-	<slot name="displayCarrer" key="label.mobility.workerJobOffer.displayCarrer"/>
-	<slot name="displayCategory" key="label.mobility.workerJobOffer.displayCategory"/>
-	<slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
-	<slot name="displayCurriculum" key="label.mobility.workerJobOffer.displayCurriculum"/>
+	<slot name="endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.FutureDateTimeValidator"/>
 </schema>
 
 <schema name="addFile-PersonalPortfolioCurriculum" type="module.workflow.util.WorkflowFileUploadBean" bundle="WORKFLOW_RESOURCES">
@@ -94,13 +84,13 @@
 </schema>
 
 <schema name="activityInformation.JobOfferSelectionActivity" type="module.mobility.domain.activity.JobOfferSelectionInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="candidateWorkerOffers" key="label.mobility.beginDate" layout="tabular-option" schema="show.WorkerOffer">
+	<slot name="selectedWorkerOffers" key="label.mobility.personal.worker.offers" layout="tabular-option" schema="show.WorkerOffer">
 		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.WorkerOffersCandidatesForJobOffer" />
 	</slot>
 </schema>
 
 <schema name="show.WorkerOffer" type="module.mobility.domain.WorkerOffer" bundle="MOBILITY_RESOURCES">
-	<slot name="approvalDate" key="label.mobility.approvalDate" layout="null-as-label"/>
+	<slot name="owner.name" key="label.mobility.name" layout="null-as-label"/>
 	<slot name="personalPortfolioInfo.carrer" key="label.mobility.carrer" />
 	<slot name="personalPortfolioInfo.category" key="label.mobility.category" />
 </schema>
@@ -156,4 +146,33 @@
 		<property name="fileNameSlot" value="filename" />
 		<property name="size" value="50"/>
 	</slot>	
+</schema>
+
+<schema name="activityInformation.SubmitCandidacyActivity" type="module.mobility.domain.activity.SubmitCandidacyInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="files" key="label.mobility.jobOffer.candidacyDocuments" layout="tabular-option" schema="show.processFile">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.PersonDocumentsForCandidacy" />
+	</slot>
+</schema>
+
+<schema name="show.processFile" bundle="WORKFLOW_RESOURCES" type="module.workflow.domain.ProcessFile">
+	<slot name="presentationName" key="label.filename"/>
+</schema>
+
+<schema name="show.jobOfferCandidacy" bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferCandidacy">
+	<slot name="selectedCandidacy" key="label.mobility.selected"/>
+	<slot name="personalPortfolioInfo.personalPortfolio.person.user.username" key="label.username" bundle="ORGANIZATION_RESOURCES"/>
+	<slot name="personalPortfolioInfo.personalPortfolio.person.name" key="label.name" bundle="ORGANIZATION_RESOURCES"/>
+	<slot name="personalPortfolioInfo.carrer" key="label.mobility.carrer" />
+	<slot name="personalPortfolioInfo.category" key="label.mobility.category" />
+	<slot name="candidacyFile" schema="show.processFileWithLink" layout="tabular" key="label.mobility.jobOffer.candidacyDocuments">
+		<property name="displayHeaders" value="false"/>
+	</slot>
+</schema>
+
+<schema name="show.processFileWithLink" bundle="WORKFLOW_RESOURCES" type="module.workflow.domain.ProcessFile">
+	<slot name="this" layout="link">
+		<property name="useParent" value="true"/>
+		<property name="format" value="${presentationName}"/>
+		<property name="linkFormat" value="/workflowProcessManagement.do?method=downloadFile&amp;fileId=${externalId}&amp;processId=${process.externalId}"/>
+	</slot>
 </schema>

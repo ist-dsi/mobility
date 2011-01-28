@@ -65,9 +65,9 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 	return getPerson().getParents(accountabilityTypes);
     }
 
-    public boolean hasAnyActiveWorkerOffer() {
+    public boolean hasAnyActiveWorkerOfferOrPendingApproval() {
 	for (WorkerOffer workerOffer : getWorkerOffer()) {
-	    if (workerOffer.isActive()) {
+	    if (workerOffer.isActiveOrPendingApproval()) {
 		return true;
 	    }
 	}

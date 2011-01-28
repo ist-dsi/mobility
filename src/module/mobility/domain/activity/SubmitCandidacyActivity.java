@@ -1,6 +1,7 @@
 package module.mobility.domain.activity;
 
 import module.mobility.domain.JobOffer;
+import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.JobOfferProcess;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
@@ -8,7 +9,7 @@ import module.workflow.activities.WorkflowActivity;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 
-public class SubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
+public class SubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess, SubmitCandidacyInformation> {
 
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
@@ -18,15 +19,16 @@ public class SubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess, A
     }
 
     @Override
-    protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
+    protected void process(SubmitCandidacyInformation activityInformation) {
 	Person person = UserView.getCurrentUser().getPerson();
-	activityInformation.getProcess().getJobOffer().getCandidatePortfolioInfo()
-		.add(person.getPersonalPortfolio().getLastPersonalPortfolioInfo());
+	JobOfferCandidacy jobOfferCandidacy = new JobOfferCandidacy(person.getPersonalPortfolio().getLastPersonalPortfolioInfo(),
+		activityInformation.getFiles());
+	activityInformation.getProcess().getJobOffer().addJobOfferCandidacy(jobOfferCandidacy);
     }
 
     @Override
     public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-	return new ActivityInformation(process, this);
+	return new SubmitCandidacyInformation(process, this);
     }
 
     @Override

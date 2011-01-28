@@ -17,7 +17,7 @@ public class ChooseJobOfferCandidatesInformation extends ActivityInformation<Job
 	super(jobOfferProcess, activity);
 
 	JobOffer jobOffer = jobOfferProcess.getJobOffer();
-	setSelectedWorkers(new ArrayList<PersonalPortfolioInfo>(jobOffer.getSelectedWorkerPortfolioInfo()));
+	setSelectedWorkers(new ArrayList<PersonalPortfolioInfo>(jobOffer.getChosenCandidateSet()));
     }
 
     @Override

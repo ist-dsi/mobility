@@ -1,7 +1,10 @@
 package module.mobility.domain;
 
+import java.util.List;
+
 import module.organization.domain.Person;
 import module.workflow.domain.LabelLog;
+import module.workflow.domain.ProcessFile;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
 
@@ -16,7 +19,8 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
 	return c == 0 ? hashCode() - offer.hashCode() : c;
     }
 
-    public WorkerOffer(final PersonalPortfolio personalPortfolio, final int year, final DateTime begin, final DateTime end) {
+    public WorkerOffer(final PersonalPortfolio personalPortfolio, final int year, final DateTime begin, final DateTime end,
+	    List<ProcessFile> processFiles) {
 	super();
 	setCanceled(Boolean.FALSE);
 	setMobilitySystem(MobilitySystem.getInstance());
@@ -38,6 +42,7 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
 	setDisplayCategory(Boolean.FALSE);
 	new LabelLog(workerOfferProcess, personalPortfolioInfo.getPersonalPortfolio().getPerson().getUser(),
 		"activity.CreateWorkerJobOffer", "resources.MobilityResources");
+	getWorkerOfferProcess().getFiles().addAll(processFiles);
     }
 
     public Person getOwner() {
@@ -45,8 +50,11 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
     }
 
     public boolean isActive() {
-	DateTime now = new DateTime();
-	return !getCanceled() && (getEndDate() == null || getEndDate().isAfter(new DateTime())) && getBeginDate().isBefore(now);
+	return !getCanceled() && (getEndDate() == null || getEndDate().isAfterNow()) && getBeginDate().isBeforeNow();
+    }
+
+    public boolean isActiveOrPendingApproval() {
+	return isActive() || isPendingApproval();
     }
 
     public boolean isPendingApproval() {

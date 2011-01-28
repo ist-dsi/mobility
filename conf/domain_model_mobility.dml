@@ -45,6 +45,9 @@ class JobOffer{
 	String requiredDocumentsForCandidacy;
 }
 
+class JobOfferCandidacy{
+}
+
 class MinutesFile extends .module.workflow.domain.ProcessFile {
 }
 
@@ -62,7 +65,7 @@ class PersonalPortfolio {
 class PersonalPortfolioInfo {
 	DateTime creationDate;
 	DateTime modificationDate;
-	String carrer;
+	CareerType carrer;
 	String category;
 }
 
@@ -240,11 +243,34 @@ relation PersonalPortfolioPersonalPortfolioInfo {
 	}
 }
 
-relation JobOfferPersonalPortfolioInfo {
+relation JobOfferJobOfferCandidacy {
+	JobOffer playsRole jobOffer;
+	JobOfferCandidacy playsRole jobOfferCandidacy{
+		multiplicity *;
+	}
+}
+
+relation JobOfferCandidacyPersonalPortfolioInfo {
+	JobOfferCandidacy playsRole jobOfferCandidacy{
+		multiplicity *;
+	}
+	PersonalPortfolioInfo playsRole personalPortfolioInfo;
+}
+
+relation JobOfferCandidacyProcessFiles{
+	JobOfferCandidacy playsRole jobOfferCandidacy{
+		multiplicity *;
+	}
+	.module.workflow.domain.ProcessFile playsRole candidacyFile{
+		multiplicity *;
+	}
+}
+
+relation JobOfferSelectedWorkerOffer {
 	JobOffer playsRole jobOffer{
 		multiplicity *;
 	}
-	PersonalPortfolioInfo playsRole candidatePortfolioInfo{
+	WorkerOffer playsRole selectedWorkerOfferCandidate{
 		multiplicity *;
 	}
 }
@@ -253,19 +279,12 @@ relation JobOfferSelectedPersonalPortfolioInfo {
 	JobOffer playsRole selectedJobOffer{
 		multiplicity *;
 	}
-	PersonalPortfolioInfo playsRole selectedWorkerPortfolioInfo{
+	PersonalPortfolioInfo playsRole chosenCandidate{
 		multiplicity *;
 	}
 }
 
-relation JobOfferCandidateWorkerOffer {
-	JobOffer playsRole jobOffer{
-		multiplicity *;
-	}
-	WorkerOffer playsRole candidateWorkerOffer{
-		multiplicity *;
-	}
-}
+
 
 relation MobilitySystemPersonalPortfolioInfoQualification {
 	MobilitySystem playsRole mobilitySystem;

@@ -3,6 +3,8 @@ package module.mobility.domain.activity;
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
+import module.mobility.domain.PersonalPortfolioInfo;
+import module.mobility.domain.WorkerOffer;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import myorg.domain.User;
@@ -20,7 +22,17 @@ public class JobOfferArchiveActivity extends WorkflowActivity<JobOfferProcess, A
 
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-	activityInformation.getProcess().getJobOffer().setArquivedDate(new DateTime());
+	JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
+	DateTime arquivedDate = new DateTime();
+	jobOffer.setArquivedDate(arquivedDate);
+	for (PersonalPortfolioInfo personalPortfolioInfo : jobOffer.getChosenCandidateSet()) {
+	    for (WorkerOffer workerOffer : personalPortfolioInfo.getPersonalPortfolio().getWorkerOffer()) {
+		if (workerOffer.isActive()) {
+		    workerOffer.setEndDate(arquivedDate);
+		}
+	    }
+
+	}
     }
 
     @Override

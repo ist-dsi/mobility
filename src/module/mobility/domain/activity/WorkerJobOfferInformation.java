@@ -1,11 +1,13 @@
 package module.mobility.domain.activity;
 
 import java.util.Calendar;
+import java.util.List;
 
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.WorkerOffer;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+import module.workflow.domain.ProcessFile;
 
 import org.joda.time.DateTime;
 
@@ -26,6 +28,8 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
     private Boolean displayCurriculum = Boolean.FALSE;
 
     private WorkerOffer workerOffer;
+
+    private List<ProcessFile> files;
 
     public WorkerJobOfferInformation(final PersonalPortfolioProcess process,
 	    WorkflowActivity<PersonalPortfolioProcess, ? extends ActivityInformation<PersonalPortfolioProcess>> activity) {
@@ -123,6 +127,14 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
 
     public void setWorkerOffer(WorkerOffer workerOffer) {
 	this.workerOffer = workerOffer;
+    }
+
+    public List<ProcessFile> getFiles() {
+	return files;
+    }
+
+    public void setFiles(List<ProcessFile> files) {
+	this.files = files;
     }
 
 }

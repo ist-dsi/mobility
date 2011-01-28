@@ -22,8 +22,7 @@ public class JobOfferConclusionInformation extends ActivityInformation<JobOfferP
 
     @Override
     public boolean hasAllneededInfo() {
-	return (hasMinuteFile(getProcess())) || getProcess().getJobOffer().getSelectedWorkerPortfolioInfoCount() == 0
-		|| getInputStream() != null;
+	return (hasMinuteFile(getProcess())) || (!getProcess().getJobOffer().hasAnyChosenCandidate()) || getInputStream() != null;
     }
 
     private boolean hasMinuteFile(JobOfferProcess process) {

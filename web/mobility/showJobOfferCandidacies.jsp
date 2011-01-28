@@ -9,18 +9,16 @@
 
 <jsp:include page="../module/mobility/domain/JobOfferProcess/header.jsp"/>
 
-<logic:empty name="jobOffer" property="candidatePortfolioInfoSet">
+<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId">
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.backToProcess"/>
+</html:link>
+
+<logic:empty name="jobOffer" property="jobOfferCandidacy">
 	<bean:message bundle="MOBILITY_RESOURCES" key="message.mobility.empty.candidateSet"/>
 </logic:empty>
 
-<fr:view name="jobOffer" property="candidatePortfolioInfoSet">
+<fr:view name="jobOffer" property="jobOfferCandidacy" schema="show.jobOfferCandidacy">
 	<fr:layout name="tabular">
 		<fr:property name="classes" value="plist mtop05 width100pc"/>
 	</fr:layout>
-	<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
-		<fr:slot name="personalPortfolio.person.user.username" key="label.username" bundle="ORGANIZATION_RESOURCES"/>
-		<fr:slot name="personalPortfolio.person.name" key="label.name" bundle="ORGANIZATION_RESOURCES"/>
-		<fr:slot name="carrer" key="label.mobility.carrer" />
-		<fr:slot name="category" key="label.mobility.category" />
-	</fr:schema>
 </fr:view>
