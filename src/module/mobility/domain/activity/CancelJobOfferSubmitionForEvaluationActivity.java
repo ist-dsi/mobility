@@ -19,6 +19,7 @@ public class CancelJobOfferSubmitionForEvaluationActivity extends
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
 	activityInformation.getProcess().getJobOffer().setSubmittedForEvaluationDate(null);
+	activityInformation.getProcess().getJobOffer().getChosenCandidateSet().clear();
     }
 
     @Override

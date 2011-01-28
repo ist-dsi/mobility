@@ -20,6 +20,8 @@ import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.activity.WorkerJobOfferInformation;
 import module.mobility.domain.util.JobOfferBean;
 import module.mobility.domain.util.OfferSearch;
+import module.mobility.domain.util.OfferSearch.OfferSearchOwner;
+import module.mobility.domain.util.OfferSearch.OfferSearchState;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
@@ -46,9 +48,13 @@ public class MobilityAction extends ContextBaseAction {
 	if (offerSearch == null) {
 	    offerSearch = new OfferSearch();
 	}
-	JobOfferProcess process = offerSearch.getJobOfferProcess(UserView.getCurrentUser());
-	if (process != null) {
-	    return ProcessManagement.forwardToProcess(process);
+	JobOfferProcess jobOfferProcess = offerSearch.getJobOfferProcess(UserView.getCurrentUser());
+	if (jobOfferProcess != null) {
+	    return ProcessManagement.forwardToProcess(jobOfferProcess);
+	}
+	WorkerOfferProcess workerOfferProcess = offerSearch.getWorkerOfferProcess(UserView.getCurrentUser());
+	if (workerOfferProcess != null) {
+	    return ProcessManagement.forwardToProcess(workerOfferProcess);
 	}
 	request.setAttribute("offerSearch", offerSearch);
 	return forward(request, "/mobility/frontPage.jsp");
@@ -70,8 +76,7 @@ public class MobilityAction extends ContextBaseAction {
 	    final HttpServletResponse response) {
 	OfferSearch offerSearch = getRenderedObject("offerSearch");
 	if (offerSearch == null) {
-	    offerSearch = new OfferSearch();
-	    offerSearch.init();
+	    offerSearch = new OfferSearch(OfferSearchOwner.ALL, OfferSearchState.ACTIVE);
 	}
 	request.setAttribute("offerSearch", offerSearch);
 	request.setAttribute("processes", offerSearch.doWorkerOfferSearch());
@@ -194,8 +199,6 @@ public class MobilityAction extends ContextBaseAction {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
 	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
-	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation
-		.getActivity();
 
 	RenderUtils.invalidateViewState();
 
@@ -227,12 +230,19 @@ public class MobilityAction extends ContextBaseAction {
 
     public ActionForward saveProfessionalInformation(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
-	final PersonalPortfolioInfoInformation activityInformation = getRenderedObject("activityBean");
-	final PersonalPortfolioProcess personalPortfolioProcess = activityInformation.getProcess();
-	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation
-		.getActivity();
-	activity.execute(activityInformation);
-	return ProcessManagement.forwardToProcess(personalPortfolioProcess);
+	// final PersonalPortfolioInfoInformation activityInformation =
+	// getRenderedObject("activityBean");
+	// final PersonalPortfolioProcess personalPortfolioProcess =
+	// activityInformation.getProcess();
+	// final WorkflowActivity<PersonalPortfolioProcess,
+	// ActivityInformation<PersonalPortfolioProcess>> activity =
+	// activityInformation
+	// .getActivity();
+	// activity.execute(activityInformation);
+	// return ProcessManagement.forwardToProcess(personalPortfolioProcess);
+	final ProcessManagement processManagement = new ProcessManagement();
+	setContext(request, processManagement.createContext(getContext(request).getPath(), request));
+	return processManagement.process(mapping, form, request, response);
     }
 
     public ActionForward updatePersonalPortfolioInfo(final ActionMapping mapping, final ActionForm form,

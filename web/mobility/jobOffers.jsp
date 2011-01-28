@@ -37,34 +37,41 @@
 <br/>
 
 <logic:present name="processes">
-	<fr:view name="processes">
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits"/>
-			
-			<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
-			<fr:property name="key(view)" value="label.mobility.view" />
-			<fr:property name="param(view)" value="OID" />
-			<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
-			
-			<fr:property name="link(manage)" value="/mobility.do?method=viewJobOfferProcessToManage" />
-			<fr:property name="key(manage)" value="label.mobility.manage" />
-			<fr:property name="param(manage)" value="OID" />
-			<fr:property name="bundle(manage)" value="MOBILITY_RESOURCES" />
-			<fr:property name="visibleIf(manage)" value="canManageProcess" />
-			<%-- 
-			<fr:property name="link(candidacies)" value="/mobility.do?method=viewJobOfferCandidacies" />
-			<fr:property name="key(candidacies)" value="label.mobility.jobOffer.candidacies" />
-			<fr:property name="param(candidacies)" value="OID" />
-			<fr:property name="bundle(candidacies)" value="MOBILITY_RESOURCES" />
-			<fr:property name="visibleIf(candidacies)" value="canManageJobOfferCandidacies" />
-			--%>
-		</fr:layout>
-		<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
-			<fr:slot name="jobOffer.jobOfferProcess.processIdentification" key="label.mobility.jobOfferProcessIdentification" />
-			<fr:slot name="jobOffer.publicationBeginDate" key="label.mobility.approvalDate" layout="null-as-label"/>
-			<fr:slot name="jobOffer.publicationEndDate" key="label.mobility.candicaciesDeadline" layout="null-as-label"/>
-			<fr:slot name="jobOffer.workplacePath" key="label.mobility.jobOffer.workplace" />
-			<fr:slot name="jobOffer.jobProfile" key="label.mobility.jobOffer.jobProfile" />
-		</fr:schema>
-	</fr:view>
+	<logic:empty name="processes">
+		<p>
+			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.none"/>
+		</p>
+	</logic:empty>
+	<logic:notEmpty name="processes">
+		<fr:view name="processes">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits"/>
+				
+				<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
+				<fr:property name="key(view)" value="label.mobility.view" />
+				<fr:property name="param(view)" value="OID" />
+				<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
+				
+				<fr:property name="link(manage)" value="/mobility.do?method=viewJobOfferProcessToManage" />
+				<fr:property name="key(manage)" value="label.mobility.manage" />
+				<fr:property name="param(manage)" value="OID" />
+				<fr:property name="bundle(manage)" value="MOBILITY_RESOURCES" />
+				<fr:property name="visibleIf(manage)" value="canManageProcess" />
+				<%-- 
+				<fr:property name="link(candidacies)" value="/mobility.do?method=viewJobOfferCandidacies" />
+				<fr:property name="key(candidacies)" value="label.mobility.jobOffer.candidacies" />
+				<fr:property name="param(candidacies)" value="OID" />
+				<fr:property name="bundle(candidacies)" value="MOBILITY_RESOURCES" />
+				<fr:property name="visibleIf(candidacies)" value="canManageJobOfferCandidacies" />
+				--%>
+			</fr:layout>
+			<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
+				<fr:slot name="jobOffer.jobOfferProcess.processIdentification" key="label.mobility.jobOfferProcessIdentification" />
+				<fr:slot name="jobOffer.publicationBeginDate" key="label.mobility.approvalDate" layout="null-as-label"/>
+				<fr:slot name="jobOffer.publicationEndDate" key="label.mobility.candicaciesDeadline" layout="null-as-label"/>
+				<fr:slot name="jobOffer.workplacePath" key="label.mobility.jobOffer.workplace" />
+				<fr:slot name="jobOffer.jobProfile" key="label.mobility.jobOffer.jobProfile" />
+			</fr:schema>
+		</fr:view>
+	</logic:notEmpty>
 </logic:present>

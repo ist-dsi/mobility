@@ -14,6 +14,7 @@
 			<fr:slot name="processNumber" key="label.mobility.processIdentification">
 				<fr:property name="size" value="10"/>
 			</fr:slot>
+			<%-- 
 			<fr:slot name="offerSearchOwner" key="label.module.mobility.employeeOffers" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="defaultOptionHidden" value="true"/>
 				<fr:property name="excludedValues" value="WITH_MY_CANDIDACY"/>
@@ -21,6 +22,7 @@
 			<fr:slot name="offerSearchState" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="defaultOptionHidden" value="true"/>
 			</fr:slot>
+			--%>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="form" />

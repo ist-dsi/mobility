@@ -100,7 +100,24 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 
     @Override
     public boolean hasAllneededInfo() {
-	return isForwardedFromInput() && carrer != null && !StringUtils.isEmpty(category);
+	return (isForwardedFromInput() && carrer != null && !StringUtils.isEmpty(category)) ? areQualificationsValid() : false;
+    }
+
+    private boolean areQualificationsValid() {
+	for (QualificationHolder qualificationHolder : qualificationHolders) {
+	    if (!isValid(qualificationHolder)) {
+		return false;
+	    }
+	}
+	return true;
+    }
+
+    private boolean isValid(QualificationHolder qualificationHolder) {
+	return !StringUtils.isEmpty(qualificationHolder.getQualificationType())
+		&& !StringUtils.isEmpty(qualificationHolder.getName())
+		&& !StringUtils.isEmpty(qualificationHolder.getInstitution())
+		&& !StringUtils.isEmpty(qualificationHolder.getDate())
+		&& !StringUtils.isEmpty(qualificationHolder.getClassification());
     }
 
     public CareerType getCarrer() {

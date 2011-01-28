@@ -34,6 +34,8 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="form listInsideClear" />
 				<fr:property name="columnClasses" value="width100px,,tderror" />
+				<fr:property name="requiredMarkShown" value="true" />
+				<fr:property name="requiredMessageShown" value="true" />
 			</fr:layout>
 		</fr:edit>
 
@@ -77,6 +79,8 @@
 					<fr:layout name="tabular">
 						<fr:property name="classes" value="form" />
 						<fr:property name="columnClasses" value="width100px,,tderror" />
+						<fr:property name="requiredMarkShown" value="true" />
+						<fr:property name="requiredMessageShown" value="true" />
 					</fr:layout>
 				</fr:edit>
 			</logic:iterate>

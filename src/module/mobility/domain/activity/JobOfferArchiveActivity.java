@@ -28,7 +28,7 @@ public class JobOfferArchiveActivity extends WorkflowActivity<JobOfferProcess, A
 	for (PersonalPortfolioInfo personalPortfolioInfo : jobOffer.getChosenCandidateSet()) {
 	    for (WorkerOffer workerOffer : personalPortfolioInfo.getPersonalPortfolio().getWorkerOffer()) {
 		if (workerOffer.isActive()) {
-		    workerOffer.setEndDate(arquivedDate);
+		    workerOffer.setCanceled(true);
 		}
 	    }
 

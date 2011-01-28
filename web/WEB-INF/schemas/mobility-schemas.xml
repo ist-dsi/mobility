@@ -57,6 +57,7 @@
 <schema name="activityInformation.CreateWorkerJobOffer" type="module.mobility.domain.activity.WorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="beginDate" read-only="true" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.FutureDateTimeValidator"/>
+	<slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
 	<slot name="files" key="label.mobility.jobOffer.candidacyDocuments" layout="tabular-option" schema="show.processFile">
 		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.PersonDocumentsForCandidacy" />*
 	</slot>
@@ -65,6 +66,7 @@
 <schema name="activityInformation.EditWorkerJobOffer" type="module.mobility.domain.activity.EditWorkerJobOfferInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="beginDate" read-only="true" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="endDate" key="label.mobility.endDate" layout="picker" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.FutureDateTimeValidator"/>
+	<slot name="displayQualifications" key="label.mobility.workerJobOffer.displayQualifications"/>
 </schema>
 
 <schema name="addFile-PersonalPortfolioCurriculum" type="module.workflow.util.WorkflowFileUploadBean" bundle="WORKFLOW_RESOURCES">
@@ -149,8 +151,11 @@
 </schema>
 
 <schema name="activityInformation.SubmitCandidacyActivity" type="module.mobility.domain.activity.SubmitCandidacyInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="process.jobOffer.requiredDocumentsForCandidacy" key="label.mobility.jobOffer.requiredDocumentsForCandidacy" read-only="true"/>
 	<slot name="files" key="label.mobility.jobOffer.candidacyDocuments" layout="tabular-option" schema="show.processFile">
 		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.PersonDocumentsForCandidacy" />
+		<property name="emptyMessageKey" value="label.mobility.documents.none"/>
+		<property name="emptyMessageBundle" value="MOBILITY_RESOURCES"/>
 	</slot>
 </schema>
 

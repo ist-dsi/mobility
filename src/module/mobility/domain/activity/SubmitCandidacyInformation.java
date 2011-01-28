@@ -25,8 +25,7 @@ public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProc
 
     @Override
     public boolean hasAllneededInfo() {
-	Person person = UserView.getCurrentUser().getPerson();
-	return (!person.getPersonalPortfolio().getPersonalPortfolioProcess().hasAnyFiles()) || isForwardedFromInput();
+	return isForwardedFromInput();
     }
 
     public List<ProcessFile> getFiles() {

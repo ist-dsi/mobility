@@ -54,6 +54,14 @@ public class OfferSearch implements Serializable {
 
     private String processNumber;
 
+    public OfferSearch() {
+    }
+
+    public OfferSearch(OfferSearchOwner offerSearchOwner, OfferSearchState offerSearchState) {
+	setOfferSearchOwner(offerSearchOwner);
+	setOfferSearchState(offerSearchState);
+    }
+
     public String getProcessNumber() {
 	return processNumber;
     }

@@ -12,7 +12,7 @@ public class CancelWorkerOfferActivity extends WorkflowActivity<WorkerOfferProce
     @Override
     public boolean isActive(WorkerOfferProcess process, User user) {
 	WorkerOffer workerOffer = process.getWorkerOffer();
-	return workerOffer.isUnderConstruction(user);
+	return workerOffer.isActive() && workerOffer.getOwner().equals(user.getPerson());
     }
 
     @Override

@@ -113,10 +113,10 @@
 	<logic:notEmpty name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
 		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
 			<fr:schema type="module.mobility.domain.PersonalPortfolioInfoQualification" bundle="MOBILITY_RESOURCES">
-				<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-				<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-				<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
-				<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+				<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType"/>
+				<fr:slot name="name" key="label.mobility.professional.information.qualification.name"/>
+				<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution"/>
+				<fr:slot name="date" key="label.mobility.professional.information.qualification.date"/>
 				<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
 			</fr:schema>
 			<fr:layout name="tabular">

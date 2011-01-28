@@ -20,7 +20,7 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 	super();
 	setMobilitySystem(MobilitySystem.getInstance());
 	setPerson(person);
-	setNotificationService(Boolean.FALSE);
+	setNotificationService(Boolean.TRUE);
 	new PersonalPortfolioProcess(this);
     }
 
