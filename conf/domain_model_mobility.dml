@@ -102,6 +102,8 @@ class WorkerOffer {
 class WorkerOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
+class task.CreatePersonalPortfolios extends .myorg.domain.scheduler.Task {
+}
 
 relation MyOrgMobilitySystem {
 	.myorg.domain.MyOrg playsRole myOrg;

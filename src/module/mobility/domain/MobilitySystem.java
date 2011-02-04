@@ -98,14 +98,11 @@ public class MobilitySystem extends MobilitySystem_Base {
 
     public Collection<String> getServiceNotificationEmails() {
 	Collection<String> emails = new HashSet<String>();
-	// for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet())
-	// {
-	// if (personalPortfolio.getNotificationService()) {
-	// emails.add(personalPortfolio.getEmail());
-	// }
-	// }
-	emails.add("susana.fernandes@ist.utl.pt");
-	emails.add("luis.cruz@ist.utl.pt");
+	for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
+	    if (personalPortfolio.getNotificationService()) {
+		emails.add(personalPortfolio.getEmail());
+	    }
+	}
 	return emails;
     }
 }
