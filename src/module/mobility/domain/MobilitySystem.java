@@ -13,6 +13,7 @@ import module.organization.domain.Unit;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.MyOrg;
 import myorg.domain.User;
+import pt.ist.fenixWebFramework.services.Service;
 
 public class MobilitySystem extends MobilitySystem_Base {
 
