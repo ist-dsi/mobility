@@ -13,7 +13,6 @@ import module.organization.domain.Unit;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.MyOrg;
 import myorg.domain.User;
-import pt.ist.fenixWebFramework.services.Service;
 
 public class MobilitySystem extends MobilitySystem_Base {
 
@@ -98,11 +97,14 @@ public class MobilitySystem extends MobilitySystem_Base {
 
     public Collection<String> getServiceNotificationEmails() {
 	Collection<String> emails = new HashSet<String>();
-	for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
-	    if (personalPortfolio.getNotificationService()) {
-		emails.add(personalPortfolio.getEmail());
-	    }
-	}
+	// for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet())
+	// {
+	// if (personalPortfolio.getNotificationService()) {
+	// emails.add(personalPortfolio.getEmail());
+	// }
+	// }
+	emails.add("susana.fernandes@ist.utl.pt");
+	emails.add("luis.cruz@ist.utl.pt");
 	return emails;
     }
 }
