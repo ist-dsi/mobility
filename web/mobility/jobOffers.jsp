@@ -39,7 +39,7 @@
 <logic:present name="processes">
 	<logic:empty name="processes">
 		<p>
-			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.none"/>
+			<em><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.none"/></em>
 		</p>
 	</logic:empty>
 	<logic:notEmpty name="processes">

@@ -12,11 +12,12 @@
 <bean:define id="person" name="personalPortfolio" property="person"/>
 
 
-<h3 class="separator">
+
+<h3 class="mtop15 mbottom0">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.information"/>
 </h3>
 
-<div class="infobox mvert1">
+<div class="infobox mvert05">
 	<table>
 		<tr>
 			<td valign="middle" style="padding: 10px">
@@ -24,7 +25,7 @@
 				<img src="<%= urlPhoto %>">
 			</td>
 			<td valign="top" style="padding: 10px">
-				<table width="100%">
+				<table class="width100pc">
 					<tr>
 						<td>
 							<%
@@ -50,8 +51,6 @@
 					</tr>
 					<tr style="border: none;">
 						<td style="border: none;">
-							<br/>
-							<br/>
 							<fr:view name="personalPortfolio" >
 								<fr:schema type="module.mobility.domain.PersonalPortfolio" bundle="MOBILITY_RESOURCES">
 									<fr:slot name="email" key="label.mobility.email"/>
@@ -61,7 +60,7 @@
 									</fr:slot>
 								</fr:schema>
 								<fr:layout>
-									<fr:property name="classes" value="mvert05 thleft"/>
+									<fr:property name="classes" value="structural-vertical mtop1 thleft"/>
 								</fr:layout>
 							</fr:view>
 						</td>
@@ -74,18 +73,15 @@
 
 
 
-
-<h3 class="separator mtop2">
+<h3 class="mtop15 mbottom0">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information"/>
 </h3>
 
-<div class="infobox mvert1">
+<div class="infobox mvert05">
 	<logic:notPresent name="personalPortfolio" property="lastPersonalPortfolioInfo">
-		<i>
-			<strong>
-				<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/>
-			</strong>
-		</i>
+		<p>
+			<em><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.none"/></em>
+		</p>
 	</logic:notPresent>
 	<logic:present name="personalPortfolio" property="lastPersonalPortfolioInfo">
 		<fr:view name="personalPortfolio" property="lastPersonalPortfolioInfo">
@@ -95,19 +91,15 @@
 				<fr:slot name="modificationDate" key="label.mobility.personalPortfolioInfo.modificationDate"/>
 			</fr:schema>
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="mvert05 thleft"/>
-				<%--
-				<fr:property name="classes" value="tstyle3 mvert05 thleft tdleft width100pc" />
-				<fr:property name="columnClasses" value="width100px,,," />
-				--%>
+				<fr:property name="classes" value="structural-vertical mvert05 thleft"/>
 			</fr:layout>
 		</fr:view>
 	</logic:present>
 </div>
 
-<p class="mtop15 mbottom0">
-	<strong><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/></strong>
-</p>
+<h3 class="mtop15 mbottom0">
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
+</h3>
 
 <logic:present name="personalPortfolio" property="lastPersonalPortfolioInfo">
 	<logic:notEmpty name="personalPortfolio" property="lastPersonalPortfolioInfo.personalPortfolioInfoQualification">
@@ -120,7 +112,7 @@
 				<fr:slot name="classification" layout="null-as-label" key="label.mobility.professional.information.qualification.classification"/>
 			</fr:schema>
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle3 mvert1 width100pc" />
+				<fr:property name="classes" value="tstyle3 mvert05 width100pc" />
 			</fr:layout>
 		</fr:view>
 	</logic:notEmpty>
@@ -129,57 +121,61 @@
 
 
 
-<h3 class="separator mtop15">
+<h3 class="mtop15 mbottom0">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.personal.worker.offers"/>
 </h3>
 
-<table class="tstyle3 mvert1 width100pc tdmiddle punits">
-	<tr>	
-		<th>
-			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerProcessIdentification"/>
-		</th>
-		<th>
-			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.active"/>
-		</th>
-		<th>
-			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.beginDate"/>
-		</th>
-		<th>
-			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.endDate"/>
-		</th>
-		<th>
-		</th>
-	</tr>
-	<logic:empty name="personalPortfolio" property="workerOffer">
-		<tr>
-			<td class="aleft" colspan="3">
-				<i><strong>
-					<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerOffer.none"/>
-				</strong></i>
-			</td>
-		</td>
-	</logic:empty>
-	<logic:iterate id="workerOffer" name="personalPortfolio" property="workerOffer">
-		<tr>
-			<td>
-				<fr:view name="workerOffer" property="workerOfferProcess.processIdentification"/>
-			</td>
-			<td>
-				<fr:view name="workerOffer" property="activeOrPendingApproval"/>
-			</td>
-			<td>
-				<fr:view name="workerOffer" property="beginDate"/>
-			</td>
-			<td>
-				<logic:present name="workerOffer" property="endDate">
-					<fr:view name="workerOffer" property="endDate"/>
-				</logic:present>
-			</td>
-			<td>
-				<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="workerOffer" paramProperty="workerOfferProcess.externalId">
-					<bean:message bundle="MOBILITY_RESOURCES" key="label.view"/>
-				</html:link>
-			</td>
+
+
+<logic:empty name="personalPortfolio" property="workerOffer">
+	<p>
+		<em><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerOffer.none"/></em>
+	</p>
+</logic:empty>
+
+<logic:notEmpty name="personalPortfolio" property="workerOffer">
+	<table class="tstyle3 mvert05 width100pc">
+		<tr>	
+			<th>
+				<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerProcessIdentification"/>
+			</th>
+			<th>
+				<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.active"/>
+			</th>
+			<th>
+				<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.beginDate"/>
+			</th>
+			<th>
+				<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.endDate"/>
+			</th>
+			<th>
+			</th>
 		</tr>
-	</logic:iterate>
-</table>
+		<logic:iterate id="workerOffer" name="personalPortfolio" property="workerOffer">
+			<tr>
+				<td>
+					<fr:view name="workerOffer" property="workerOfferProcess.processIdentification"/>
+				</td>
+				<td>
+					<fr:view name="workerOffer" property="activeOrPendingApproval"/>
+				</td>
+				<td>
+					<fr:view name="workerOffer" property="beginDate"/>
+				</td>
+				<td>
+					<logic:present name="workerOffer" property="endDate">
+						<fr:view name="workerOffer" property="endDate"/>
+					</logic:present>
+				</td>
+				<td>
+					<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="workerOffer" paramProperty="workerOfferProcess.externalId">
+						<bean:message bundle="MOBILITY_RESOURCES" key="label.view"/>
+					</html:link>
+				</td>
+			</tr>
+		</logic:iterate>
+	</table>
+</logic:notEmpty>
+
+
+

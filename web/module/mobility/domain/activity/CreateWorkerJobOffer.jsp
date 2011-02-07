@@ -5,9 +5,11 @@
 <%@ taglib uri="/WEB-INF/fenix-renderers.tld" prefix="fr"%>
 <%@page import="pt.ist.fenixWebFramework.renderers.utils.RenderUtils"%>
 
-<h3 class="separator">
+<%--
+<h4>
 	<bean:message bundle="MOBILITY_RESOURCES" key="activity.CreateWorkerJobOffer"/>
-</h3>
+</h4>
+--%>
 
 <fr:edit id="CreateWorkerJobOffer" name="information" schema="activityInformation.CreateWorkerJobOffer"
 	action="/mobility.do?method=updatePersonalPortfolioInfo">

@@ -7,6 +7,8 @@
 
 <bean:define id="jobOffer" name="process" property="jobOffer"/>
 
+
+
 <div class="infobox mvert1">
 	<fr:view name="jobOffer">
 		<fr:schema type="module.mobility.domain.JobOffer" bundle="MOBILITY_RESOURCES">
@@ -23,11 +25,12 @@
 			<fr:slot name="professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" />
 			<fr:slot name="requiredDocumentsForCandidacy" key="label.mobility.jobOffer.requiredDocumentsForCandidacy" />
 			<fr:layout name="tabular-nonNullValues">
-				<fr:property name="classes" value="mvert05 thleft"/>
+				<fr:property name="classes" value="tstyle5 mvert05 thleft"/>
 			</fr:layout>
 		</fr:schema>
 	</fr:view>
 </div>
+
 
 <logic:equal name="jobOffer" property="approved" value="true">
 	<logic:notEqual name="jobOffer" property="hasAllNeededInfoForSubmitCancidacy" value="true">

@@ -18,7 +18,7 @@
 		<fr:edit id="activityBean" name="information" visible="false"/>
 
 
-		<h3 class="separator">
+		<h3 class="separator mtop15">
 			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information"/>
 		</h3>
 
@@ -35,14 +35,14 @@
 				<fr:property name="classes" value="form listInsideClear" />
 				<fr:property name="columnClasses" value="width100px,,tderror" />
 				<fr:property name="requiredMarkShown" value="true" />
-				<fr:property name="requiredMessageShown" value="true" />
+				<fr:property name="requiredMessageShown" value="false" />
+
 			</fr:layout>
 		</fr:edit>
 
 
 
-
-		<h3 class="separator mbottom1">
+		<h3 class="separator mtop2">
 			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications"/>
 		</h3>
 
@@ -53,11 +53,7 @@
 		</logic:empty>
 		<logic:notEmpty name="information" property="qualificationHolders">
 			<logic:iterate id="qualificationHolder" indexId="i" name="information" property="qualificationHolders">
-				<p class="mtop1 mbottom0">
-					<a href="#" onclick="<%= "javascript:getElementById('activityForm').qualificationIndex.value='" + i + "';getElementById('activityForm').method.value='removeQualification';getElementById('activityForm').submit();return" %>">
-						<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications.remove"/>
-					</a>
-				</p>
+
 				<fr:edit id="<%= "qualificationHolder" + i %>" name="qualificationHolder">
 					<fr:schema type="module.mobility.domain.activity.PersonalPortfolioInfoInformation$QualificationHolder" bundle="MOBILITY_RESOURCES">
 						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
@@ -77,12 +73,19 @@
 						</fr:slot>
 					</fr:schema>
 					<fr:layout name="tabular">
-						<fr:property name="classes" value="form" />
+						<fr:property name="classes" value="form mbottom05" />
 						<fr:property name="columnClasses" value="width100px,,tderror" />
 						<fr:property name="requiredMarkShown" value="true" />
-						<fr:property name="requiredMessageShown" value="true" />
+						<fr:property name="requiredMessageShown" value="false" />
+
 					</fr:layout>
 				</fr:edit>
+				<p class="mtop0 mbottom15">
+					<a href="#" onclick="<%= "javascript:getElementById('activityForm').qualificationIndex.value='" + i + "';getElementById('activityForm').method.value='removeQualification';getElementById('activityForm').submit();return" %>">
+						<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.professional.information.qualifications.remove"/>
+					</a>
+				</p>
+
 			</logic:iterate>
 		</logic:notEmpty>
 
