@@ -11,10 +11,10 @@
 <logic:equal name="jobOffer" property="approved" value="true">
 	<logic:equal name="process" property="canManageJobOfferCandidacies" value="true">
 		<bean:define id="OID" name="process" property="OID"/>
-		<p>
-		<html:link action="<%= "/mobility.do?method=viewJobOfferCandidacies&OID="+OID%>">
-			<bean:message key="label.mobility.jobOffer.candidacies.view" bundle="MOBILITY_RESOURCES"/>
-		</html:link>
+		<p class="mbottom15">
+			<html:link action="<%= "/mobility.do?method=viewJobOfferCandidacies&OID="+OID%>">
+				<bean:message key="label.mobility.jobOffer.candidacies.view" bundle="MOBILITY_RESOURCES"/>
+			</html:link>
 		</p>
 	</logic:equal>
 </logic:equal>

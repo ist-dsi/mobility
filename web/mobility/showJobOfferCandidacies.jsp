@@ -9,9 +9,9 @@
 
 <jsp:include page="../module/mobility/domain/JobOfferProcess/header.jsp"/>
 
-<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId">
-	<bean:message bundle="MOBILITY_RESOURCES" key="label.backToProcess"/>
-</html:link>
+<h3>
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.candidacies.view"/>
+</h3>
 
 <logic:empty name="jobOffer" property="jobOfferCandidacy">
 	<bean:message bundle="MOBILITY_RESOURCES" key="message.mobility.empty.candidateSet"/>
@@ -19,6 +19,12 @@
 
 <fr:view name="jobOffer" property="jobOfferCandidacy" schema="show.jobOfferCandidacy">
 	<fr:layout name="tabular">
-		<fr:property name="classes" value="plist mtop05 width100pc"/>
+		<fr:property name="classes" value="tstyle3 width100pc mtop15"/>
 	</fr:layout>
 </fr:view>
+
+<p class="mtop1 mbottom0">
+	<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="process" paramProperty="externalId">
+		<bean:message bundle="MOBILITY_RESOURCES" key="label.backToProcess"/>
+	</html:link>
+</p>

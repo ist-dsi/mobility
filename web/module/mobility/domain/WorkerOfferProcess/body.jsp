@@ -9,12 +9,13 @@
 <bean:define id="workerOffer" name="process" property="workerOffer" type="module.mobility.domain.WorkerOffer"/>
 
 
-
 <jsp:include page="processStageView.jsp"/>
 
-<h3 class="separator">
+
+<h4>
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerOffer.options"/>
-</h3>
+</h4>
+
 
 <div class="infobox mtop1 mbottom1">
 	<fr:view name="workerOffer">

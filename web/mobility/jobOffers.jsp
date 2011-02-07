@@ -6,7 +6,8 @@
 
 <h2><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.jobOffers" /> </h2>
 
-<p class="mtop05">
+
+<p class="mtop1 mbottom05">
 	<html:link action="/mobility.do?method=prepareToCreateJobOffer">
 		<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.jobOffers.create" />
 	</html:link>
@@ -34,7 +35,6 @@
 		<bean:message  bundle="MOBILITY_RESOURCES" key="label.mobility.submit"/>
 	</html:submit>
 </fr:form>
-<br/>
 
 <logic:present name="processes">
 	<logic:empty name="processes">
@@ -45,7 +45,9 @@
 	<logic:notEmpty name="processes">
 		<fr:view name="processes">
 			<fr:layout name="tabular">
-				<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits"/>
+				<fr:property name="classes" value="tstyle3 mtop2 mbottom1 width100pc punits tdtop"/>
+				<fr:property name="columnClasses" value=",,,,,nowrap"/>
+				
 				
 				<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
 				<fr:property name="key(view)" value="label.mobility.view" />

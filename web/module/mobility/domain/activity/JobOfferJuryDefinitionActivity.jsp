@@ -6,10 +6,9 @@
 <%@page import="pt.ist.fenixWebFramework.renderers.utils.RenderUtils"%>
 
 
-
-<h3 class="separator">
+<p class="mtop15 mbottom0">
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.addJuryMember"/>
-</h3>
+</p>
 
 
 <fr:form action="/mobility.do?method=addPersonToJobOfferJury">
@@ -32,18 +31,18 @@
 
 
 <logic:notEmpty name="information" property="juryMembers">
-<br/>
-	<h3 class="separator">
+
+	<h3 class="mtop1">
 		<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.selectJuryPresident"/>
 	</h3>
 
-	<div class="warning3">
+	<div class="warning3 mtop1">
 		<p class="mvert05"><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jobOffer.juryMembers.message"/></p>
 	</div>
 	
 	<fr:view name="information" property="juryMembers" schema="show.juryMember">
 		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle3 mvert1 width100pc tdleft" />
+			<fr:property name="classes" value="tstyle3 mvert1 width100pc" />
 			<fr:property name="link(remove)" value="/mobility.do?method=removePersonToJobOfferJury" />
 			<fr:property name="param(remove)" value="OID" />
 			<fr:property name="key(remove)" value="label.mobility.remove" />
@@ -60,7 +59,9 @@
 	</fr:view>
 </logic:notEmpty>
 
-<br/>
-<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="information" paramProperty="process.externalId">
-	<bean:message bundle="MOBILITY_RESOURCES" key="label.backToProcess"/>
-</html:link>
+
+<p
+	<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="information" paramProperty="process.externalId">
+		<bean:message bundle="MOBILITY_RESOURCES" key="label.backToProcess"/>
+	</html:link>
+</p>

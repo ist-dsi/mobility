@@ -25,7 +25,8 @@
 			<fr:slot name="professionalExperienceRequirements" key="label.mobility.jobOffer.professionalExperienceRequirements" />
 			<fr:slot name="requiredDocumentsForCandidacy" key="label.mobility.jobOffer.requiredDocumentsForCandidacy" />
 			<fr:layout name="tabular-nonNullValues">
-				<fr:property name="classes" value="tstyle5 mvert05 thleft"/>
+				<fr:property name="classes" value="tstyle5 tdtop thtop mvert15 thleft thnowrap"/>
+				<fr:property name="rowClasses" value=",,,bold,bold,,,,,,,,,,,,,,,"/>
 			</fr:layout>
 		</fr:schema>
 	</fr:view>
