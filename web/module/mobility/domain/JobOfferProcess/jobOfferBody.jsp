@@ -8,6 +8,12 @@
 <bean:define id="jobOffer" name="process" property="jobOffer"/>
 
 
+<logic:equal name="jobOffer" property="approved" value="true">
+	<logic:notEqual name="jobOffer" property="hasAllNeededInfoForSubmitCancidacy" value="true">
+		<p class="mbottom15"><em><bean:message key="message.mobility.submitCandidacy.missingPersonalPortfolio" bundle="MOBILITY_RESOURCES"/></em></p>
+	</logic:notEqual>
+</logic:equal>
+
 
 <div class="infobox mvert1">
 	<fr:view name="jobOffer">
@@ -33,8 +39,3 @@
 </div>
 
 
-<logic:equal name="jobOffer" property="approved" value="true">
-	<logic:notEqual name="jobOffer" property="hasAllNeededInfoForSubmitCancidacy" value="true">
-		<p><bean:message key="message.mobility.submitCandidacy.missingPersonalPortfolio" bundle="MOBILITY_RESOURCES"/></p>
-	</logic:notEqual>
-</logic:equal>

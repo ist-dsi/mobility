@@ -10,21 +10,23 @@
 	<span class="processNumber">(<bean:write name="process" property="processIdentification"/>)</span>	 
 </h2>
 
-<jsp:include page="../module/mobility/domain/JobOfferProcess/jobOfferBody.jsp"/>
-
-
 <bean:define id="OID" name="process" property="OID"/>
 <wf:isActive processName="process" activityName="SubmitCandidacyActivity" scope="request">
-	<p>				
+	<p class="mbottom15">				
 		<html:link action="<%= "/mobility.do?method=submitCandidacy&OID="+OID%>">
 			<bean:message key="activity.SubmitCandidacyActivity" bundle="MOBILITY_RESOURCES"/>
 		</html:link>
 	</p>
 </wf:isActive>
 <wf:isActive processName="process" activityName="UnSubmitCandidacyActivity" scope="request">
-	<p>
+	<p class="mbottom15">
 		<html:link action="<%= "/mobility.do?method=unSubmitCandidacy&OID="+OID%>">
 			<bean:message key="activity.UnSubmitCandidacyActivity" bundle="MOBILITY_RESOURCES"/>
 		</html:link>
 	</p>
 </wf:isActive>
+
+<jsp:include page="../module/mobility/domain/JobOfferProcess/jobOfferBody.jsp"/>
+
+
+
