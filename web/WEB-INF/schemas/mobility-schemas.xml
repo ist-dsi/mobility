@@ -50,7 +50,7 @@
 <schema name="activityInformation.DefineNewPersonalPortfolioInfo" type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
 	<slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-		<property name="size" value="600" />
+		<property name="size" value="60" />
 	</slot>
 	<property name="requiredMessageShown" value="false" />
 </schema>
