@@ -60,7 +60,7 @@
 </logic:notEmpty>
 
 
-<p
+<p>
 	<html:link action="/workflowProcessManagement.do?method=viewProcess" paramId="processId" paramName="information" paramProperty="process.externalId">
 		<bean:message bundle="MOBILITY_RESOURCES" key="label.backToProcess"/>
 	</html:link>

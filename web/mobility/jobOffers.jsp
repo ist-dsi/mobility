@@ -47,7 +47,7 @@
 			<fr:layout name="tabular">
 				<fr:property name="classes" value="tstyle3 mtop2 mbottom1 width100pc punits tdtop"/>
 				<fr:property name="columnClasses" value=",,,,,nowrap"/>
-				
+				<fr:property name="linkGroupSeparator" value=" | "/>
 				
 				<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
 				<fr:property name="key(view)" value="label.mobility.view" />

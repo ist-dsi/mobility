@@ -47,6 +47,7 @@ public class JobOfferJuryInformation extends ActivityInformation<JobOfferProcess
 	if (getPersonToAddToJury() != null && !containsJuryMember(getPersonToAddToJury())) {
 	    juryMembers.add(new JuryMember(getPersonToAddToJury(), false, getProcess().getJobOffer()));
 	}
+	setPersonToAddToJury(null);
     }
 
     @Service

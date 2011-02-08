@@ -257,6 +257,7 @@ public class MobilityAction extends ContextBaseAction {
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	final JobOfferJuryInformation jobOfferJuryInformation = getRenderedObject();
 	jobOfferJuryInformation.addJuryMember();
+	RenderUtils.invalidateViewState();
 	return jobOfferJuryInfoPostback(request, jobOfferJuryInformation);
     }
 

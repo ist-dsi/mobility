@@ -6,6 +6,7 @@
 <h2><bean:message bundle="MOBILITY_RESOURCES" key="title.module.mobility.jobOffers.create"/></h2>
 
 <fr:edit id="jobOfferBean" name="jobOfferBean" action="/mobility.do?method=createJobOffer">
+	<fr:destination name="cancel" path="/mobility.do?method=jobOffers"/>
 	<fr:schema type="module.mobility.domain.util.JobOfferBean" bundle="MOBILITY_RESOURCES">
 		<fr:slot name="vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 			<fr:property name="size" value="2"/>
