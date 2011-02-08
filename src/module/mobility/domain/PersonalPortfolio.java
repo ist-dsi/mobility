@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import module.organization.domain.Accountability;
 import module.organization.domain.AccountabilityType;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
 import module.organizationIst.domain.IstAccountabilityType;
-import net.sourceforge.fenixedu.domain.RemotePerson;
 import pt.ist.fenixWebFramework.services.Service;
 
 public class PersonalPortfolio extends PersonalPortfolio_Base {
@@ -20,8 +20,18 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 	super();
 	setMobilitySystem(MobilitySystem.getInstance());
 	setPerson(person);
-	setNotificationService(Boolean.TRUE);
+	setNotificationService(isEmployee(person));
 	new PersonalPortfolioProcess(this);
+    }
+
+    private Boolean isEmployee(Person person) {
+	for (Accountability accountability : person.getParentAccountabilities(IstAccountabilityType.PERSONNEL
+		.readAccountabilityType())) {
+	    if (accountability.isActiveNow()) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     @Service
@@ -53,8 +63,10 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     public String getEmail() {
-	final RemotePerson remotePerson = getPerson().getRemotePerson();
-	return remotePerson == null ? "" : remotePerson.getEmailForSendingEmails();
+	// final RemotePerson remotePerson = getPerson().getRemotePerson();
+	// return remotePerson == null ? "" :
+	// remotePerson.getEmailForSendingEmails();
+	return "";
     }
 
     public Collection<Party> getWorkingPlaces() {
