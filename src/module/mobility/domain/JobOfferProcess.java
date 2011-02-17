@@ -29,9 +29,13 @@ import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
+import module.workflow.domain.utils.WorkflowCommentCounter;
+import module.workflow.widgets.UnreadCommentsWidget;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
+import myorg.util.ClassNameBundle;
 
+@ClassNameBundle(bundle = "resources/MobilityResources")
 public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<JobOfferProcess> {
     private static final String JOB_OFFER_SIGLA = "RCT";
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
@@ -60,6 +64,8 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	activitiesAux.add(new SubmitCandidacyActivity());
 	activitiesAux.add(new UnSubmitCandidacyActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
+
+	UnreadCommentsWidget.register(new WorkflowCommentCounter(JobOfferProcess.class));
     }
 
     public JobOfferProcess(final JobOffer jobOffer) {

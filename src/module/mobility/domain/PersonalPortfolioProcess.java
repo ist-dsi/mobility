@@ -27,6 +27,7 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
 	activitiesAux.add(new EnableNotificationServiceActivity());
 	activitiesAux.add(new DisableNotificationServiceActivity());
 	activities = Collections.unmodifiableList(activitiesAux);
+
     }
 
     public PersonalPortfolioProcess(final PersonalPortfolio personalPortfolio) {
