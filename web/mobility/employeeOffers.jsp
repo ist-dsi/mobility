@@ -8,6 +8,9 @@
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.employeeOffers"/>
 </h2>
 
+<bean:define id="user" name="USER_SESSION_ATTRIBUTE" property="user"/>
+
+<% if(module.mobility.domain.groups.MobilityGroup.getInstance().isMember((myorg.domain.User)user)) {%>
 <fr:form action="/mobility.do?method=employeeOffers">
 	<fr:edit id="offerSearch" name="offerSearch">
 		<fr:schema type="module.mobility.domain.util.OfferSearch" bundle="MOBILITY_RESOURCES">
@@ -34,7 +37,7 @@
 	</html:submit>
 </fr:form>
 <br/>
-
+<%} %>
 <logic:empty name="processes">
 	<p>
 		<em><bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.workerOffer.none"/></em>
