@@ -29,7 +29,7 @@
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
-		<fr:slot name="knowledgeRequirements" key="label.mobility.jobOffer.knowledgeRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="knowledgeRequirements" key="label.mobility.jobOffer.knowledgeRequirements" layout="longText">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
@@ -49,5 +49,15 @@
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
+		<fr:slot name="additionalRemarks" key="label.mobility.jobOffer.additionalRemarks" layout="longText">
+			<fr:property name="rows" value="5"/>
+			<fr:property name="columns" value="50"/>
+		</fr:slot>
 	</fr:schema>
+	<fr:layout name="tabular">
+		<fr:property name="classes" value="form listInsideClear" />
+		<fr:property name="columnClasses" value="width100px,,tderror" />
+		<fr:property name="requiredMarkShown" value="true" />
+		<fr:property name="requiredMessageShown" value="false" />
+	</fr:layout>
 </fr:edit>

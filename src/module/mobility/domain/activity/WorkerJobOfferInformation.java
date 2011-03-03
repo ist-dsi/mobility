@@ -9,13 +9,13 @@ import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortfolioProcess> {
 
     private int year = Calendar.getInstance().get(Calendar.YEAR);
-    private DateTime beginDate = new DateTime();
-    private DateTime endDate;
+    private LocalDate beginDate = new LocalDate();
+    private LocalDate endDate;
 
     private Boolean displayPhoto = Boolean.FALSE;
     private Boolean displayName = Boolean.FALSE;
@@ -38,22 +38,23 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
 
     @Override
     public boolean hasAllneededInfo() {
-	return isForwardedFromInput();
+	return isForwardedFromInput() && beginDate != null;
     }
 
-    public DateTime getBeginDate() {
+    public LocalDate getBeginDate() {
 	return beginDate;
     }
 
-    public void setBeginDate(DateTime beginDate) {
+    public void setBeginDate(LocalDate beginDate) {
 	this.beginDate = beginDate;
+	setEndDate(beginDate.plusYears(1));
     }
 
-    public DateTime getEndDate() {
+    public LocalDate getEndDate() {
 	return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
 	this.endDate = endDate;
     }
 

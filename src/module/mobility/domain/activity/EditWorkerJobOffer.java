@@ -18,8 +18,8 @@ public class EditWorkerJobOffer extends WorkflowActivity<WorkerOfferProcess, Edi
     @Override
     protected void process(final EditWorkerJobOfferInformation information) {
 	final WorkerOffer workerOffer = information.getProcess().getWorkerOffer();
-	workerOffer.setBeginDate(information.getBeginDate());
-	workerOffer.setEndDate(information.getEndDate());
+	workerOffer.setBeginDate(information.getBeginDate().toDateTimeAtStartOfDay());
+	workerOffer.setEndDate(information.getEndDate().toDateTimeAtStartOfDay());
 
 	workerOffer.setDisplayPhoto(information.getDisplayPhoto());
 	workerOffer.setDisplayName(information.getDisplayName());

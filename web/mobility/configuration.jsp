@@ -6,6 +6,31 @@
 
 <h2><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.configuration"/></h2>
 
+
+<logic:notPresent name="mobilitySystem" property="organizationalModel">
+	<p>
+		<bean:message key="label.mobility.organizationalModel.not.defined" bundle="MOBILITY_RESOURCES"/>
+		<br/>
+		<html:link action="/mobility.do?method=prepareSelectOrganizationalModel">
+			<bean:message key="label.mobility.select.organizationalModel" bundle="MOBILITY_RESOURCES"/>
+		</html:link>
+	</p>
+</logic:notPresent>
+<logic:present name="mobilitySystem" property="organizationalModel">
+	<br/>
+	<div class="orgTBox orgTBoxLight">
+		<html:link action="/organizationModel.do?method=viewModel" paramId="organizationalModelOid" paramName="mobilitySystem" paramProperty="organizationalModel.externalId">
+			<bean:write name="mobilitySystem" property="organizationalModel.name.content"/>
+		</html:link>
+	</div>	
+	<p>
+		<html:link action="/mobility.do?method=prepareSelectOrganizationalModel">
+			<bean:message key="label.mobility.change.organizationalModel" bundle="MOBILITY_RESOURCES"/>
+		</html:link>
+	</p>
+	<br/>
+</logic:present>
+
 <logic:present name="mobilitySystem" property="managementUnit">
 <fr:view name="mobilitySystem">
 	<fr:layout name="tabular-list">

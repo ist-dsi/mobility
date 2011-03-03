@@ -34,6 +34,15 @@ public class JobOfferBean implements Serializable {
     private String professionalExperienceRequirements;
     private Integer vacanciesNumber;
     private String requiredDocumentsForCandidacy;
+    private String additionalRemarks;
+
+    public String getAdditionalRemarks() {
+	return additionalRemarks;
+    }
+
+    public void setAdditionalRemarks(String additionalRemarks) {
+	this.additionalRemarks = additionalRemarks;
+    }
 
     public String getRequiredDocumentsForCandidacy() {
 	return requiredDocumentsForCandidacy;
@@ -63,6 +72,7 @@ public class JobOfferBean implements Serializable {
 	setProfessionalExperienceRequirements(jobOffer.getProfessionalExperienceRequirements());
 	setVacanciesNumber(jobOffer.getVacanciesNumber());
 	setRequiredDocumentsForCandidacy(jobOffer.getRequiredDocumentsForCandidacy());
+	setAdditionalRemarks(jobOffer.getAdditionalRemarks());
     }
 
     @Service

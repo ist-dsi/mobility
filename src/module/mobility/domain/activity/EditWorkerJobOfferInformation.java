@@ -5,12 +5,12 @@ import module.mobility.domain.WorkerOfferProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 
-import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 
 public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOfferProcess> {
 
-    private DateTime beginDate;
-    private DateTime endDate;
+    private LocalDate beginDate;
+    private LocalDate endDate;
 
     private Boolean displayPhoto;
     private Boolean displayName;
@@ -26,95 +26,96 @@ public class EditWorkerJobOfferInformation extends ActivityInformation<WorkerOff
 	    WorkflowActivity<WorkerOfferProcess, ? extends ActivityInformation<WorkerOfferProcess>> activity) {
 	super(process, activity);
 	final WorkerOffer workerOffer = process.getWorkerOffer();
-        setBeginDate(workerOffer.getBeginDate());
-        setEndDate(workerOffer.getEndDate());
+	setBeginDate(workerOffer.getBeginDate().toLocalDate());
+	setEndDate(workerOffer.getEndDate().toLocalDate());
 
-        setDisplayPhoto(workerOffer.getDisplayPhoto());
-        setDisplayName(workerOffer.getDisplayName());
-        setDisplayDateOfBirth(workerOffer.getDisplayDateOfBirth());
+	setDisplayPhoto(workerOffer.getDisplayPhoto());
+	setDisplayName(workerOffer.getDisplayName());
+	setDisplayDateOfBirth(workerOffer.getDisplayDateOfBirth());
 
-        setDisplayCarrer(workerOffer.getDisplayCarrer());
-        setDisplayCategory(workerOffer.getDisplayCategory());
+	setDisplayCarrer(workerOffer.getDisplayCarrer());
+	setDisplayCategory(workerOffer.getDisplayCategory());
 
-        setDisplayQualifications(workerOffer.getDisplayQualifications());
-        setDisplayCurriculum(workerOffer.getDisplayCurriculum());
+	setDisplayQualifications(workerOffer.getDisplayQualifications());
+	setDisplayCurriculum(workerOffer.getDisplayCurriculum());
     }
 
     @Override
     public boolean hasAllneededInfo() {
-        return isForwardedFromInput() && beginDate != null;
+	return isForwardedFromInput() && beginDate != null;
     }
 
-    public DateTime getBeginDate() {
-        return beginDate;
+    public LocalDate getBeginDate() {
+	return beginDate;
     }
 
-    public void setBeginDate(DateTime beginDate) {
-        this.beginDate = beginDate;
+    public void setBeginDate(LocalDate beginDate) {
+	this.beginDate = beginDate;
+	setEndDate(beginDate.plusYears(1));
     }
 
-    public DateTime getEndDate() {
-        return endDate;
+    public LocalDate getEndDate() {
+	return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
-        this.endDate = endDate;
+    public void setEndDate(LocalDate endDate) {
+	this.endDate = endDate;
     }
 
     public Boolean getDisplayName() {
-        return displayName;
+	return displayName;
     }
 
     public void setDisplayName(Boolean displayName) {
-        this.displayName = displayName;
+	this.displayName = displayName;
     }
 
     public Boolean getDisplayDateOfBirth() {
-        return displayDateOfBirth;
+	return displayDateOfBirth;
     }
 
     public void setDisplayDateOfBirth(Boolean displayDateOfBirth) {
-        this.displayDateOfBirth = displayDateOfBirth;
+	this.displayDateOfBirth = displayDateOfBirth;
     }
 
     public Boolean getDisplayCarrer() {
-        return displayCarrer;
+	return displayCarrer;
     }
 
     public void setDisplayCarrer(Boolean displayCarrer) {
-        this.displayCarrer = displayCarrer;
+	this.displayCarrer = displayCarrer;
     }
 
     public Boolean getDisplayCategory() {
-        return displayCategory;
+	return displayCategory;
     }
 
     public void setDisplayCategory(Boolean displayCategory) {
-        this.displayCategory = displayCategory;
+	this.displayCategory = displayCategory;
     }
 
     public Boolean getDisplayPhoto() {
-        return displayPhoto;
+	return displayPhoto;
     }
 
     public void setDisplayPhoto(Boolean displayPhoto) {
-        this.displayPhoto = displayPhoto;
+	this.displayPhoto = displayPhoto;
     }
 
     public Boolean getDisplayQualifications() {
-        return displayQualifications;
+	return displayQualifications;
     }
 
     public void setDisplayQualifications(Boolean displayQualifications) {
-        this.displayQualifications = displayQualifications;
+	this.displayQualifications = displayQualifications;
     }
 
     public Boolean getDisplayCurriculum() {
-        return displayCurriculum;
+	return displayCurriculum;
     }
 
     public void setDisplayCurriculum(Boolean displayCurriculum) {
-        this.displayCurriculum = displayCurriculum;
+	this.displayCurriculum = displayCurriculum;
     }
 
 }

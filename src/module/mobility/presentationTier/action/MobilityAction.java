@@ -22,7 +22,9 @@ import module.mobility.domain.util.JobOfferBean;
 import module.mobility.domain.util.OfferSearch;
 import module.mobility.domain.util.OfferSearch.OfferSearchOwner;
 import module.mobility.domain.util.OfferSearch.OfferSearchState;
+import module.organization.domain.OrganizationalModel;
 import module.organization.domain.Person;
+import module.organization.presentationTier.actions.OrganizationModelAction;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.presentationTier.WorkflowLayoutContext;
@@ -174,6 +176,29 @@ public class MobilityAction extends ContextBaseAction {
     public ActionForward configuration(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
 	    final HttpServletResponse response) {
 	final MobilitySystem mobilitySystem = MobilitySystem.getInstance();
+	request.setAttribute("mobilitySystem", mobilitySystem);
+	return forward(request, "/mobility/configuration.jsp");
+    }
+
+    @Override
+    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) throws Exception {
+	final ActionForward forward = super.execute(mapping, form, request, response);
+	OrganizationModelAction.addHeadToLayoutContext(request);
+	return forward;
+    }
+
+    public ActionForward prepareSelectOrganizationalModel(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	OrganizationModelAction.viewModels(request);
+	return forward(request, "/mobility/selectOrganizationalModel.jsp");
+    }
+
+    public ActionForward selectOrganizationalModel(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	final MobilitySystem mobilitySystem = MobilitySystem.getInstance();
+	final OrganizationalModel organizationalModel = getDomainObject(request, "organizationalModelOid");
+	mobilitySystem.setOrganizationalModel(organizationalModel);
 	request.setAttribute("mobilitySystem", mobilitySystem);
 	return forward(request, "/mobility/configuration.jsp");
     }

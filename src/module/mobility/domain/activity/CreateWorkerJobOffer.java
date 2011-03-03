@@ -20,8 +20,8 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
     protected void process(final WorkerJobOfferInformation information) {
 	final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
 	final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-	final WorkerOffer workerOffer = new WorkerOffer(personalPortfolio, information.getYear(), information.getBeginDate(),
-		information.getEndDate(), information.getFiles());
+	final WorkerOffer workerOffer = new WorkerOffer(personalPortfolio, information.getYear(), information.getBeginDate()
+		.toDateTimeAtStartOfDay(), information.getEndDate().toDateTimeAtStartOfDay(), information.getFiles());
 
 	// workerOffer.setDisplayPhoto(information.getDisplayPhoto());
 	// workerOffer.setDisplayName(information.getDisplayName());

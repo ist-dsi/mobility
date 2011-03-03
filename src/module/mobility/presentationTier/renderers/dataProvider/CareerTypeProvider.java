@@ -21,6 +21,7 @@ public class CareerTypeProvider implements DataProvider {
 	careers.add(CareerType.SENIOR_TECHNICIAN);
 	careers.add(CareerType.TECHNICAL_ASSISTANT);
 	careers.add(CareerType.TECHNICAL_OPERATION);
+	careers.add(CareerType.INFORMATIC);
 	return careers;
     }
 

@@ -43,6 +43,7 @@ class JobOffer{
 	String professionalExperienceRequirements;
 	Integer vacanciesNumber;
 	String requiredDocumentsForCandidacy;
+	String additionalRemarks;
 }
 
 class JobOfferCandidacy{
@@ -108,6 +109,11 @@ class task.CreatePersonalPortfolios extends .myorg.domain.scheduler.Task {
 relation MyOrgMobilitySystem {
 	.myorg.domain.MyOrg playsRole myOrg;
 	MobilitySystem playsRole mobilitySystem;
+}
+
+relation MobilitySystemOrganizationalModel {
+	MobilitySystem playsRole mobilitySystem;
+	.module.organization.domain.OrganizationalModel playsRole organizationalModel;
 }
 
 relation MobilitySystemMobilityYear {

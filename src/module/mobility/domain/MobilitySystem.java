@@ -8,6 +8,7 @@ import java.util.TreeSet;
 
 import module.organization.domain.Accountability;
 import module.organization.domain.AccountabilityType;
+import module.organization.domain.OrganizationalModel;
 import module.organization.domain.Person;
 import module.organization.domain.Unit;
 import myorg.applicationTier.Authenticate.UserView;
@@ -36,6 +37,12 @@ public class MobilitySystem extends MobilitySystem_Base {
     private MobilitySystem(final MyOrg myOrg) {
 	super();
 	setMyOrg(myOrg);
+    }
+
+    @Service
+    @Override
+    public void setOrganizationalModel(OrganizationalModel organizationalModel) {
+	super.setOrganizationalModel(organizationalModel);
     }
 
     public SortedSet<Accountability> getManagementMembers() {

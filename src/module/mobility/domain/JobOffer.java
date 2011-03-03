@@ -74,6 +74,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	setFormationRequirements(jobOfferBean.getFormationRequirements());
 	setProfessionalExperienceRequirements(jobOfferBean.getProfessionalExperienceRequirements());
 	setRequiredDocumentsForCandidacy(jobOfferBean.getRequiredDocumentsForCandidacy());
+	setAdditionalRemarks(jobOfferBean.getAdditionalRemarks());
     }
 
     public Person getOwner() {
