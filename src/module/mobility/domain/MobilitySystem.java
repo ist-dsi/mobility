@@ -14,6 +14,9 @@ import module.organization.domain.Unit;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.MyOrg;
 import myorg.domain.User;
+
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.fenixWebFramework.services.Service;
 
 public class MobilitySystem extends MobilitySystem_Base {
@@ -107,7 +110,10 @@ public class MobilitySystem extends MobilitySystem_Base {
 	Collection<String> emails = new HashSet<String>();
 	for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
 	    if (personalPortfolio.getNotificationService()) {
-		emails.add(personalPortfolio.getEmail());
+		String email = personalPortfolio.getEmail();
+		if (!StringUtils.isEmpty(email)) {
+		    emails.add(email);
+		}
 	    }
 	}
 	return emails;
