@@ -11,6 +11,7 @@ import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForEvaluationActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForJuryDefinitionActivity;
+import module.mobility.domain.activity.CancelJobOfferSubmitionForSelectionActivity;
 import module.mobility.domain.activity.ChooseJobOfferCandidatesActivity;
 import module.mobility.domain.activity.EditJobOfferActivity;
 import module.mobility.domain.activity.JobOfferApprovalActivity;
@@ -43,6 +44,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux = new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
 	activitiesAux.add(new EditJobOfferActivity());
 	activitiesAux.add(new CancelJobOfferActivity());
+	activitiesAux.add(new CancelJobOfferSubmitionForSelectionActivity());
 
 	activitiesAux.add(new SubmitJobOfferForSelectionActivity());
 	activitiesAux.add(new JobOfferSelectionActivity());
