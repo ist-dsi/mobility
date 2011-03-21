@@ -13,7 +13,7 @@
 <bean:define id="OID" name="process" property="OID"/>
 <wf:isActive processName="process" activityName="SubmitCandidacyActivity" scope="request">
 	<p class="mbottom15">				
-		<html:link action="<%= "/mobility.do?method=submitCandidacy&OID="+OID%>">
+		<html:link action="<%= "/mobility.do?method=prepareSubmitCandidacy&OID="+OID%>">
 			<bean:message key="activity.SubmitCandidacyActivity" bundle="MOBILITY_RESOURCES"/>
 		</html:link>
 	</p>

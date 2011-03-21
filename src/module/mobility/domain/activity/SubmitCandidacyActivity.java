@@ -36,4 +36,9 @@ public class SubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess, S
 	return "resources/MobilityResources";
     }
 
+    @Override
+    public boolean isDefaultInputInterfaceUsed() {
+	return false;
+    }
+
 }

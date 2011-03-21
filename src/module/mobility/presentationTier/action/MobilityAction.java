@@ -125,17 +125,43 @@ public class MobilityAction extends ContextBaseAction {
 	return forward(request, "/mobility/showWorkerOfferProcess.jsp");
     }
 
-    public ActionForward submitCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-	    final HttpServletResponse response) {
+    public ActionForward prepareSubmitCandidacy(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
 	JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
 	SubmitCandidacyActivity submitCandidacyActivity = new SubmitCandidacyActivity();
 	if (submitCandidacyActivity.isActive(jobOfferProcess)) {
 	    ActivityInformation<JobOfferProcess> activityInformation = submitCandidacyActivity
 		    .getActivityInformation(jobOfferProcess);
-	    activityInformation.execute();
+	    final Context context = getContext(request);
+	    final WorkflowLayoutContext workflowLayoutContext = activityInformation.getProcess().getLayout();
+	    workflowLayoutContext.setElements(context.getPath());
+	    setContext(request, workflowLayoutContext);
+
+	    return ProcessManagement.performActivityPostback(activityInformation, request);
+
 	}
 	request.setAttribute("process", jobOfferProcess);
 	return forward(request, "/mobility/showJobOfferProcess.jsp");
+    }
+
+    public ActionForward submitCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
+	    final HttpServletResponse response) {
+	ActivityInformation<JobOfferProcess> activityInformation = getRenderedObject();
+	JobOfferProcess jobOfferProcess = activityInformation.getProcess();
+	if (activityInformation.getActivity().isActive(jobOfferProcess)) {
+	    activityInformation.execute();
+	}
+	return returnToJobOfferProcess(mapping, form, request, response);
+    }
+
+    public ActionForward returnToJobOfferProcess(final ActionMapping mapping, final ActionForm form,
+	    final HttpServletRequest request, final HttpServletResponse response) {
+	ActivityInformation<JobOfferProcess> activityInformation = getRenderedObject();
+	request.setAttribute("OID", activityInformation.getProcess().getExternalId());
+	if (activityInformation.getProcess().getCanManageProcess()) {
+	    return viewJobOfferProcessToManage(mapping, form, request, response);
+	}
+	return viewJobOfferProcess(mapping, form, request, response);
     }
 
     public ActionForward unSubmitCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
