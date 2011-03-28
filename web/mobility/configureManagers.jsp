@@ -8,7 +8,7 @@
 
 <fr:edit id="mobilitySystem" name="mobilitySystem" action="/mobility.do?method=configuration">
 	<fr:schema type="module.mobility.domain.MobilitySystem" bundle="ORGANIZATION_RESOURCES">
-		<fr:slot name="managersQueue" layout="menu-select" key="label.mobility.configuration.queue" bundle="ORGANIZATION_RESOURCES" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="managersQueue" layout="menu-select" key="label.mobility.configuration.queue" bundle="ORGANIZATION_RESOURCES">
         	<fr:property name="providerClass" value="module.workflow.presentationTier.provider.WorkflowUserGroupQueueProvider" />
         	<fr:property name="format" value="${name}"/>
         	<fr:property name="classes" value="nobullet noindent"/>
