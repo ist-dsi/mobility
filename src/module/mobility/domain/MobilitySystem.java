@@ -3,14 +3,8 @@ package module.mobility.domain;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
-import module.organization.domain.Accountability;
-import module.organization.domain.AccountabilityType;
 import module.organization.domain.OrganizationalModel;
-import module.organization.domain.Person;
-import module.organization.domain.Unit;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.MyOrg;
 import myorg.domain.User;
@@ -48,62 +42,19 @@ public class MobilitySystem extends MobilitySystem_Base {
 	super.setOrganizationalModel(organizationalModel);
     }
 
-    public SortedSet<Accountability> getManagementMembers() {
-	final SortedSet<Accountability> managementMembers = new TreeSet<Accountability>(
-		Accountability.COMPARATOR_BY_CHILD_PARTY_NAMES);
-	if (hasManagementUnit() && hasManagementAccountabilityType()) {
-	    final Unit accountingUnit = getManagementUnit();
-	    final AccountabilityType accountabilityType = getManagementAccountabilityType();
-	    for (final Accountability accountability : accountingUnit.getChildAccountabilitiesSet()) {
-		if (accountability.getAccountabilityType() == accountabilityType && accountability.getChild().isPerson()) {
-		    managementMembers.add(accountability);
-		}
-	    }
-	}
-	return managementMembers;
-    }
-
-    public Set<User> getManagementUsers() {
-	final Set<User> managementUsers = new HashSet<User>();
-	if (hasManagementUnit() && hasManagementAccountabilityType()) {
-	    final Unit accountingUnit = getManagementUnit();
-	    final AccountabilityType accountabilityType = getManagementAccountabilityType();
-	    for (final Accountability accountability : accountingUnit.getChildAccountabilitiesSet()) {
-		if (accountability.getAccountabilityType() == accountabilityType && accountability.getChild().isPerson()) {
-		    managementUsers.add(((Person) accountability.getChild()).getUser());
-		}
-	    }
-	}
-	return managementUsers;
-    }
-
     public boolean isManagementMember() {
-	return getManagementAccountability(UserView.getCurrentUser()) != null;
+	return isManagementMember(UserView.getCurrentUser());
     }
 
     public boolean isManagementMember(final User user) {
-	return getManagementAccountability(user) != null;
+	if (getManagersQueue() != null) {
+	    return getManagersQueue().isUserAbleToAccessQueue(user);
+	}
+	return false;
     }
 
-    public Accountability getManagementAccountability(final User user) {
-	if (hasManagementUnit() && hasManagementAccountabilityType()) {
-	    final Unit managementeUnit = getManagementUnit();
-	    final AccountabilityType accountabilityType = getManagementAccountabilityType();
-	    return findAccountability(user, accountabilityType, managementeUnit);
-	}
-	return null;
-    }
-
-    private Accountability findAccountability(final User user, final AccountabilityType accountabilityType, final Unit unit) {
-	for (final Accountability accountability : unit.getChildAccountabilitiesSet()) {
-	    if (accountability.getAccountabilityType() == accountabilityType && accountability.getChild().isPerson()) {
-		final Person person = (Person) accountability.getChild();
-		if (person.getUser() == user) {
-		    return accountability;
-		}
-	    }
-	}
-	return null;
+    public Set<User> getManagementUsers() {
+	return getManagersQueue() != null ? getManagersQueue().getUsersSet() : new HashSet<User>();
     }
 
     public Collection<String> getServiceNotificationEmails() {
@@ -118,4 +69,5 @@ public class MobilitySystem extends MobilitySystem_Base {
 	}
 	return emails;
     }
+
 }

@@ -84,4 +84,14 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
 	}
 	return false;
     }
+
+    public Set<JobOfferProcess> getJobOffersWithCandidacies() {
+	final Set<JobOfferProcess> jobOffersWithCandidacies = new TreeSet<JobOfferProcess>();
+	for (final PersonalPortfolioInfo personalPortfolioInfo : getPersonalPortfolioInfoSet()) {
+	    for (JobOfferCandidacy jobOfferCandidacy : personalPortfolioInfo.getJobOfferCandidacySet()) {
+		jobOffersWithCandidacies.add(jobOfferCandidacy.getJobOffer().getJobOfferProcess());
+	    }
+	}
+	return jobOffersWithCandidacies;
+    }
 }

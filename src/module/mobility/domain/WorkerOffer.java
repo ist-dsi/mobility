@@ -84,7 +84,7 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
 
     public void approve() {
 	setApprovalDate(new DateTime());
-	setWorkerOfferApprover(MobilitySystem.getInstance().getManagementAccountability(UserView.getCurrentUser()));
+	setWorkerOfferApproverPerson(UserView.getCurrentUser().getPerson());
     }
 
 }

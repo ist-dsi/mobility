@@ -49,6 +49,10 @@
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
+		<fr:slot name="optionalDocuments" key="label.mobility.jobOffer.optionalDocuments">
+			<fr:property name="rows" value="5"/>
+			<fr:property name="columns" value="50"/>
+		</fr:slot>
 		<fr:slot name="additionalRemarks" key="label.mobility.jobOffer.additionalRemarks" layout="longText">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>

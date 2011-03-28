@@ -35,6 +35,7 @@ public class JobOfferBean implements Serializable {
     private Integer vacanciesNumber;
     private String requiredDocumentsForCandidacy;
     private String additionalRemarks;
+    private Boolean optionalDocuments;
 
     public String getAdditionalRemarks() {
 	return additionalRemarks;
@@ -73,6 +74,7 @@ public class JobOfferBean implements Serializable {
 	setVacanciesNumber(jobOffer.getVacanciesNumber());
 	setRequiredDocumentsForCandidacy(jobOffer.getRequiredDocumentsForCandidacy());
 	setAdditionalRemarks(jobOffer.getAdditionalRemarks());
+	setOptionalDocuments(jobOffer.getOptionalDocuments());
     }
 
     @Service
@@ -158,6 +160,14 @@ public class JobOfferBean implements Serializable {
 
     public void setVacanciesNumber(Integer vacanciesNumber) {
 	this.vacanciesNumber = vacanciesNumber;
+    }
+
+    public Boolean getOptionalDocuments() {
+	return optionalDocuments;
+    }
+
+    public void setOptionalDocuments(Boolean optionalDocuments) {
+	this.optionalDocuments = optionalDocuments;
     }
 
 }

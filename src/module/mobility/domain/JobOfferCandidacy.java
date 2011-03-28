@@ -18,4 +18,13 @@ public class JobOfferCandidacy extends JobOfferCandidacy_Base {
 	return getJobOffer().getChosenCandidate().contains(getPersonalPortfolioInfo());
     }
 
+    public void delete() {
+	removePersonalPortfolioInfo();
+	removeJobOffer();
+	for (; getCandidacyFileCount() != 0; getCandidacyFileIterator().next().removeJobOfferCandidacy(this))
+	    ;
+
+	deleteDomainObject();
+    }
+
 }

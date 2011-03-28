@@ -178,4 +178,30 @@
 </logic:notEmpty>
 
 
+<h3 class="mtop15 mbottom0">
+	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.myJobOffersCandidacies"/>
+</h3>
 
+<logic:empty name="personalPortfolio" property="jobOffersWithCandidacies">
+	<p>
+		<em><bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.myJobOffersCandidacies.none"/></em>
+	</p>
+</logic:empty>
+
+<logic:notEmpty name="personalPortfolio" property="jobOffersWithCandidacies">
+	<fr:view name="personalPortfolio" property="jobOffersWithCandidacies">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle3 mvert1 width100pc tdmiddle punits" />
+				<fr:property name="link(view)" value="/mobility.do?method=viewJobOfferProcess" />
+				<fr:property name="key(view)" value="label.mobility.view" />
+				<fr:property name="param(view)" value="OID" />
+				<fr:property name="bundle(view)" value="MOBILITY_RESOURCES" />
+			</fr:layout>
+			<fr:schema bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferProcess">
+				<fr:slot name="processIdentification" key="label.mobility.jobOfferProcessIdentification" />
+				<fr:slot name="jobOffer.workplacePath" key="label.mobility.jobOffer.workplace" />
+				<fr:slot name="jobOffer.careerRequirements" key="label.mobility.jobOffer.careerRequirements" />
+				<fr:slot name="jobOffer.publicationEndDate" key="label.mobility.candicaciesDeadline" />
+			</fr:schema>
+		</fr:view>
+</logic:notEmpty>

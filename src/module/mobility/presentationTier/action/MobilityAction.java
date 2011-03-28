@@ -149,7 +149,16 @@ public class MobilityAction extends ContextBaseAction {
 	ActivityInformation<JobOfferProcess> activityInformation = getRenderedObject();
 	JobOfferProcess jobOfferProcess = activityInformation.getProcess();
 	if (activityInformation.getActivity().isActive(jobOfferProcess)) {
-	    activityInformation.execute();
+	    activityInformation.markHasForwardedFromInput();
+	    if (activityInformation.hasAllneededInfo()) {
+		activityInformation.execute();
+	    } else {
+		final Context context = getContext(request);
+		final WorkflowLayoutContext workflowLayoutContext = activityInformation.getProcess().getLayout();
+		workflowLayoutContext.setElements(context.getPath());
+		setContext(request, workflowLayoutContext);
+		return ProcessManagement.performActivityPostback(activityInformation, request);
+	    }
 	}
 	return returnToJobOfferProcess(mapping, form, request, response);
     }

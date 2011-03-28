@@ -44,6 +44,7 @@ class JobOffer{
 	Integer vacanciesNumber;
 	String requiredDocumentsForCandidacy;
 	String additionalRemarks;
+	Boolean optionalDocuments;
 }
 
 class JobOfferCandidacy{
@@ -165,9 +166,23 @@ relation JobOfferApprover {
 	}
 }
 
+relation JobOfferApproverPerson {
+	.module.organization.domain.Person playsRole jobOfferApproverPerson;
+	JobOffer playsRole approvedJobOffer {
+		multiplicity *;
+	}
+}
+
 relation WorkerOfferApprover {
 	.module.organization.domain.Accountability playsRole workerOfferApprover;
 	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
+}
+
+relation WorkerOfferApproverPerson {
+	.module.organization.domain.Person playsRole workerOfferApproverPerson;
+	WorkerOffer playsRole approvedWorkerOffer {
 		multiplicity *;
 	}
 }
@@ -191,14 +206,9 @@ relation MobilityYearWorkerOffer {
 	}
 }
 
-relation MobilitySystemManagementUnit {
+relation MobilitySystemWorkflowQueue {
 	MobilitySystem playsRole mobilitySystem;
-	.module.organization.domain.Unit playsRole managementUnit;
-}
-
-relation MobilitySystemManagementAccountabilityType {
-	MobilitySystem playsRole mobilitySystem;
-	.module.organization.domain.AccountabilityType playsRole managementAccountabilityType;
+	.module.workflow.domain.WorkflowUserGroupQueue playsRole managersQueue;
 }
 
 relation MobilitySystemPersonalPortfolio {

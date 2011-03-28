@@ -40,6 +40,7 @@
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>
 	</slot>	
+	<slot name="jobOfferBean.optionalDocuments" key="label.mobility.jobOffer.optionalDocuments"/>
 	<slot name="jobOfferBean.additionalRemarks" key="label.mobility.jobOffer.additionalRemarks" layout="longText">
 		<property name="rows" value="5"/>
 		<property name="columns" value="50"/>

@@ -75,6 +75,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	setProfessionalExperienceRequirements(jobOfferBean.getProfessionalExperienceRequirements());
 	setRequiredDocumentsForCandidacy(jobOfferBean.getRequiredDocumentsForCandidacy());
 	setAdditionalRemarks(jobOfferBean.getAdditionalRemarks());
+	setOptionalDocuments(jobOfferBean.getOptionalDocuments());
     }
 
     public Person getOwner() {
@@ -97,7 +98,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     public void removeCandidacy(Person person) {
 	JobOfferCandidacy jobOfferCandidacy = getCandidacy(person);
 	if (jobOfferCandidacy != null) {
-	    getJobOfferCandidacySet().remove(jobOfferCandidacy);
+	    jobOfferCandidacy.delete();
 	}
     }
 
@@ -118,7 +119,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	setApprovalDate(new DateTime());
 	setPublicationBeginDate(publicationBeginDate);
 	setPublicationEndDate(publicationEndDate);
-	setJobOfferApprover(MobilitySystem.getInstance().getManagementAccountability(UserView.getCurrentUser()));
+	setJobOfferApproverPerson(UserView.getCurrentUser().getPerson());
 	String fromName = BundleUtil.getStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailFromName");
 	String emailSubject = BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES,
 		"message.mobility.jobOffer.emailSubject", getWorkplace().getPartyName().getContent());

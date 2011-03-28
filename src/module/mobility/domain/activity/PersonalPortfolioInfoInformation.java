@@ -116,8 +116,7 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
 	return !StringUtils.isEmpty(qualificationHolder.getQualificationType())
 		&& !StringUtils.isEmpty(qualificationHolder.getName())
 		&& !StringUtils.isEmpty(qualificationHolder.getInstitution())
-		&& !StringUtils.isEmpty(qualificationHolder.getDate())
-		&& !StringUtils.isEmpty(qualificationHolder.getClassification());
+		&& !StringUtils.isEmpty(qualificationHolder.getDate());
     }
 
     public CareerType getCarrer() {

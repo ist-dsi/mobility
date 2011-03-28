@@ -25,7 +25,7 @@ public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProc
 
     @Override
     public boolean hasAllneededInfo() {
-	return isForwardedFromInput();
+	return isForwardedFromInput() && (getProcess().getJobOffer().getOptionalDocuments() || !getFiles().isEmpty());
     }
 
     public List<ProcessFile> getFiles() {
