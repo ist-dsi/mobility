@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import pt.ist.emailNotifier.domain.Email;
+
 import module.mobility.domain.activity.CancelWorkerJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerJobOfferSubmitionForApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerOfferActivity;
@@ -21,6 +23,7 @@ import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.widgets.UnreadCommentsWidget;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
+import myorg.util.BundleUtil;
 import myorg.util.ClassNameBundle;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
@@ -80,7 +83,17 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 
     @Override
     public void notifyUserDueToComment(User user, String comment) {
-	// TODO Auto-generated method stub
+	List<String> toAddress = new ArrayList<String>();
+	final String email = user.getPerson().getRemotePerson().getEmailForSendingEmails();
+	if (email != null) {
+	    toAddress.add(email);
+
+	    final User loggedUser = UserView.getCurrentUser();
+	    new Email("Aplicações Centrais do IST", "noreply@ist.utl.pt", new String[] {}, toAddress, Collections.EMPTY_LIST,
+		    Collections.EMPTY_LIST,
+		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
+		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+	}
     }
 
     @Override
