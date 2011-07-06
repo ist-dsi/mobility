@@ -13,6 +13,7 @@ import module.organizationIst.domain.IstAccountabilityType;
 import module.workflow.domain.LabelLog;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
+import myorg.domain.VirtualHost;
 import myorg.domain.exceptions.DomainException;
 import myorg.util.BundleUtil;
 
@@ -133,7 +134,8 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 		"message.mobility.jobOffer.emailBody", getWorkplacePath(), getJobOfferProcess().getProcessIdentification(),
 		getVacanciesNumber().toString(), StringUtils.join(carrerRequirements, ", "));
 
-	new Email(fromName, "noreply@ist.utl.pt", new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST, MobilitySystem
+	final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
+	new Email(fromName, virtualHost.getSystemEmailAddress(), new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST, MobilitySystem
 		.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
     }
 

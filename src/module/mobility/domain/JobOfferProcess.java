@@ -36,6 +36,7 @@ import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.widgets.UnreadCommentsWidget;
 import myorg.applicationTier.Authenticate.UserView;
 import myorg.domain.User;
+import myorg.domain.VirtualHost;
 import myorg.util.BundleUtil;
 import myorg.util.ClassNameBundle;
 
@@ -123,7 +124,9 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	    toAddress.add(email);
 
 	    final User loggedUser = UserView.getCurrentUser();
-	    new Email("Aplicações Centrais do IST", "noreply@ist.utl.pt", new String[] {}, toAddress, Collections.EMPTY_LIST,
+	    final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
+	    new Email(virtualHost.getApplicationSubTitle().getContent(),
+			    virtualHost.getSystemEmailAddress(), new String[] {}, toAddress, Collections.EMPTY_LIST,
 		    Collections.EMPTY_LIST,
 		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
 		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
