@@ -60,7 +60,8 @@ public class MobilitySystem extends MobilitySystem_Base {
     public Collection<String> getServiceNotificationEmails() {
 	Collection<String> emails = new HashSet<String>();
 	for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
-	    if (personalPortfolio.getNotificationService()) {
+	    final Boolean notificationService = personalPortfolio.getNotificationService();
+	    if (notificationService != null && notificationService.booleanValue()) {
 		String email = personalPortfolio.getEmail();
 		if (!StringUtils.isEmpty(email)) {
 		    emails.add(email);
