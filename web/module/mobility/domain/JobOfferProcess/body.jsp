@@ -19,4 +19,17 @@
 	</logic:equal>
 </logic:equal>
 
+<logic:equal name="process" property="canManageProcess" value="true">
+	<logic:notEqual name="jobOffer" property="juryMemberCount" value="0">
+		<h3 class="mtop1">
+			<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.jury"/>
+		</h3>
+		<fr:view name="jobOffer" property="juryMember" schema="show.juryMember">
+			<fr:layout name="tabular">
+				<fr:property name="classes" value="tstyle3 mvert1 width100pc" />
+			</fr:layout>
+		</fr:view>
+	</logic:notEqual>
+</logic:equal>
+
 <jsp:include page="jobOfferBody.jsp"/>

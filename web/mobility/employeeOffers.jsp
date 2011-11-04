@@ -22,10 +22,12 @@
 				<fr:property name="defaultOptionHidden" value="true"/>
 				<fr:property name="excludedValues" value="WITH_MY_CANDIDACY"/>
 			</fr:slot>
-			<fr:slot name="offerSearchState" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			--%>
+			<fr:slot name="mobilityProcessStage" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:property name="excludedValues" value="SELECTION,EVALUATION,JURY_DEFINITION,CANDIDACY_EVALUATION,CONCLUDED_CANDIDACY,ARCHIVED"/>
 				<fr:property name="defaultOptionHidden" value="true"/>
 			</fr:slot>
-			--%>
+			
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="form" />

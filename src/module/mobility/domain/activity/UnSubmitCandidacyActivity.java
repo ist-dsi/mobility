@@ -13,7 +13,7 @@ public class UnSubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess,
     @Override
     public boolean isActive(JobOfferProcess process, User user) {
 	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.hasCandidacy(user) && jobOffer.isInCandidacyEvaluationPeriod();
+	return jobOffer.hasCandidacy(user) && jobOffer.isInCandidacyPeriod();
     }
 
     @Override

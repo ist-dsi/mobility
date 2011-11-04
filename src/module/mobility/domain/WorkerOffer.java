@@ -50,7 +50,7 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
     }
 
     public boolean isActive() {
-	return !getCanceled() && (getEndDate() == null || getEndDate().isAfterNow()) && getBeginDate().isBeforeNow();
+	return !getCanceled() && (getEndDate() != null && getEndDate().isAfterNow()) && getBeginDate().isBeforeNow();
     }
 
     public boolean isActiveOrPendingApproval() {

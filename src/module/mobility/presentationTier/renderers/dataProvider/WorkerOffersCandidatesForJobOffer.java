@@ -20,7 +20,7 @@ public class WorkerOffersCandidatesForJobOffer implements DataProvider {
     public Object provide(Object arg0, Object arg1) {
 	List<WorkerOffer> workerOfferList = new ArrayList<WorkerOffer>();
 	for (WorkerOffer workerOffer : MyOrg.getInstance().getMobilitySystem().getWorkerOffer()) {
-	    if (workerOffer.isActive()) {
+	    if (workerOffer.isActive() && workerOffer.isApproved()) {
 		workerOfferList.add(workerOffer);
 	    }
 	}

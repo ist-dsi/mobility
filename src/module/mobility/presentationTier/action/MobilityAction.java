@@ -67,7 +67,6 @@ public class MobilityAction extends ContextBaseAction {
 	OfferSearch offerSearch = getRenderedObject("offerSearch");
 	if (offerSearch == null) {
 	    offerSearch = new OfferSearch();
-	    offerSearch.init();
 	}
 	request.setAttribute("offerSearch", offerSearch);
 	request.setAttribute("processes", offerSearch.doJobOfferSearch());
@@ -308,9 +307,12 @@ public class MobilityAction extends ContextBaseAction {
     public ActionForward updatePersonalPortfolioInfo(final ActionMapping mapping, final ActionForm form,
 	    final HttpServletRequest request, final HttpServletResponse response) {
 	final WorkerJobOfferInformation workerJobOfferInformation = getRenderedObject("CreateWorkerJobOffer");
-	workerJobOfferInformation.getActivity().execute(workerJobOfferInformation);
-	WorkerOffer workerOffer = workerJobOfferInformation.getWorkerOffer();
-	return ProcessManagement.forwardToProcess(workerOffer.getWorkerOfferProcess());
+	if (workerJobOfferInformation != null) {
+	    workerJobOfferInformation.getActivity().execute(workerJobOfferInformation);
+	    WorkerOffer workerOffer = workerJobOfferInformation.getWorkerOffer();
+	    return ProcessManagement.forwardToProcess(workerOffer.getWorkerOfferProcess());
+	}
+	return portfolio(mapping, form, request, response);
     }
 
     public ActionForward addPersonToJobOfferJury(final ActionMapping mapping, final ActionForm form,

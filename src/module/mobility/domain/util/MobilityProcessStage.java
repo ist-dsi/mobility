@@ -6,7 +6,7 @@ import myorg.util.BundleUtil;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 public enum MobilityProcessStage implements IPresentableEnum {
-    UNDER_CONSTRUCTION, SELECTION, EVALUATION, JURY_DEFINITION, PUBLISHED, CANDIDACY_EVALUATION, CONCLUDED, CONCLUDED_CANDIDACY;
+    UNDER_CONSTRUCTION, SELECTION, EVALUATION, JURY_DEFINITION, PENDING_PUBLISHMENT, PUBLISHED, CANDIDACY_EVALUATION, CONCLUDED_CANDIDACY, CONCLUDED, ARCHIVED;
 
     private static final String BUNDLE = "resources.MobilityResources";
     private static final String KEY_PREFIX = "label.MobilityProcessStage.";

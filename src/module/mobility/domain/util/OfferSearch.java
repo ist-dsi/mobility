@@ -52,14 +52,26 @@ public class OfferSearch implements Serializable {
 
     private OfferSearchState offerSearchState;
 
+    private MobilityProcessStage workerOfferProcessStage;
+
+    private MobilityProcessStage mobilityProcessStage;
+
     private String processNumber;
 
     public OfferSearch() {
+	setOfferSearchOwner(OfferSearchOwner.ALL);
+	setOfferSearchState(OfferSearchState.ALL);
+	if (MobilitySystem.getInstance().isManagementMember()) {
+	    setMobilityProcessStage(MobilityProcessStage.PUBLISHED);
+	}
     }
 
     public OfferSearch(OfferSearchOwner offerSearchOwner, OfferSearchState offerSearchState) {
 	setOfferSearchOwner(offerSearchOwner);
 	setOfferSearchState(offerSearchState);
+	if (MobilitySystem.getInstance().isManagementMember()) {
+	    setMobilityProcessStage(MobilityProcessStage.PUBLISHED);
+	}
     }
 
     public String getProcessNumber() {
@@ -78,17 +90,28 @@ public class OfferSearch implements Serializable {
 	this.offerSearchOwner = offerSearchOwner;
     }
 
+    public MobilityProcessStage getMobilityProcessStage() {
+	return mobilityProcessStage;
+    }
+
+    public void setMobilityProcessStage(MobilityProcessStage mobilityProcessStage) {
+	this.mobilityProcessStage = mobilityProcessStage;
+    }
+
+    public MobilityProcessStage getWorkerOfferProcessStage() {
+	return workerOfferProcessStage;
+    }
+
+    public void setWorkerOfferProcessStage(MobilityProcessStage workerOfferProcessStage) {
+	this.workerOfferProcessStage = workerOfferProcessStage;
+    }
+
     public OfferSearchState getOfferSearchState() {
 	return offerSearchState;
     }
 
     public void setOfferSearchState(OfferSearchState offerSearchState) {
 	this.offerSearchState = offerSearchState;
-    }
-
-    public void init() {
-	setOfferSearchOwner(OfferSearchOwner.ALL);
-	setOfferSearchState(OfferSearchState.ALL);
     }
 
     public JobOfferProcess getJobOfferProcess(User user) {
@@ -113,7 +136,6 @@ public class OfferSearch implements Serializable {
 	return null;
     }
 
-    //
     public Set<JobOfferProcess> getJobOfferSet() {
 	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
 	User user = UserView.getCurrentUser();
@@ -162,8 +184,9 @@ public class OfferSearch implements Serializable {
 	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
 	User user = UserView.getCurrentUser();
 	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
-	    if (jobOffer.getJobOfferProcess().isAccessible(user) && isSatisfiedJobOfferOwner(jobOffer, user)
-		    && isSatisfiedState(jobOffer.isActive(), user)
+	    if ((jobOffer.getJobOfferProcess().isAccessible(user) || MobilitySystem.getInstance().isManagementMember(user))
+		    && isSatisfiedJobOfferOwner(jobOffer, user) && isSatisfiedState(jobOffer)
+		    && isSatisfiedState(jobOffer.isActive())
 		    && isSatisfiedProcessNumber(jobOffer.getJobOfferProcess().getProcessIdentification())) {
 		result.add(jobOffer.getJobOfferProcess());
 	    }
@@ -175,8 +198,8 @@ public class OfferSearch implements Serializable {
 	Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
 	User user = UserView.getCurrentUser();
 	for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
-	    if (workerOffer.getWorkerOfferProcess().isAccessible(user) && isSatisfiedOwner(workerOffer.getOwner(), user)
-		    && isSatisfiedState(workerOffer.isActive(), user)
+	    if ((workerOffer.getWorkerOfferProcess().isAccessible(user) || MobilitySystem.getInstance().isManagementMember(user))
+		    && isSatisfiedOwner(workerOffer.getOwner(), user) && isSatisfiedState(workerOffer)
 		    && isSatisfiedProcessNumber(workerOffer.getWorkerOfferProcess().getProcessIdentification())) {
 		result.add(workerOffer.getWorkerOfferProcess());
 	    }
@@ -188,10 +211,50 @@ public class OfferSearch implements Serializable {
 	return StringUtils.isEmpty(getProcessNumber()) || processIdentification.contains(getProcessNumber());
     }
 
-    private boolean isSatisfiedState(Boolean isActive, User user) {
+    private boolean isSatisfiedState(Boolean isActive) {
 	return getOfferSearchState().equals(OfferSearchState.ALL)
 		|| (getOfferSearchState().equals(OfferSearchState.ACTIVE) && isActive)
 		|| (getOfferSearchState().equals(OfferSearchState.INACTIVE) && !isActive);
+    }
+
+    private boolean isSatisfiedState(JobOffer jobOffer) {
+	if (getMobilityProcessStage() == null) {
+	    return true;
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.UNDER_CONSTRUCTION)) {
+	    return jobOffer.isUnderConstruction();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.SELECTION)) {
+	    return jobOffer.isPendingSelection();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.EVALUATION)) {
+	    return jobOffer.isUnderSelectionEvaluation();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.CONCLUDED)) {
+	    return jobOffer.isConcluded() && !jobOffer.isArchived();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.JURY_DEFINITION)) {
+	    return jobOffer.isPendingJuryDefinition();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.PENDING_PUBLISHMENT)) {
+	    return jobOffer.isPendingApproval();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.PUBLISHED)) {
+	    return jobOffer.isInCandidacyPeriod();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.CANDIDACY_EVALUATION)) {
+	    return jobOffer.isUnderCandidacyEvaluation();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.ARCHIVED)) {
+	    return jobOffer.isArchived();
+	}
+	return false;
+    }
+
+    private boolean isSatisfiedState(WorkerOffer workerOffer) {
+	if (getMobilityProcessStage() == null) {
+	    return true;
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.UNDER_CONSTRUCTION)) {
+	    return workerOffer.isUnderConstruction();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.PENDING_PUBLISHMENT)) {
+	    return workerOffer.isPendingApproval();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.PUBLISHED)) {
+	    return workerOffer.isApproved() && workerOffer.isActive();
+	} else if (getMobilityProcessStage().equals(MobilityProcessStage.CONCLUDED)) {
+	    return workerOffer.isApproved() && !workerOffer.isActive();
+	}
+	return false;
     }
 
     private boolean isSatisfiedJobOfferOwner(JobOffer jobOffer, User user) {
@@ -203,4 +266,5 @@ public class OfferSearch implements Serializable {
 	return getOfferSearchOwner().equals(OfferSearchOwner.ALL)
 		|| (getOfferSearchOwner().equals(OfferSearchOwner.MINE) && offerPerson.equals(user.getPerson()));
     }
+
 }

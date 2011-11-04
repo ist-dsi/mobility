@@ -22,9 +22,18 @@
 			<fr:slot name="offerSearchOwner" key="label.module.mobility.jobOffers" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
 				<fr:property name="defaultOptionHidden" value="true"/>
 			</fr:slot>
-			<fr:slot name="offerSearchState" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
-				<fr:property name="defaultOptionHidden" value="true"/>
-			</fr:slot>
+			
+			<%  module.mobility.domain.MobilitySystem mobilitySystem = module.mobility.domain.MobilitySystem.getInstance();
+			if (mobilitySystem.isManagementMember()) { %>
+				<fr:slot name="mobilityProcessStage" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="excludedValues" value="CONCLUDED_CANDIDACY"/>
+					<fr:property name="defaultOptionHidden" value="true"/>
+				</fr:slot>
+			<%} else { %>
+				<fr:slot name="offerSearchState" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+					<fr:property name="defaultOptionHidden" value="true"/>
+				</fr:slot>
+			<%}%>
 		</fr:schema>
 		<fr:layout name="tabular">
 			<fr:property name="classes" value="form" />

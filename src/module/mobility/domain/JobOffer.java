@@ -135,8 +135,8 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 		getVacanciesNumber().toString(), StringUtils.join(carrerRequirements, ", "));
 
 	final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-	new Email(fromName, virtualHost.getSystemEmailAddress(), new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST, MobilitySystem
-		.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
+	new Email(fromName, virtualHost.getSystemEmailAddress(), new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+		MobilitySystem.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
     }
 
     public String getWorkplacePath() {
@@ -219,7 +219,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 	return !getCanceled() && getConclusionDate() == null && isCandidacyPeriodFinish() && hasAnyJobOfferCandidacy();
     }
 
-    public boolean isInCandidacyEvaluationPeriod() {
+    public boolean isInCandidacyPeriod() {
 	Interval candidacyPeriod = getCandidacyPeriod();
 	return !getCanceled() && candidacyPeriod != null && candidacyPeriod.containsNow();
     }

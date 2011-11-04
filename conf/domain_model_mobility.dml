@@ -159,23 +159,9 @@ relation JuryMemberPerson {
 	}
 }
 
-relation JobOfferApprover {
-	.module.organization.domain.Accountability playsRole jobOfferApprover;
-	JobOffer playsRole jobOffer {
-		multiplicity *;
-	}
-}
-
 relation JobOfferApproverPerson {
 	.module.organization.domain.Person playsRole jobOfferApproverPerson;
 	JobOffer playsRole approvedJobOffer {
-		multiplicity *;
-	}
-}
-
-relation WorkerOfferApprover {
-	.module.organization.domain.Accountability playsRole workerOfferApprover;
-	WorkerOffer playsRole workerOffer {
 		multiplicity *;
 	}
 }
