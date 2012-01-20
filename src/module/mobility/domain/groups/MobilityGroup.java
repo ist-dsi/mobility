@@ -3,6 +3,7 @@ package module.mobility.domain.groups;
 import java.util.Set;
 
 import module.mobility.domain.MobilitySystem;
+import myorg.domain.MyOrg;
 import myorg.domain.User;
 import myorg.domain.groups.PersistentGroup;
 import myorg.util.BundleUtil;
@@ -12,6 +13,7 @@ public class MobilityGroup extends MobilityGroup_Base {
 
     public MobilityGroup() {
 	super();
+	setSystemGroupMyOrg(MyOrg.getInstance());
     }
 
     @Override
