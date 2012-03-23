@@ -30,10 +30,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pt.ist.emailNotifier.domain.Email;
-
 import module.mobility.domain.activity.CancelJobOfferActivity;
 import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
+import module.mobility.domain.activity.CancelJobOfferConclusionActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForEvaluationActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForJuryDefinitionActivity;
@@ -63,6 +62,7 @@ import myorg.domain.User;
 import myorg.domain.VirtualHost;
 import myorg.util.BundleUtil;
 import myorg.util.ClassNameBundle;
+import pt.ist.emailNotifier.domain.Email;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**
@@ -86,6 +86,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 	activitiesAux.add(new SubmitJobOfferForEvaluationActivity());
 	activitiesAux.add(new CancelJobOfferSubmitionForEvaluationActivity());
 	activitiesAux.add(new JobOfferConclusionActivity());
+	activitiesAux.add(new CancelJobOfferConclusionActivity());
 	activitiesAux.add(new JobOfferArchiveActivity());
 
 	activitiesAux.add(new SubmitJobOfferForJuryDefinitionActivity());
@@ -156,11 +157,12 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 
 	    final User loggedUser = UserView.getCurrentUser();
 	    final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-	    new Email(virtualHost.getApplicationSubTitle().getContent(),
-			    virtualHost.getSystemEmailAddress(), new String[] {}, toAddress, Collections.EMPTY_LIST,
-		    Collections.EMPTY_LIST,
-		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
-		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+	    new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
+		    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
+			    "resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
+		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
+			    "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
+			    comment));
 	}
     }
 
