@@ -8,7 +8,7 @@
 <fr:edit id="jobOfferBean" name="jobOfferBean" action="/mobility.do?method=createJobOffer">
 	<fr:destination name="cancel" path="/mobility.do?method=jobOffers"/>
 	<fr:schema type="module.mobility.domain.util.JobOfferBean" bundle="MOBILITY_RESOURCES">
-		<fr:slot name="vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" required="true">
 			<fr:property name="size" value="2"/>
 		</fr:slot>	
 		<fr:slot name="workplace" key="label.mobility.jobOffer.workplace" layout="autoComplete" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator">
@@ -18,14 +18,14 @@
 			<fr:property name="args" value="provider=module.mobility.presentationTier.renderers.dataProvider.UnitCostCenterAutoCompleteProvider" />
 			<fr:property name="size" value="60"/>
 		</fr:slot>
-		<fr:slot name="careerRequirements" layout="option-select" key="label.mobility.jobOffer.careerRequirements" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="careerRequirements" layout="option-select" key="label.mobility.jobOffer.careerRequirements" required="true">
 			<fr:property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
 		</fr:slot>	
-		<fr:slot name="skillRequirements" key="label.mobility.jobOffer.skillRequirements" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="skillRequirements" key="label.mobility.jobOffer.skillRequirements" layout="longText" required="true">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>	
-		<fr:slot name="jobProfile" key="label.mobility.jobOffer.jobProfile" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="jobProfile" key="label.mobility.jobOffer.jobProfile" layout="longText" required="true">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
@@ -45,7 +45,7 @@
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>
-		<fr:slot name="requiredDocumentsForCandidacy" key="label.mobility.jobOffer.requiredDocumentsForCandidacy" layout="longText" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+		<fr:slot name="requiredDocumentsForCandidacy" key="label.mobility.jobOffer.requiredDocumentsForCandidacy" layout="longText" required="true">
 			<fr:property name="rows" value="5"/>
 			<fr:property name="columns" value="50"/>
 		</fr:slot>

@@ -24,10 +24,10 @@
 
 		<fr:edit id="UpdatePersonalPortfolioInfo" name="information">
 			<fr:schema type="module.mobility.domain.activity.PersonalPortfolioInfoInformation" bundle="MOBILITY_RESOURCES">
-				<fr:slot name="carrer" key="label.mobility.carrer" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="carrer" key="label.mobility.carrer" required="true">
 					<fr:property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.CareerTypeProvider"/>
 				</fr:slot>
-				<fr:slot name="category" key="label.mobility.category" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="category" key="label.mobility.category" required="true">
 					<fr:property name="size" value="60" />
 				</fr:slot>
 			</fr:schema>
@@ -56,16 +56,16 @@
 
 				<fr:edit id="<%= "qualificationHolder" + i %>" name="qualificationHolder">
 					<fr:schema type="module.mobility.domain.activity.PersonalPortfolioInfoInformation$QualificationHolder" bundle="MOBILITY_RESOURCES">
-						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:slot name="qualificationType" key="label.mobility.professional.information.qualification.qualificationType" required="true">
 							<fr:property name="size" value="60" />
 						</fr:slot>
-						<fr:slot name="name" key="label.mobility.professional.information.qualification.name" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:slot name="name" key="label.mobility.professional.information.qualification.name" required="true">
 							<fr:property name="size" value="60" />
 						</fr:slot>
-						<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:slot name="institution" key="label.mobility.professional.information.qualification.institution" required="true">
 							<fr:property name="size" value="60" />
 						</fr:slot>
-						<fr:slot name="date" key="label.mobility.professional.information.qualification.date" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+						<fr:slot name="date" key="label.mobility.professional.information.qualification.date" required="true">
 							<fr:property name="size" value="20" />
 						</fr:slot>
 						<fr:slot name="classification" key="label.mobility.professional.information.qualification.classification">

@@ -20,7 +20,7 @@
 <div class="infobox mtop1 mbottom1">
 	<fr:view name="workerOffer">
 		<fr:schema type="module.mobility.domain.WorkerOffer" bundle="MOBILITY_RESOURCES">
-			<fr:slot name="beginDate" key="label.mobility.beginDate" layout="picker" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator"/>
+			<fr:slot name="beginDate" key="label.mobility.beginDate" layout="picker" required="true"/>
 			<fr:slot name="endDate" key="label.mobility.endDate" layout="picker"/>
 			<fr:layout name="tabular-nonNullValues">
 				<fr:property name="classes" value="mvert05 thleft"/>

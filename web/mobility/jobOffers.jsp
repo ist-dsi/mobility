@@ -19,18 +19,18 @@
 			<fr:slot name="processNumber" key="label.mobility.processIdentification">
 				<fr:property name="size" value="10"/>
 			</fr:slot>
-			<fr:slot name="offerSearchOwner" key="label.module.mobility.jobOffers" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:slot name="offerSearchOwner" key="label.module.mobility.jobOffers" required="true">
 				<fr:property name="defaultOptionHidden" value="true"/>
 			</fr:slot>
 			
 			<%  module.mobility.domain.MobilitySystem mobilitySystem = module.mobility.domain.MobilitySystem.getInstance();
 			if (mobilitySystem.isManagementMember()) { %>
-				<fr:slot name="mobilityProcessStage" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="mobilityProcessStage" key="label.mobility.state" required="true">
 					<fr:property name="excludedValues" value="CONCLUDED_CANDIDACY"/>
 					<fr:property name="defaultOptionHidden" value="true"/>
 				</fr:slot>
 			<%} else { %>
-				<fr:slot name="offerSearchState" key="label.mobility.state" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+				<fr:slot name="offerSearchState" key="label.mobility.state" required="true">
 					<fr:property name="defaultOptionHidden" value="true"/>
 				</fr:slot>
 			<%}%>

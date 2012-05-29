@@ -13,7 +13,7 @@
 <fr:form action="/mobility.do?method=frontPage">
 	<fr:edit id="offerSearch" name="offerSearch">
 		<fr:schema type="module.mobility.domain.util.OfferSearch" bundle="MOBILITY_RESOURCES">
-			<fr:slot name="processNumber" key="label.mobility.processIdentification" validator="pt.ist.fenixWebFramework.renderers.validators.RequiredValidator">
+			<fr:slot name="processNumber" key="label.mobility.processIdentification" required="true">
 				<fr:property name="size" value="10"/>
 			</fr:slot>
 		</fr:schema>
