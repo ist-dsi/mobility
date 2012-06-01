@@ -40,7 +40,6 @@ public class EnumSetConverter implements Serializable {
 	String result = null;
 	if (!enumSet.isEmpty()) {
 	    result = enumSet.iterator().next().getClass().getName() + SEPARATOR + enumSet.toString();
-	    System.out.println(result);
 	}
 	return result;
     }
