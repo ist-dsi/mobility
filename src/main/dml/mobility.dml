@@ -1,0 +1,312 @@
+package module.mobility.domain;
+
+valueType java.util.EnumSet as EnumSet {
+	externalizeWith {
+		String module.mobility.domain.EnumSetConverter.externalize();
+	}
+	internalizeWith module.mobility.domain.EnumSetConverter.internalize();
+}
+
+enum CareerType as CareerType;
+
+class MobilitySystem {
+}
+
+class groups.MobilityGroup extends .pt.ist.bennu.core.domain.groups.PersistentGroup {
+}
+	
+class MobilityYear {
+	Integer year;
+	Integer jobOfferCounter;
+	Integer workerOfferCounter;
+}
+
+class JobOffer{
+	DateTime creationDate;
+	Boolean canceled;
+	DateTime submittedForSelectionDate;
+	DateTime submittedForEvaluationDate;
+	DateTime conclusionDate;
+	DateTime arquivedDate;
+	DateTime submittedForJuryDefinitionDate;
+	DateTime submittedForApprovalDate;
+	DateTime approvalDate;
+	DateTime publicationBeginDate;
+	DateTime publicationEndDate;
+	String jobProfile;
+	String knowledgeRequirements;
+	String skillRequirements;
+	EnumSet<CareerType> careerRequirements;
+	String categoryRequirements;
+	String qualificationRequirements;
+	String formationRequirements;
+	String professionalExperienceRequirements;
+	Integer vacanciesNumber;
+	String requiredDocumentsForCandidacy;
+	String additionalRemarks;
+	Boolean optionalDocuments;
+}
+
+class JobOfferCandidacy{
+}
+
+class MinutesFile extends .module.workflow.domain.ProcessFile {
+}
+
+class JuryMember {
+	Boolean juryPresident;
+}
+
+class JobOfferProcess extends .module.workflow.domain.WorkflowProcess {
+}
+
+class PersonalPortfolio {
+	Boolean notificationService;
+}
+
+class PersonalPortfolioInfo {
+	DateTime creationDate;
+	DateTime modificationDate;
+	CareerType carrer;
+	String category;
+}
+
+class PersonalPortfolioCurriculum extends .module.workflow.domain.ProcessFile {
+}
+
+class PersonalPortfolioInfoQualification {
+	String qualificationType;
+	String name;
+	String institution;
+	String date;
+	String classification;
+}
+
+class PersonalPortfolioProcess extends .module.workflow.domain.WorkflowProcess {
+}
+
+class WorkerOffer {
+	DateTime beginDate;
+	DateTime endDate;
+	DateTime creationDate;
+	DateTime submittedForApprovalDate;
+	DateTime approvalDate;
+	Boolean canceled;
+	Boolean displayPhoto;
+	Boolean displayName;
+	Boolean displayDateOfBirth;
+	Boolean displayCarrer;
+	Boolean displayCategory;
+	Boolean displayQualifications;
+	Boolean displayCurriculum;
+}
+
+class WorkerOfferProcess extends .module.workflow.domain.WorkflowProcess {
+}
+
+class task.CreatePersonalPortfolios extends .pt.ist.bennu.core.domain.scheduler.Task {
+}
+
+relation MyOrgMobilitySystem {
+	.pt.ist.bennu.core.domain.MyOrg playsRole myOrg;
+	MobilitySystem playsRole mobilitySystem;
+}
+
+relation MobilitySystemOrganizationalModel {
+	MobilitySystem playsRole mobilitySystem;
+	.module.organization.domain.OrganizationalModel playsRole organizationalModel;
+}
+
+relation MobilitySystemMobilityYear {
+	MobilitySystem playsRole mobilitySystem;
+	MobilityYear playsRole mobilityYear {
+		multiplicity *;
+	}
+}
+
+relation MobilitySystemJobOffer {
+	MobilitySystem playsRole mobilitySystem;
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
+}
+
+relation JobOfferRequestor {
+	.module.organization.domain.Person playsRole creator;
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
+}
+
+relation JobOfferWorkplace {
+	.module.organization.domain.Unit playsRole workplace;
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
+}
+
+relation JobOfferJuryMember {
+	JuryMember playsRole juryMember{
+		multiplicity *;
+	}
+	JobOffer playsRole jobOffer;
+}
+
+relation JuryMemberPerson {
+	.module.organization.domain.Person playsRole person;
+	JuryMember playsRole juryMember{
+		multiplicity *;
+	}
+}
+
+relation JobOfferApproverPerson {
+	.module.organization.domain.Person playsRole jobOfferApproverPerson;
+	JobOffer playsRole approvedJobOffer {
+		multiplicity *;
+	}
+}
+
+relation WorkerOfferApproverPerson {
+	.module.organization.domain.Person playsRole workerOfferApproverPerson;
+	WorkerOffer playsRole approvedWorkerOffer {
+		multiplicity *;
+	}
+}
+
+relation JobOfferProcessJobOffer {
+	JobOfferProcess playsRole jobOfferProcess;
+	JobOffer playsRole jobOffer;
+}
+
+relation MobilityYearJobOffer {
+	MobilityYear playsRole mobilityYear;
+	JobOffer playsRole jobOffer {
+		multiplicity *;
+	}
+}
+
+relation MobilityYearWorkerOffer {
+	MobilityYear playsRole mobilityYear;
+	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
+}
+
+relation MobilitySystemWorkflowQueue {
+	MobilitySystem playsRole mobilitySystem;
+	.module.workflow.domain.WorkflowUserGroupQueue playsRole managersQueue;
+}
+
+relation MobilitySystemPersonalPortfolio {
+	MobilitySystem playsRole mobilitySystem;
+	PersonalPortfolio playsRole personalPortfolio {
+		multiplicity *;
+	}
+}
+
+relation PersonPersonalPortfolio {
+	.module.organization.domain.Person playsRole person;
+	PersonalPortfolio playsRole personalPortfolio;
+}
+
+relation PersonalPortfolioPersonalPortfolioProcess {
+	PersonalPortfolioProcess playsRole personalPortfolioProcess;
+	PersonalPortfolio playsRole personalPortfolio;
+}
+
+relation MobilitySystemWorkerOffer {
+	MobilitySystem playsRole mobilitySystem;
+	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
+}
+
+relation WorkerOfferWorkerOfferProcess {
+	WorkerOffer playsRole workerOffer;
+	WorkerOfferProcess playsRole workerOfferProcess;
+}
+
+relation PersonalPortfolioWorkerOffer {
+	PersonalPortfolioInfo playsRole personalPortfolioInfo;
+	WorkerOffer playsRole workerOffer {
+		multiplicity *;
+	}
+}
+
+relation MobilitySystemPersonalPortfolioInfo {
+	MobilitySystem playsRole mobilitySystem;
+	PersonalPortfolioInfo playsRole personalPortfolioInfo {
+		multiplicity *;
+	}
+}
+
+relation PersonalPortfolioPersonalPortfolioInfo {
+	PersonalPortfolio playsRole personalPortfolio;
+	PersonalPortfolioInfo playsRole personalPortfolioInfo {
+		multiplicity *;
+	}
+}
+
+relation JobOfferJobOfferCandidacy {
+	JobOffer playsRole jobOffer;
+	JobOfferCandidacy playsRole jobOfferCandidacy{
+		multiplicity *;
+	}
+}
+
+relation JobOfferCandidacyPersonalPortfolioInfo {
+	JobOfferCandidacy playsRole jobOfferCandidacy{
+		multiplicity *;
+	}
+	PersonalPortfolioInfo playsRole personalPortfolioInfo;
+}
+
+relation JobOfferCandidacyProcessFiles{
+	JobOfferCandidacy playsRole jobOfferCandidacy{
+		multiplicity *;
+	}
+	.module.workflow.domain.ProcessFile playsRole candidacyFile{
+		multiplicity *;
+	}
+}
+
+relation JobOfferSelectedWorkerOffer {
+	JobOffer playsRole jobOffer{
+		multiplicity *;
+	}
+	WorkerOffer playsRole selectedWorkerOfferCandidate{
+		multiplicity *;
+	}
+}
+
+relation JobOfferSelectedPersonalPortfolioInfo {
+	JobOffer playsRole selectedJobOffer{
+		multiplicity *;
+	}
+	PersonalPortfolioInfo playsRole chosenCandidate{
+		multiplicity *;
+	}
+}
+
+
+
+relation MobilitySystemPersonalPortfolioInfoQualification {
+	MobilitySystem playsRole mobilitySystem;
+	PersonalPortfolioInfoQualification playsRole personalPortfolioInfoQualification {
+		multiplicity *;
+	}
+}
+
+relation PersonalPortfolioInfoPersonalPortfolioInfoQualification {
+	PersonalPortfolioInfo playsRole personalPortfolioInfo;
+	PersonalPortfolioInfoQualification playsRole personalPortfolioInfoQualification {
+		multiplicity *;
+	}
+}
+
+relation PersonalPortfolioInfoPersonalPortfolioCurriculum {
+	PersonalPortfolioInfo playsRole personalPortfolioInfo {
+		multiplicity *;
+	}
+	PersonalPortfolioCurriculum playsRole personalPortfolioCurriculum;
+}
