@@ -114,6 +114,11 @@
 			<version>7.0.28</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>web-service-utils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

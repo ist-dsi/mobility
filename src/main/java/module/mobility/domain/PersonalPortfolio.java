@@ -31,13 +31,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 import module.organization.domain.Accountability;
 import module.organization.domain.AccountabilityType;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
 import module.organizationIst.domain.IstAccountabilityType;
-import net.sourceforge.fenixedu.domain.RemotePerson;
-import pt.ist.fenixWebFramework.services.Service;
+import module.organizationIst.webservices.JerseyRemoteUser;
+import module.webserviceutils.domain.WSURemoteSystem;
 
 /**
  * 
@@ -94,8 +96,8 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     public String getEmail() {
-	final RemotePerson remotePerson = getPerson().getRemotePerson();
-	return remotePerson == null ? "" : remotePerson.getEmailForSendingEmails();
+	JerseyRemoteUser remoteUser = new JerseyRemoteUser(getPerson().getUser());
+	return remoteUser.getEmailForSendingEmails();
     }
 
     public Collection<Party> getWorkingPlaces() {

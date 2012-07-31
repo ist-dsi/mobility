@@ -30,6 +30,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.emailNotifier.domain.Email;
+
 import module.mobility.domain.activity.CancelJobOfferActivity;
 import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferConclusionActivity;
@@ -51,18 +58,13 @@ import module.mobility.domain.activity.SubmitJobOfferForJuryDefinitionActivity;
 import module.mobility.domain.activity.SubmitJobOfferForSelectionActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.util.MobilityJobOfferProcessStageView;
+import module.organizationIst.webservices.JerseyRemoteUser;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.widgets.UnreadCommentsWidget;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
-import pt.ist.emailNotifier.domain.Email;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**
@@ -151,7 +153,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     @Override
     public void notifyUserDueToComment(User user, String comment) {
 	List<String> toAddress = new ArrayList<String>();
-	final String email = user.getPerson().getRemotePerson().getEmailForSendingEmails();
+	final String email = new JerseyRemoteUser(user).getEmailForSendingEmails();
 	if (email != null) {
 	    toAddress.add(email);
 

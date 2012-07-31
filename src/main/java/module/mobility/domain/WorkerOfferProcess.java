@@ -30,6 +30,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.util.ClassNameBundle;
 import pt.ist.emailNotifier.domain.Email;
 
 import module.mobility.domain.activity.CancelWorkerJobOfferApprovalActivity;
@@ -40,16 +45,12 @@ import module.mobility.domain.activity.SubmitWorkerJobOfferForApprovalActivity;
 import module.mobility.domain.activity.UpdateWorkerJobOfferProfessionalInformation;
 import module.mobility.domain.activity.WorkerJobOfferApprovalActivity;
 import module.mobility.domain.util.MobilityWorkerOfferProcessStageView;
+import module.organizationIst.webservices.JerseyRemoteUser;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.widgets.UnreadCommentsWidget;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**
@@ -116,17 +117,18 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
     @Override
     public void notifyUserDueToComment(User user, String comment) {
 	List<String> toAddress = new ArrayList<String>();
-	final String email = user.getPerson().getRemotePerson().getEmailForSendingEmails();
+	final String email = new JerseyRemoteUser(user).getEmailForSendingEmails();
 	if (email != null) {
 	    toAddress.add(email);
 
 	    final User loggedUser = UserView.getCurrentUser();
 	    final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-	    new Email(virtualHost.getApplicationSubTitle().getContent(),
-			    virtualHost.getSystemEmailAddress(), new String[] {}, toAddress, Collections.EMPTY_LIST,
-		    Collections.EMPTY_LIST,
-		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
-		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources", "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+	    new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
+		    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
+			    "resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
+		    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
+			    "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
+			    comment));
 	}
     }
 
