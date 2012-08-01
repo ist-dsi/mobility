@@ -24,11 +24,12 @@
  */
 package module.mobility.domain.activity;
 
+import pt.ist.bennu.core.domain.User;
+
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.bennu.core.domain.User;
 
 /**
  * 

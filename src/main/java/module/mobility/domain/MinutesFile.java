@@ -24,8 +24,9 @@
  */
 package module.mobility.domain;
 
-import module.workflow.domain.WorkflowProcess;
 import pt.ist.bennu.core.util.ClassNameBundle;
+
+import module.workflow.domain.WorkflowProcess;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**

@@ -26,12 +26,13 @@ package module.mobility.domain.groups;
 
 import java.util.Set;
 
-import module.mobility.domain.MobilitySystem;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.groups.PersistentGroup;
 import pt.ist.bennu.core.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
+
+import module.mobility.domain.MobilitySystem;
 
 /**
  * 

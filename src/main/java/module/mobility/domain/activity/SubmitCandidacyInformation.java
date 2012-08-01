@@ -26,13 +26,14 @@ package module.mobility.domain.activity;
 
 import java.util.List;
 
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+
 import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.JobOfferProcess;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 
 /**
  * 

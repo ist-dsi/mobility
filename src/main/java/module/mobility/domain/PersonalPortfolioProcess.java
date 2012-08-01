@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import pt.ist.bennu.core.domain.User;
+
 import module.mobility.domain.activity.CreateWorkerJobOffer;
 import module.mobility.domain.activity.DefineNewPersonalPortfolioInfo;
 import module.mobility.domain.activity.DisableNotificationServiceActivity;
@@ -37,7 +39,6 @@ import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
-import pt.ist.bennu.core.domain.User;
 
 /**
  * 

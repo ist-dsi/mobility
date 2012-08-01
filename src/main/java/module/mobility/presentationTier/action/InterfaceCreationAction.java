@@ -27,6 +27,20 @@ package module.mobility.presentationTier.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import pt.ist.bennu.core.domain.RoleType;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.bennu.core.domain.contents.ActionNode;
+import pt.ist.bennu.core.domain.contents.Node;
+import pt.ist.bennu.core.domain.groups.PersistentGroup;
+import pt.ist.bennu.core.domain.groups.Role;
+import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
+import pt.ist.fenixWebFramework.servlets.functionalities.CreateNodeAction;
+import pt.ist.fenixWebFramework.struts.annotations.Mapping;
+
 import module.mobility.domain.MobilitySystem;
 import module.mobility.domain.groups.MobilityGroup;
 import module.organization.domain.AccountabilityType;
@@ -35,20 +49,6 @@ import module.organization.domain.Unit;
 import module.organization.domain.groups.PersonGroup;
 import module.organization.domain.groups.UnitGroup;
 import module.organizationIst.domain.IstAccountabilityType;
-import pt.ist.bennu.core.domain.RoleType;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.contents.ActionNode;
-import pt.ist.bennu.core.domain.contents.Node;
-import pt.ist.bennu.core.domain.groups.PersistentGroup;
-import pt.ist.bennu.core.domain.groups.Role;
-import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-import pt.ist.fenixWebFramework.servlets.functionalities.CreateNodeAction;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
 @Mapping(path = "/mobilityInterfaceCreationAction")
 /**

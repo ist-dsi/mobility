@@ -24,12 +24,12 @@
  */
 package module.mobility.domain.activity;
 
+import org.joda.time.LocalDate;
+
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-
-import org.joda.time.LocalDate;
 
 /**
  * 

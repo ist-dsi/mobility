@@ -38,8 +38,7 @@ import module.organization.domain.AccountabilityType;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
 import module.organizationIst.domain.IstAccountabilityType;
-import module.organizationIst.webservices.JerseyRemoteUser;
-import module.webserviceutils.domain.WSURemoteSystem;
+import module.webserviceutils.client.JerseyRemoteUser;
 
 /**
  * 

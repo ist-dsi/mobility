@@ -58,7 +58,7 @@ import module.mobility.domain.activity.SubmitJobOfferForJuryDefinitionActivity;
 import module.mobility.domain.activity.SubmitJobOfferForSelectionActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.util.MobilityJobOfferProcessStageView;
-import module.organizationIst.webservices.JerseyRemoteUser;
+import module.webserviceutils.client.JerseyRemoteUser;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;

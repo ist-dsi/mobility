@@ -27,11 +27,12 @@ package module.mobility.presentationTier.renderers.dataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import module.mobility.domain.WorkerOffer;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+import module.mobility.domain.WorkerOffer;
 
 /**
  * 

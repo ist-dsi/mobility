@@ -24,11 +24,12 @@
  */
 package module.mobility.presentationTier.renderers.dataProvider;
 
-import module.organization.domain.Person;
 import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+import module.organization.domain.Person;
 
 /**
  * 

@@ -29,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 import module.mobility.domain.CareerType;
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioInfo;
@@ -36,8 +38,6 @@ import module.mobility.domain.PersonalPortfolioInfoQualification;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * 

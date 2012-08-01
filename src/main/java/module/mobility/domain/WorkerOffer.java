@@ -26,13 +26,14 @@ package module.mobility.domain;
 
 import java.util.List;
 
-import module.organization.domain.Person;
-import module.workflow.domain.LabelLog;
-import module.workflow.domain.ProcessFile;
+import org.joda.time.DateTime;
+
 import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.User;
 
-import org.joda.time.DateTime;
+import module.organization.domain.Person;
+import module.workflow.domain.LabelLog;
+import module.workflow.domain.ProcessFile;
 
 /**
  * 

@@ -28,14 +28,14 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import module.organization.domain.OrganizationalModel;
+import org.apache.commons.lang.StringUtils;
+
 import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.User;
-
-import org.apache.commons.lang.StringUtils;
-
 import pt.ist.fenixWebFramework.services.Service;
+
+import module.organization.domain.OrganizationalModel;
 
 /**
  * 

@@ -26,15 +26,15 @@ package module.mobility.domain.activity;
 
 import java.util.ResourceBundle;
 
+import org.apache.commons.lang.StringUtils;
+
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.exceptions.DomainException;
+import pt.utl.ist.fenix.tools.util.i18n.Language;
+
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
-
-import org.apache.commons.lang.StringUtils;
-
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * 

@@ -45,7 +45,7 @@ import module.mobility.domain.activity.SubmitWorkerJobOfferForApprovalActivity;
 import module.mobility.domain.activity.UpdateWorkerJobOfferProfessionalInformation;
 import module.mobility.domain.activity.WorkerJobOfferApprovalActivity;
 import module.mobility.domain.util.MobilityWorkerOfferProcessStageView;
-import module.organizationIst.webservices.JerseyRemoteUser;
+import module.webserviceutils.client.JerseyRemoteUser;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.WorkflowProcess;

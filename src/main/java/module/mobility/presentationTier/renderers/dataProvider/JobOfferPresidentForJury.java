@@ -24,10 +24,11 @@
  */
 package module.mobility.presentationTier.renderers.dataProvider;
 
-import module.mobility.domain.activity.JobOfferJuryInformation;
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
+import module.mobility.domain.activity.JobOfferJuryInformation;
 
 /**
  * 

@@ -27,13 +27,13 @@ package module.mobility.domain.activity;
 import java.util.Calendar;
 import java.util.List;
 
+import org.joda.time.LocalDate;
+
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.WorkerOffer;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
-
-import org.joda.time.LocalDate;
 
 /**
  * 

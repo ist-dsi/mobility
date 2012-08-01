@@ -27,14 +27,15 @@ package module.mobility.presentationTier.renderers.dataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
+import pt.ist.fenixWebFramework.renderers.DataProvider;
+import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
+
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.PersonalPortfolioInfo;
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.activity.ChooseJobOfferCandidatesInformation;
-import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
-import pt.ist.fenixWebFramework.renderers.DataProvider;
-import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 
 /**
  * 

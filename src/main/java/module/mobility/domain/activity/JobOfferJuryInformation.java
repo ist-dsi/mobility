@@ -27,12 +27,13 @@ package module.mobility.domain.activity;
 import java.util.HashSet;
 import java.util.Set;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.JuryMember;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 

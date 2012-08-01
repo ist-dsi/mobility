@@ -24,14 +24,15 @@
  */
 package module.mobility.domain.activity;
 
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.domain.User;
+
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.JobOfferProcess;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
 
 /**
  * 

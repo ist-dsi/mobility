@@ -31,15 +31,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import pt.ist.bennu.core.domain.MyOrg;
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
 import module.organization.domain.Accountability;
 import module.organization.domain.Party;
 import module.organization.domain.PartyType;
 import module.organization.domain.Unit;
 import module.organizationIst.domain.IstAccountabilityType;
 import module.organizationIst.domain.IstPartyType;
-import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
  * 

@@ -26,12 +26,13 @@ package module.mobility.domain.activity;
 
 import java.io.InputStream;
 
+import pt.ist.bennu.core.util.InputStreamUtil;
+
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MinutesFile;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
-import pt.ist.bennu.core.util.InputStreamUtil;
 
 /**
  * 

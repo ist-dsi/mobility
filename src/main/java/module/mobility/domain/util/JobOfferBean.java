@@ -30,10 +30,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import pt.ist.fenixWebFramework.services.Service;
+
 import module.mobility.domain.CareerType;
 import module.mobility.domain.JobOffer;
 import module.organization.domain.Unit;
-import pt.ist.fenixWebFramework.services.Service;
 
 /**
  * 

@@ -24,14 +24,15 @@
  */
 package module.mobility.domain.activity;
 
+import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.User;
+
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.bennu.core.domain.User;
-
-import org.joda.time.DateTime;
 
 /**
  * 

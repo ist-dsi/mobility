@@ -28,19 +28,19 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.commons.lang.StringUtils;
+
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
+
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
 import module.organization.domain.Person;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
-
-import org.apache.commons.lang.StringUtils;
-
-import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 /**
  * 

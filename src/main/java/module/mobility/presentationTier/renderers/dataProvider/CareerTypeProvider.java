@@ -27,10 +27,11 @@ package module.mobility.presentationTier.renderers.dataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-import module.mobility.domain.CareerType;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
 import pt.ist.fenixWebFramework.renderers.converters.EnumArrayConverter;
+
+import module.mobility.domain.CareerType;
 
 /**
  * 
