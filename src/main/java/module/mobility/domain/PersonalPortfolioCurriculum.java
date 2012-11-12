@@ -24,10 +24,16 @@
  */
 package module.mobility.domain;
 
-import pt.ist.bennu.core.util.ClassNameBundle;
+import java.util.Map;
 
+import javax.annotation.Nonnull;
+
+import module.workflow.domain.AbstractWFDocsGroup;
+import module.workflow.domain.ProcessDocumentMetaDataResolver;
 import module.workflow.domain.ProcessFile;
+import module.workflow.domain.WFDocsDefaultWriteGroup;
 import module.workflow.domain.WorkflowProcess;
+import pt.ist.bennu.core.util.ClassNameBundle;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**
@@ -42,6 +48,36 @@ public class PersonalPortfolioCurriculum extends PersonalPortfolioCurriculum_Bas
 	if (content != null) {
 	    init(displayName, filename, content);
 	}
+    }
+
+    public static class PersonalPortfolioCurriculumMetadataResolver extends ProcessDocumentMetaDataResolver<ProcessFile> {
+	
+	private final static String PORTFOLIO_OWNER = "Portfóflio de";
+
+	@Override
+	public @Nonnull
+	Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
+	    return WFDocsDefaultWriteGroup.class;
+	}
+
+	@Override
+	public Map<String, String> getMetadataKeysAndValuesMap(ProcessFile processDocument) {
+	    PersonalPortfolioCurriculum personalPortfolioCurriculum = (PersonalPortfolioCurriculum) processDocument;
+	    
+	    PersonalPortfolioProcess personalPortfolioProcess =  (PersonalPortfolioProcess) personalPortfolioCurriculum.getProcess();
+	    
+	    
+	    Map<String, String> metadataKeysAndValuesMap = super.getMetadataKeysAndValuesMap(personalPortfolioCurriculum);
+	    metadataKeysAndValuesMap.put(PORTFOLIO_OWNER, personalPortfolioProcess.getPersonalPortfolio().getPerson().getPresentationName());
+	    
+	    
+	    return metadataKeysAndValuesMap;
+	}
+    }
+
+    @Override
+    public ProcessDocumentMetaDataResolver<? extends ProcessFile> getMetaDataResolver() {
+	return new PersonalPortfolioCurriculumMetadataResolver();
     }
 
     @Override

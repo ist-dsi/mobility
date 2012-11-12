@@ -30,13 +30,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
-import pt.ist.emailNotifier.domain.Email;
-
 import module.mobility.domain.activity.CancelJobOfferActivity;
 import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferConclusionActivity;
@@ -65,6 +58,12 @@ import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.widgets.UnreadCommentsWidget;
+import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+import pt.ist.bennu.core.domain.User;
+import pt.ist.bennu.core.domain.VirtualHost;
+import pt.ist.bennu.core.util.BundleUtil;
+import pt.ist.bennu.core.util.ClassNameBundle;
+import pt.ist.emailNotifier.domain.Email;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**
@@ -144,6 +143,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     public MobilityJobOfferProcessStageView getMobilityProcessStageView() {
 	return new MobilityJobOfferProcessStageView(getJobOffer());
     }
+
 
     @Override
     public boolean isActive() {
