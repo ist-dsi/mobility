@@ -24,16 +24,9 @@
  */
 package module.mobility.domain;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import module.workflow.domain.AbstractWFDocsGroup;
-import module.workflow.domain.ProcessDocumentMetaDataResolver;
-import module.workflow.domain.ProcessFile;
-import module.workflow.domain.WFDocsDefaultWriteGroup;
-import module.workflow.domain.WorkflowProcess;
 import pt.ist.bennu.core.util.ClassNameBundle;
+
+import module.workflow.domain.WorkflowProcess;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**
@@ -54,34 +47,6 @@ public class MinutesFile extends MinutesFile_Base {
 	if (content != null) {
 	    init(displayName, filename, content);
 	}
-    }
-
-    public static class MinutesFileMetadataResolver extends ProcessDocumentMetaDataResolver<ProcessFile> {
-
-	private static final String WORKPLACE = "Local de trabalho";
-
-	@Override
-	public @Nonnull
-	Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
-	    return WFDocsDefaultWriteGroup.class;
-	}
-
-	@Override
-	public java.util.Map<String, String> getMetadataKeysAndValuesMap(ProcessFile processDocument) {
-	    MinutesFile minutesFile = (MinutesFile) processDocument;
-	    Map<String, String> metadataKeysAndValuesMap = super.getMetadataKeysAndValuesMap(processDocument);
-	    JobOfferProcess jobOfferProcess = (JobOfferProcess) minutesFile.getProcess();
-	    metadataKeysAndValuesMap.put(WORKPLACE, jobOfferProcess.getJobOffer().getWorkplace().getPresentationName());
-
-	    return metadataKeysAndValuesMap;
-
-	}
-
-    }
-
-    @Override
-    public ProcessDocumentMetaDataResolver<? extends ProcessFile> getMetaDataResolver() {
-	return new MinutesFileMetadataResolver();
     }
 
     @Override
