@@ -303,12 +303,9 @@ public class MobilityAction extends ContextBaseAction {
 	final WorkflowActivity<PersonalPortfolioProcess, ActivityInformation<PersonalPortfolioProcess>> activity = activityInformation
 		.getActivity();
 	String indexToRemove = (String) request.getAttribute("qualificationIndex");
-	System.out.println("indexToRemove: " + indexToRemove);
-	System.out.println("activityForm: " + request.getAttribute("activityForm"));
 	if (indexToRemove == null) {
 	    indexToRemove = request.getParameter("qualificationIndex");
 	}
-	System.out.println("indexToRemove: " + indexToRemove);
 
 	RenderUtils.invalidateViewState();
 

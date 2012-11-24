@@ -88,6 +88,26 @@
 			<artifactId>informa</artifactId>
 			<version>0.6.0</version>
 		</dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>bennu-core</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>workflow</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>pt.ist</groupId>
+			<artifactId>organization-ist</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-servlet-api</artifactId>
+			<version>7.0.28</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

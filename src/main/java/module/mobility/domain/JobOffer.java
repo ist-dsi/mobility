@@ -162,7 +162,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 
 	String messageBody = BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES,
 		"message.mobility.jobOffer.emailBody", getWorkplacePath(), getJobOfferProcess().getProcessIdentification(),
-		getVacanciesNumber().toString(), StringUtils.join(carrerRequirements, ", "));
+		getVacanciesNumber().toString(), StringUtils.join(carrerRequirements.iterator(), ", "));
 
 	final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
 	new Email(fromName, virtualHost.getSystemEmailAddress(), new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
