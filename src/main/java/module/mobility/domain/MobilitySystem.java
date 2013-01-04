@@ -92,7 +92,7 @@ public class MobilitySystem extends MobilitySystem_Base {
 	for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
 	    final Boolean notificationService = personalPortfolio.getNotificationService();
 	    if (notificationService != null && notificationService.booleanValue()) {
-		String email = personalPortfolio.getEmail();
+		String email = personalPortfolio.getPerson().getUser().getEmail();
 		if (!StringUtils.isEmpty(email)) {
 		    emails.add(email);
 		}
