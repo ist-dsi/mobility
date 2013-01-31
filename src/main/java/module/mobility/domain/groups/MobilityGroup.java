@@ -26,13 +26,12 @@ package module.mobility.domain.groups;
 
 import java.util.Set;
 
+import module.mobility.domain.MobilitySystem;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.groups.PersistentGroup;
 import pt.ist.bennu.core.util.BundleUtil;
 import pt.ist.fenixWebFramework.services.Service;
-
-import module.mobility.domain.MobilitySystem;
 
 /**
  * 
@@ -42,30 +41,30 @@ import module.mobility.domain.MobilitySystem;
  */
 public class MobilityGroup extends MobilityGroup_Base {
 
-    public MobilityGroup() {
-	super();
-	setSystemGroupMyOrg(MyOrg.getInstance());
-    }
+	public MobilityGroup() {
+		super();
+		setSystemGroupMyOrg(MyOrg.getInstance());
+	}
 
-    @Override
-    public boolean isMember(final User user) {
-	return MobilitySystem.getInstance().isManagementMember(user);
-    }
+	@Override
+	public boolean isMember(final User user) {
+		return MobilitySystem.getInstance().isManagementMember(user);
+	}
 
-    @Service
-    public static MobilityGroup getInstance() {
-	final MobilityGroup mobilityGroup = (MobilityGroup) PersistentGroup.getSystemGroup(MobilityGroup.class);
-	return mobilityGroup == null ? new MobilityGroup() : mobilityGroup;
-    }
+	@Service
+	public static MobilityGroup getInstance() {
+		final MobilityGroup mobilityGroup = (MobilityGroup) PersistentGroup.getSystemGroup(MobilityGroup.class);
+		return mobilityGroup == null ? new MobilityGroup() : mobilityGroup;
+	}
 
-    @Override
-    public String getName() {
-	return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", "label.mobility.group.mobilityGroup.name");
-    }
+	@Override
+	public String getName() {
+		return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", "label.mobility.group.mobilityGroup.name");
+	}
 
-    @Override
-    public Set<User> getMembers() {
-	return MobilitySystem.getInstance().getManagementUsers();
-    }
+	@Override
+	public Set<User> getMembers() {
+		return MobilitySystem.getInstance().getManagementUsers();
+	}
 
 }

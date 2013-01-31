@@ -24,13 +24,12 @@
  */
 package module.mobility.domain.activity;
 
-import pt.ist.bennu.core.domain.User;
-
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.WorkerOffer;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+import pt.ist.bennu.core.domain.User;
 
 /**
  * 
@@ -40,46 +39,47 @@ import module.workflow.activities.WorkflowActivity;
  */
 public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProcess, WorkerJobOfferInformation> {
 
-    @Override
-    public boolean isActive(final PersonalPortfolioProcess process, final User user) {
-	final PersonalPortfolio personalPortfolio = process.getPersonalPortfolio();
-	return user == personalPortfolio.getPerson().getUser() && personalPortfolio.hasAnyPersonalPortfolioInfo()
-		&& !personalPortfolio.hasAnyActiveWorkerOfferOrPendingApproval();
-    }
+	@Override
+	public boolean isActive(final PersonalPortfolioProcess process, final User user) {
+		final PersonalPortfolio personalPortfolio = process.getPersonalPortfolio();
+		return user == personalPortfolio.getPerson().getUser() && personalPortfolio.hasAnyPersonalPortfolioInfo()
+				&& !personalPortfolio.hasAnyActiveWorkerOfferOrPendingApproval();
+	}
 
-    @Override
-    protected void process(final WorkerJobOfferInformation information) {
-	final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
-	final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-	final WorkerOffer workerOffer = new WorkerOffer(personalPortfolio, information.getYear(), information.getBeginDate()
-		.toDateTimeAtStartOfDay(), information.getEndDate().toDateTimeAtStartOfDay(), information.getFiles());
+	@Override
+	protected void process(final WorkerJobOfferInformation information) {
+		final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
+		final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
+		final WorkerOffer workerOffer =
+				new WorkerOffer(personalPortfolio, information.getYear(), information.getBeginDate().toDateTimeAtStartOfDay(),
+						information.getEndDate().toDateTimeAtStartOfDay(), information.getFiles());
 
-	// workerOffer.setDisplayPhoto(information.getDisplayPhoto());
-	// workerOffer.setDisplayName(information.getDisplayName());
-	// workerOffer.setDisplayDateOfBirth(information.getDisplayName());
-	//
-	// workerOffer.setDisplayCarrer(information.getDisplayCarrer());
-	// workerOffer.setDisplayCategory(information.getDisplayCategory());
+		// workerOffer.setDisplayPhoto(information.getDisplayPhoto());
+		// workerOffer.setDisplayName(information.getDisplayName());
+		// workerOffer.setDisplayDateOfBirth(information.getDisplayName());
+		//
+		// workerOffer.setDisplayCarrer(information.getDisplayCarrer());
+		// workerOffer.setDisplayCategory(information.getDisplayCategory());
 
-	workerOffer.setDisplayQualifications(information.getDisplayQualifications());
-	// workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
+		workerOffer.setDisplayQualifications(information.getDisplayQualifications());
+		// workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
 
-	information.setWorkerOffer(workerOffer);
-    }
+		information.setWorkerOffer(workerOffer);
+	}
 
-    @Override
-    public ActivityInformation<PersonalPortfolioProcess> getActivityInformation(final PersonalPortfolioProcess process) {
-	return new WorkerJobOfferInformation(process, this);
-    }
+	@Override
+	public ActivityInformation<PersonalPortfolioProcess> getActivityInformation(final PersonalPortfolioProcess process) {
+		return new WorkerJobOfferInformation(process, this);
+	}
 
-    @Override
-    public String getUsedBundle() {
-	return "resources/MobilityResources";
-    }
+	@Override
+	public String getUsedBundle() {
+		return "resources/MobilityResources";
+	}
 
-    @Override
-    public boolean isDefaultInputInterfaceUsed() {
-	return false;
-    }
+	@Override
+	public boolean isDefaultInputInterfaceUsed() {
+		return false;
+	}
 
 }

@@ -24,13 +24,12 @@
  */
 package module.mobility.domain.activity;
 
-import pt.ist.bennu.core.domain.User;
-
 import module.mobility.domain.PersonalPortfolio;
 import module.mobility.domain.WorkerOffer;
 import module.mobility.domain.WorkerOfferProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+import pt.ist.bennu.core.domain.User;
 
 /**
  * 
@@ -40,36 +39,36 @@ import module.workflow.activities.WorkflowActivity;
  */
 public class EditWorkerJobOffer extends WorkflowActivity<WorkerOfferProcess, EditWorkerJobOfferInformation> {
 
-    @Override
-    public boolean isActive(final WorkerOfferProcess process, final User user) {
-	final PersonalPortfolio personalPortfolio = process.getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio();
-	return process.getWorkerOffer().isUnderConstruction(user) && personalPortfolio.hasAnyPersonalPortfolioInfo();
-    }
+	@Override
+	public boolean isActive(final WorkerOfferProcess process, final User user) {
+		final PersonalPortfolio personalPortfolio = process.getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio();
+		return process.getWorkerOffer().isUnderConstruction(user) && personalPortfolio.hasAnyPersonalPortfolioInfo();
+	}
 
-    @Override
-    protected void process(final EditWorkerJobOfferInformation information) {
-	final WorkerOffer workerOffer = information.getProcess().getWorkerOffer();
-	workerOffer.setBeginDate(information.getBeginDate().toDateTimeAtStartOfDay());
-	workerOffer.setEndDate(information.getEndDate().toDateTimeAtStartOfDay());
+	@Override
+	protected void process(final EditWorkerJobOfferInformation information) {
+		final WorkerOffer workerOffer = information.getProcess().getWorkerOffer();
+		workerOffer.setBeginDate(information.getBeginDate().toDateTimeAtStartOfDay());
+		workerOffer.setEndDate(information.getEndDate().toDateTimeAtStartOfDay());
 
-	workerOffer.setDisplayPhoto(information.getDisplayPhoto());
-	workerOffer.setDisplayName(information.getDisplayName());
-	workerOffer.setDisplayDateOfBirth(information.getDisplayDateOfBirth());
+		workerOffer.setDisplayPhoto(information.getDisplayPhoto());
+		workerOffer.setDisplayName(information.getDisplayName());
+		workerOffer.setDisplayDateOfBirth(information.getDisplayDateOfBirth());
 
-	workerOffer.setDisplayCarrer(information.getDisplayCarrer());
-	workerOffer.setDisplayCategory(information.getDisplayCategory());
-	workerOffer.setDisplayQualifications(information.getDisplayQualifications());
-	workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
-    }
+		workerOffer.setDisplayCarrer(information.getDisplayCarrer());
+		workerOffer.setDisplayCategory(information.getDisplayCategory());
+		workerOffer.setDisplayQualifications(information.getDisplayQualifications());
+		workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());
+	}
 
-    @Override
-    public ActivityInformation<WorkerOfferProcess> getActivityInformation(final WorkerOfferProcess process) {
-	return new EditWorkerJobOfferInformation(process, this);
-    }
+	@Override
+	public ActivityInformation<WorkerOfferProcess> getActivityInformation(final WorkerOfferProcess process) {
+		return new EditWorkerJobOfferInformation(process, this);
+	}
 
-    @Override
-    public String getUsedBundle() {
-	return "resources/MobilityResources";
-    }
+	@Override
+	public String getUsedBundle() {
+		return "resources/MobilityResources";
+	}
 
 }

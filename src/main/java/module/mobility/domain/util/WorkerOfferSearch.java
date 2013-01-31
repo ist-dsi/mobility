@@ -36,68 +36,68 @@ import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
  */
 public class WorkerOfferSearch implements Serializable {
 
-    public enum OfferSearchOwner implements IPresentableEnum {
-	ALL, MINE, WITH_MY_CANDIDACY;
+	public enum OfferSearchOwner implements IPresentableEnum {
+		ALL, MINE, WITH_MY_CANDIDACY;
 
-	public String getQualifiedName() {
-	    return this.getClass().getName() + "." + this.name();
+		public String getQualifiedName() {
+			return this.getClass().getName() + "." + this.name();
+		}
+
+		@Override
+		public String getLocalizedName() {
+			return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+		}
+
 	}
 
-	@Override
-	public String getLocalizedName() {
-	    return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+	public enum OfferSearchState implements IPresentableEnum {
+		ALL, ACTIVE, INACTIVE;
+
+		public String getQualifiedName() {
+			return this.getClass().getName() + "." + this.name();
+		}
+
+		@Override
+		public String getLocalizedName() {
+			return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+		}
+
 	}
 
-    }
+	private OfferSearchOwner offerSearchOwner;
 
-    public enum OfferSearchState implements IPresentableEnum {
-	ALL, ACTIVE, INACTIVE;
+	private OfferSearchState offerSearchState;
 
-	public String getQualifiedName() {
-	    return this.getClass().getName() + "." + this.name();
+	private String processNumber;
+
+	public String getProcessNumber() {
+		return processNumber;
 	}
 
-	@Override
-	public String getLocalizedName() {
-	    return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+	public void setProcessNumber(String processNumber) {
+		this.processNumber = processNumber;
 	}
 
-    }
+	public OfferSearchOwner getOfferSearchOwner() {
+		return offerSearchOwner;
+	}
 
-    private OfferSearchOwner offerSearchOwner;
+	public void setOfferSearchOwner(OfferSearchOwner offerSearchOwner) {
+		this.offerSearchOwner = offerSearchOwner;
+	}
 
-    private OfferSearchState offerSearchState;
+	public OfferSearchState getOfferSearchState() {
+		return offerSearchState;
+	}
 
-    private String processNumber;
+	public void setOfferSearchState(OfferSearchState offerSearchState) {
+		this.offerSearchState = offerSearchState;
+	}
 
-    public String getProcessNumber() {
-	return processNumber;
-    }
-
-    public void setProcessNumber(String processNumber) {
-	this.processNumber = processNumber;
-    }
-
-    public OfferSearchOwner getOfferSearchOwner() {
-	return offerSearchOwner;
-    }
-
-    public void setOfferSearchOwner(OfferSearchOwner offerSearchOwner) {
-	this.offerSearchOwner = offerSearchOwner;
-    }
-
-    public OfferSearchState getOfferSearchState() {
-	return offerSearchState;
-    }
-
-    public void setOfferSearchState(OfferSearchState offerSearchState) {
-	this.offerSearchState = offerSearchState;
-    }
-
-    public void init() {
-	setOfferSearchOwner(OfferSearchOwner.ALL);
-	setOfferSearchState(OfferSearchState.ALL);
-    }
+	public void init() {
+		setOfferSearchOwner(OfferSearchOwner.ALL);
+		setOfferSearchState(OfferSearchState.ALL);
+	}
 //
 //    public OfferProcess getOfferProcess(User user) {
 //	if (!StringUtils.isEmpty(getProcessNumber())) {

@@ -24,16 +24,16 @@
  */
 package module.mobility.domain.activity;
 
-import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.User;
-
 import module.mobility.domain.JobOffer;
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MinutesFile;
 import module.mobility.domain.MobilitySystem;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+
+import org.joda.time.DateTime;
+
+import pt.ist.bennu.core.domain.User;
 
 /**
  * 
@@ -42,31 +42,31 @@ import module.workflow.activities.WorkflowActivity;
  */
 public class JobOfferConclusionActivity extends WorkflowActivity<JobOfferProcess, JobOfferConclusionInformation> {
 
-    @Override
-    public boolean isActive(JobOfferProcess process, User user) {
-	JobOffer jobOffer = process.getJobOffer();
-	return jobOffer.isPendingConclusion()
-		&& (jobOffer.getOwner().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user));
-    }
-
-    @Override
-    protected void process(JobOfferConclusionInformation activityInformation) {
-	byte[] fileContent = activityInformation.getBytes();
-	JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
-	if (fileContent != null) {
-	    new MinutesFile(jobOffer, activityInformation.getDisplayName(), activityInformation.getFilename(), fileContent);
+	@Override
+	public boolean isActive(JobOfferProcess process, User user) {
+		JobOffer jobOffer = process.getJobOffer();
+		return jobOffer.isPendingConclusion()
+				&& (jobOffer.getOwner().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user));
 	}
-	jobOffer.setConclusionDate(new DateTime());
-    }
 
-    @Override
-    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-	return new JobOfferConclusionInformation(process, this);
-    }
+	@Override
+	protected void process(JobOfferConclusionInformation activityInformation) {
+		byte[] fileContent = activityInformation.getBytes();
+		JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
+		if (fileContent != null) {
+			new MinutesFile(jobOffer, activityInformation.getDisplayName(), activityInformation.getFilename(), fileContent);
+		}
+		jobOffer.setConclusionDate(new DateTime());
+	}
 
-    @Override
-    public String getUsedBundle() {
-	return "resources/MobilityResources";
-    }
+	@Override
+	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+		return new JobOfferConclusionInformation(process, this);
+	}
+
+	@Override
+	public String getUsedBundle() {
+		return "resources/MobilityResources";
+	}
 
 }

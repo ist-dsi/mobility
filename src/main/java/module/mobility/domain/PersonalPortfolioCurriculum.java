@@ -43,62 +43,62 @@ import pt.ist.bennu.core.util.ClassNameBundle;
  */
 public class PersonalPortfolioCurriculum extends PersonalPortfolioCurriculum_Base {
 
-    public PersonalPortfolioCurriculum(String displayName, String filename, byte[] content) {
-	super();
-	if (content != null) {
-	    init(displayName, filename, content);
-	}
-    }
-
-    public static class PersonalPortfolioCurriculumMetadataResolver extends ProcessDocumentMetaDataResolver<ProcessFile> {
-
-	private final static String PORTFOLIO_OWNER = "Portfóflio de";
-
-	@Override
-	public @Nonnull
-	Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
-	    return WFDocsDefaultWriteGroup.class;
-	}
-
-	@Override
-	public Map<String, String> getMetadataKeysAndValuesMap(ProcessFile processDocument) {
-	    PersonalPortfolioCurriculum personalPortfolioCurriculum = (PersonalPortfolioCurriculum) processDocument;
-
-	    Map<String, String> metadataKeysAndValuesMap = super.getMetadataKeysAndValuesMap(personalPortfolioCurriculum);
-	    if (personalPortfolioCurriculum.getProcess() instanceof PersonalPortfolioProcess) {
-		PersonalPortfolioProcess personalPortfolioProcess = (PersonalPortfolioProcess) personalPortfolioCurriculum
-			.getProcess();
-		metadataKeysAndValuesMap.put(PORTFOLIO_OWNER, personalPortfolioProcess.getPersonalPortfolio().getPerson()
-			.getPresentationName());
-	    } else {
-		WorkerOfferProcess workerOfferProcess = (WorkerOfferProcess) personalPortfolioCurriculum.getProcess();
-		metadataKeysAndValuesMap.put(PORTFOLIO_OWNER, workerOfferProcess.getWorkerOffer().getOwner()
-			.getPresentationName());
-
-	    }
-
-	    return metadataKeysAndValuesMap;
-	}
-    }
-
-    @Override
-    public ProcessDocumentMetaDataResolver<? extends ProcessFile> getMetaDataResolver() {
-	return new PersonalPortfolioCurriculumMetadataResolver();
-    }
-
-    @Override
-    public void setProcess(final WorkflowProcess process) {
-	super.setProcess(process);
-	if (process != null) {
-	    final PersonalPortfolioProcess personalPortfolioProcess = (PersonalPortfolioProcess) process;
-	    final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-	    personalPortfolio.addCurriculum(this);
-	    for (final ProcessFile processFile : personalPortfolioProcess.getFilesSet()) {
-		if (processFile instanceof PersonalPortfolioCurriculum && processFile != this) {
-		    personalPortfolioProcess.removeFiles(processFile);
+	public PersonalPortfolioCurriculum(String displayName, String filename, byte[] content) {
+		super();
+		if (content != null) {
+			init(displayName, filename, content);
 		}
-	    }
 	}
-    }
+
+	public static class PersonalPortfolioCurriculumMetadataResolver extends ProcessDocumentMetaDataResolver<ProcessFile> {
+
+		private final static String PORTFOLIO_OWNER = "Portfóflio de";
+
+		@Override
+		public @Nonnull
+		Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
+			return WFDocsDefaultWriteGroup.class;
+		}
+
+		@Override
+		public Map<String, String> getMetadataKeysAndValuesMap(ProcessFile processDocument) {
+			PersonalPortfolioCurriculum personalPortfolioCurriculum = (PersonalPortfolioCurriculum) processDocument;
+
+			Map<String, String> metadataKeysAndValuesMap = super.getMetadataKeysAndValuesMap(personalPortfolioCurriculum);
+			if (personalPortfolioCurriculum.getProcess() instanceof PersonalPortfolioProcess) {
+				PersonalPortfolioProcess personalPortfolioProcess =
+						(PersonalPortfolioProcess) personalPortfolioCurriculum.getProcess();
+				metadataKeysAndValuesMap.put(PORTFOLIO_OWNER, personalPortfolioProcess.getPersonalPortfolio().getPerson()
+						.getPresentationName());
+			} else {
+				WorkerOfferProcess workerOfferProcess = (WorkerOfferProcess) personalPortfolioCurriculum.getProcess();
+				metadataKeysAndValuesMap.put(PORTFOLIO_OWNER, workerOfferProcess.getWorkerOffer().getOwner()
+						.getPresentationName());
+
+			}
+
+			return metadataKeysAndValuesMap;
+		}
+	}
+
+	@Override
+	public ProcessDocumentMetaDataResolver<? extends ProcessFile> getMetaDataResolver() {
+		return new PersonalPortfolioCurriculumMetadataResolver();
+	}
+
+	@Override
+	public void setProcess(final WorkflowProcess process) {
+		super.setProcess(process);
+		if (process != null) {
+			final PersonalPortfolioProcess personalPortfolioProcess = (PersonalPortfolioProcess) process;
+			final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
+			personalPortfolio.addCurriculum(this);
+			for (final ProcessFile processFile : personalPortfolioProcess.getFilesSet()) {
+				if (processFile instanceof PersonalPortfolioCurriculum && processFile != this) {
+					personalPortfolioProcess.removeFiles(processFile);
+				}
+			}
+		}
+	}
 
 }

@@ -38,25 +38,25 @@ import module.workflow.activities.WorkflowActivity;
  * 
  */
 public class JobOfferSelectionInformation extends ActivityInformation<JobOfferProcess> {
-    private List<WorkerOffer> selectedWorkerOffers;
+	private List<WorkerOffer> selectedWorkerOffers;
 
-    public JobOfferSelectionInformation(final JobOfferProcess jobOfferProcess,
-	    WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
-	super(jobOfferProcess, activity);
-	setSelectedWorkerOffers(new ArrayList<WorkerOffer>(jobOfferProcess.getJobOffer().getSelectedWorkerOfferCandidateSet()));
-    }
+	public JobOfferSelectionInformation(final JobOfferProcess jobOfferProcess,
+			WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
+		super(jobOfferProcess, activity);
+		setSelectedWorkerOffers(new ArrayList<WorkerOffer>(jobOfferProcess.getJobOffer().getSelectedWorkerOfferCandidateSet()));
+	}
 
-    @Override
-    public boolean hasAllneededInfo() {
-	return isForwardedFromInput();
-    }
+	@Override
+	public boolean hasAllneededInfo() {
+		return isForwardedFromInput();
+	}
 
-    public List<WorkerOffer> getSelectedWorkerOffers() {
-	return selectedWorkerOffers;
-    }
+	public List<WorkerOffer> getSelectedWorkerOffers() {
+		return selectedWorkerOffers;
+	}
 
-    public void setSelectedWorkerOffers(List<WorkerOffer> selectedWorkerOffers) {
-	this.selectedWorkerOffers = selectedWorkerOffers;
-    }
+	public void setSelectedWorkerOffers(List<WorkerOffer> selectedWorkerOffers) {
+		this.selectedWorkerOffers = selectedWorkerOffers;
+	}
 
 }

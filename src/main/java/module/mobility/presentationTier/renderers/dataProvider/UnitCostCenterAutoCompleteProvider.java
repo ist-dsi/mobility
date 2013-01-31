@@ -31,16 +31,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
-
 import module.organization.domain.Accountability;
 import module.organization.domain.Party;
 import module.organization.domain.PartyType;
 import module.organization.domain.Unit;
 import module.organizationIst.domain.IstAccountabilityType;
 import module.organizationIst.domain.IstPartyType;
+import pt.ist.bennu.core.domain.MyOrg;
+import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import pt.utl.ist.fenix.tools.util.StringNormalizer;
 
 /**
  * 
@@ -49,55 +48,56 @@ import module.organizationIst.domain.IstPartyType;
  */
 public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider {
 
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
-	final List<Unit> units = new ArrayList<Unit>();
+	@Override
+	public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+		final List<Unit> units = new ArrayList<Unit>();
 
-	final String trimmedValue = value.trim();
-	final String[] input = trimmedValue.split(" ");
-	StringNormalizer.normalize(input);
+		final String trimmedValue = value.trim();
+		final String[] input = trimmedValue.split(" ");
+		StringNormalizer.normalize(input);
 
-	for (final Party party : getParties(argsMap, value)) {
-	    if (party.isUnit() && party.getPartyTypes().contains(PartyType.readBy(IstPartyType.COST_CENTER.getType()))) {
-		final Unit unit = (Unit) party;
-		if (isActive(unit)) {
-		    final String unitName = StringNormalizer.normalize(unit.getPartyName().getContent());
-		    if (hasMatch(input, unitName)) {
-			units.add(unit);
-		    } else {
-			final String unitAcronym = StringNormalizer.normalize(unit.getAcronym());
-			if (hasMatch(input, unitAcronym)) {
-			    units.add(unit);
+		for (final Party party : getParties(argsMap, value)) {
+			if (party.isUnit() && party.getPartyTypes().contains(PartyType.readBy(IstPartyType.COST_CENTER.getType()))) {
+				final Unit unit = (Unit) party;
+				if (isActive(unit)) {
+					final String unitName = StringNormalizer.normalize(unit.getPartyName().getContent());
+					if (hasMatch(input, unitName)) {
+						units.add(unit);
+					} else {
+						final String unitAcronym = StringNormalizer.normalize(unit.getAcronym());
+						if (hasMatch(input, unitAcronym)) {
+							units.add(unit);
+						}
+					}
+				}
 			}
-		    }
 		}
-	    }
+
+		Collections.sort(units, Unit.COMPARATOR_BY_PRESENTATION_NAME);
+
+		return units;
 	}
 
-	Collections.sort(units, Unit.COMPARATOR_BY_PRESENTATION_NAME);
-
-	return units;
-    }
-
-    private boolean isActive(Unit unit) {
-	for (Accountability accountability : unit.getParentAccountabilities(IstAccountabilityType.ORGANIZATIONAL
-		.readAccountabilityType())) {
-	    if (accountability.isActiveNow()) {
-		return true;
-	    }
-	}
-	return false;
-    }
-
-    private boolean hasMatch(final String[] input, final String unitNameParts) {
-	for (final String namePart : input) {
-	    if (unitNameParts.indexOf(namePart) == -1) {
+	private boolean isActive(Unit unit) {
+		for (Accountability accountability : unit.getParentAccountabilities(IstAccountabilityType.ORGANIZATIONAL
+				.readAccountabilityType())) {
+			if (accountability.isActiveNow()) {
+				return true;
+			}
+		}
 		return false;
-	    }
 	}
-	return true;
-    }
 
-    protected Set<Party> getParties(Map<String, String> argsMap, String value) {
-	return MyOrg.getInstance().getPartiesSet();
-    }
+	private boolean hasMatch(final String[] input, final String unitNameParts) {
+		for (final String namePart : input) {
+			if (unitNameParts.indexOf(namePart) == -1) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected Set<Party> getParties(Map<String, String> argsMap, String value) {
+		return MyOrg.getInstance().getPartiesSet();
+	}
 }

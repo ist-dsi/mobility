@@ -43,50 +43,50 @@ import pt.ist.bennu.core.util.ClassNameBundle;
  */
 public class MinutesFile extends MinutesFile_Base {
 
-    public MinutesFile(JobOffer jobOffer, String displayName, String filename, byte[] content) {
-	super();
-	init(displayName, filename, content);
-	setProcess(jobOffer.getJobOfferProcess());
-    }
-
-    public MinutesFile(String displayName, String filename, byte[] content) {
-	super();
-	if (content != null) {
-	    init(displayName, filename, content);
+	public MinutesFile(JobOffer jobOffer, String displayName, String filename, byte[] content) {
+		super();
+		init(displayName, filename, content);
+		setProcess(jobOffer.getJobOfferProcess());
 	}
-    }
 
-    public static class MinutesFileMetadataResolver extends ProcessDocumentMetaDataResolver<ProcessFile> {
+	public MinutesFile(String displayName, String filename, byte[] content) {
+		super();
+		if (content != null) {
+			init(displayName, filename, content);
+		}
+	}
 
-	private static final String WORKPLACE = "Local de trabalho";
+	public static class MinutesFileMetadataResolver extends ProcessDocumentMetaDataResolver<ProcessFile> {
+
+		private static final String WORKPLACE = "Local de trabalho";
+
+		@Override
+		public @Nonnull
+		Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
+			return WFDocsDefaultWriteGroup.class;
+		}
+
+		@Override
+		public java.util.Map<String, String> getMetadataKeysAndValuesMap(ProcessFile processDocument) {
+			MinutesFile minutesFile = (MinutesFile) processDocument;
+			Map<String, String> metadataKeysAndValuesMap = super.getMetadataKeysAndValuesMap(processDocument);
+			JobOfferProcess jobOfferProcess = (JobOfferProcess) minutesFile.getProcess();
+			metadataKeysAndValuesMap.put(WORKPLACE, jobOfferProcess.getJobOffer().getWorkplace().getPresentationName());
+
+			return metadataKeysAndValuesMap;
+
+		}
+
+	}
 
 	@Override
-	public @Nonnull
-	Class<? extends AbstractWFDocsGroup> getWriteGroupClass() {
-	    return WFDocsDefaultWriteGroup.class;
+	public ProcessDocumentMetaDataResolver<? extends ProcessFile> getMetaDataResolver() {
+		return new MinutesFileMetadataResolver();
 	}
 
 	@Override
-	public java.util.Map<String, String> getMetadataKeysAndValuesMap(ProcessFile processDocument) {
-	    MinutesFile minutesFile = (MinutesFile) processDocument;
-	    Map<String, String> metadataKeysAndValuesMap = super.getMetadataKeysAndValuesMap(processDocument);
-	    JobOfferProcess jobOfferProcess = (JobOfferProcess) minutesFile.getProcess();
-	    metadataKeysAndValuesMap.put(WORKPLACE, jobOfferProcess.getJobOffer().getWorkplace().getPresentationName());
-
-	    return metadataKeysAndValuesMap;
-
+	public void setProcess(final WorkflowProcess process) {
+		super.setProcess(process);
 	}
-
-    }
-
-    @Override
-    public ProcessDocumentMetaDataResolver<? extends ProcessFile> getMetaDataResolver() {
-	return new MinutesFileMetadataResolver();
-    }
-
-    @Override
-    public void setProcess(final WorkflowProcess process) {
-	super.setProcess(process);
-    }
 
 }
