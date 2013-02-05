@@ -40,20 +40,20 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class WorkerOffersCandidatesForJobOffer implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		List<WorkerOffer> workerOfferList = new ArrayList<WorkerOffer>();
-		for (WorkerOffer workerOffer : MyOrg.getInstance().getMobilitySystem().getWorkerOffer()) {
-			if (workerOffer.isActive() && workerOffer.isApproved()) {
-				workerOfferList.add(workerOffer);
-			}
-		}
-		return workerOfferList;
-	}
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        List<WorkerOffer> workerOfferList = new ArrayList<WorkerOffer>();
+        for (WorkerOffer workerOffer : MyOrg.getInstance().getMobilitySystem().getWorkerOffer()) {
+            if (workerOffer.isActive() && workerOffer.isApproved()) {
+                workerOfferList.add(workerOffer);
+            }
+        }
+        return workerOfferList;
+    }
 
 }

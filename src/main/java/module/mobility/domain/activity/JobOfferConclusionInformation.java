@@ -40,54 +40,54 @@ import pt.ist.bennu.core.util.InputStreamUtil;
  */
 public class JobOfferConclusionInformation extends ActivityInformation<JobOfferProcess> {
 
-	private transient InputStream inputStream;
-	private String filename;
-	private String displayName;
+    private transient InputStream inputStream;
+    private String filename;
+    private String displayName;
 
-	public JobOfferConclusionInformation(final JobOfferProcess process,
-			WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
-		super(process, activity);
-	}
+    public JobOfferConclusionInformation(final JobOfferProcess process,
+            WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
+        super(process, activity);
+    }
 
-	@Override
-	public boolean hasAllneededInfo() {
-		return (hasMinuteFile(getProcess())) || (!getProcess().getJobOffer().hasAnyChosenCandidate()) || getInputStream() != null;
-	}
+    @Override
+    public boolean hasAllneededInfo() {
+        return (hasMinuteFile(getProcess())) || (!getProcess().getJobOffer().hasAnyChosenCandidate()) || getInputStream() != null;
+    }
 
-	private boolean hasMinuteFile(JobOfferProcess process) {
-		for (ProcessFile processFile : process.getFiles()) {
-			if (processFile instanceof MinutesFile) {
-				return true;
-			}
-		}
-		return false;
-	}
+    private boolean hasMinuteFile(JobOfferProcess process) {
+        for (ProcessFile processFile : process.getFiles()) {
+            if (processFile instanceof MinutesFile) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public InputStream getInputStream() {
-		return inputStream;
-	}
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
-	}
+    public void setInputStream(InputStream inputStream) {
+        this.inputStream = inputStream;
+    }
 
-	public String getFilename() {
-		return filename;
-	}
+    public String getFilename() {
+        return filename;
+    }
 
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
 
-	public byte[] getBytes() {
-		return InputStreamUtil.consumeInputStream(getInputStream());
-	}
+    public byte[] getBytes() {
+        return InputStreamUtil.consumeInputStream(getInputStream());
+    }
 
-	public String getDisplayName() {
-		return displayName;
-	}
+    public String getDisplayName() {
+        return displayName;
+    }
 
-	public void setDisplayName(String displayName) {
-		this.displayName = displayName;
-	}
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

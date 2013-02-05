@@ -40,30 +40,30 @@ import pt.ist.bennu.core.domain.User;
  * 
  */
 public class SubmitJobOfferForJuryDefinitionActivity extends
-		WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
+        WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
-	@Override
-	public boolean isActive(JobOfferProcess process, User user) {
-		JobOffer jobOffer = process.getJobOffer();
-		return !jobOffer.isInInternalRecruitment()
-				&& ((jobOffer.isPendingSelection() && jobOffer.getSelectedWorkerOfferCandidateSet().isEmpty() && MobilitySystem
-						.getInstance().isManagementMember(user)) || jobOffer.isUnderSelectionEvaluation()
-						&& (!jobOffer.hasAnyChosenCandidate()) && jobOffer.getOwner().getUser().equals(user));
-	}
+    @Override
+    public boolean isActive(JobOfferProcess process, User user) {
+        JobOffer jobOffer = process.getJobOffer();
+        return !jobOffer.isInInternalRecruitment()
+                && ((jobOffer.isPendingSelection() && jobOffer.getSelectedWorkerOfferCandidateSet().isEmpty() && MobilitySystem
+                        .getInstance().isManagementMember(user)) || jobOffer.isUnderSelectionEvaluation()
+                        && (!jobOffer.hasAnyChosenCandidate()) && jobOffer.getOwner().getUser().equals(user));
+    }
 
-	@Override
-	protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-		activityInformation.getProcess().getJobOffer().setSubmittedForJuryDefinitionDate(new DateTime());
-	}
+    @Override
+    protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
+        activityInformation.getProcess().getJobOffer().setSubmittedForJuryDefinitionDate(new DateTime());
+    }
 
-	@Override
-	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-		return new ActivityInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+        return new ActivityInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
 }

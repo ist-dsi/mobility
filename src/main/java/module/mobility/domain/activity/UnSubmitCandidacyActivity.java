@@ -39,26 +39,26 @@ import pt.ist.bennu.core.domain.User;
  */
 public class UnSubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
-	@Override
-	public boolean isActive(JobOfferProcess process, User user) {
-		JobOffer jobOffer = process.getJobOffer();
-		return jobOffer.hasCandidacy(user) && jobOffer.isInCandidacyPeriod();
-	}
+    @Override
+    public boolean isActive(JobOfferProcess process, User user) {
+        JobOffer jobOffer = process.getJobOffer();
+        return jobOffer.hasCandidacy(user) && jobOffer.isInCandidacyPeriod();
+    }
 
-	@Override
-	protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-		Person person = UserView.getCurrentUser().getPerson();
-		activityInformation.getProcess().getJobOffer().removeCandidacy(person);
-	}
+    @Override
+    protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
+        Person person = UserView.getCurrentUser().getPerson();
+        activityInformation.getProcess().getJobOffer().removeCandidacy(person);
+    }
 
-	@Override
-	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-		return new ActivityInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+        return new ActivityInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
 }

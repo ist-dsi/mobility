@@ -45,60 +45,60 @@ import pt.ist.fenixWebFramework.services.Service;
  */
 public class MobilitySystem extends MobilitySystem_Base {
 
-	public static MobilitySystem getInstance() {
-		final MyOrg myOrg = MyOrg.getInstance();
-		if (!myOrg.hasMobilitySystem()) {
-			initialize();
-		}
-		return myOrg.getMobilitySystem();
-	}
+    public static MobilitySystem getInstance() {
+        final MyOrg myOrg = MyOrg.getInstance();
+        if (!myOrg.hasMobilitySystem()) {
+            initialize();
+        }
+        return myOrg.getMobilitySystem();
+    }
 
-	@Service
-	public synchronized static void initialize() {
-		final MyOrg myOrg = MyOrg.getInstance();
-		if (!myOrg.hasMobilitySystem()) {
-			new MobilitySystem(myOrg);
-		}
-	}
+    @Service
+    public synchronized static void initialize() {
+        final MyOrg myOrg = MyOrg.getInstance();
+        if (!myOrg.hasMobilitySystem()) {
+            new MobilitySystem(myOrg);
+        }
+    }
 
-	private MobilitySystem(final MyOrg myOrg) {
-		super();
-		setMyOrg(myOrg);
-	}
+    private MobilitySystem(final MyOrg myOrg) {
+        super();
+        setMyOrg(myOrg);
+    }
 
-	@Service
-	@Override
-	public void setOrganizationalModel(OrganizationalModel organizationalModel) {
-		super.setOrganizationalModel(organizationalModel);
-	}
+    @Service
+    @Override
+    public void setOrganizationalModel(OrganizationalModel organizationalModel) {
+        super.setOrganizationalModel(organizationalModel);
+    }
 
-	public boolean isManagementMember() {
-		return isManagementMember(UserView.getCurrentUser());
-	}
+    public boolean isManagementMember() {
+        return isManagementMember(UserView.getCurrentUser());
+    }
 
-	public boolean isManagementMember(final User user) {
-		if (getManagersQueue() != null) {
-			return getManagersQueue().isUserAbleToAccessQueue(user);
-		}
-		return false;
-	}
+    public boolean isManagementMember(final User user) {
+        if (getManagersQueue() != null) {
+            return getManagersQueue().isUserAbleToAccessQueue(user);
+        }
+        return false;
+    }
 
-	public Set<User> getManagementUsers() {
-		return getManagersQueue() != null ? getManagersQueue().getUsersSet() : new HashSet<User>();
-	}
+    public Set<User> getManagementUsers() {
+        return getManagersQueue() != null ? getManagersQueue().getUsersSet() : new HashSet<User>();
+    }
 
-	public Collection<String> getServiceNotificationEmails() {
-		Collection<String> emails = new HashSet<String>();
-		for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
-			final Boolean notificationService = personalPortfolio.getNotificationService();
-			if (notificationService != null && notificationService.booleanValue()) {
-				String email = personalPortfolio.getPerson().getUser().getEmail();
-				if (!StringUtils.isEmpty(email)) {
-					emails.add(email);
-				}
-			}
-		}
-		return emails;
-	}
+    public Collection<String> getServiceNotificationEmails() {
+        Collection<String> emails = new HashSet<String>();
+        for (PersonalPortfolio personalPortfolio : getPersonalPortfolioSet()) {
+            final Boolean notificationService = personalPortfolio.getNotificationService();
+            if (notificationService != null && notificationService.booleanValue()) {
+                String email = personalPortfolio.getPerson().getUser().getEmail();
+                if (!StringUtils.isEmpty(email)) {
+                    emails.add(email);
+                }
+            }
+        }
+        return emails;
+    }
 
 }

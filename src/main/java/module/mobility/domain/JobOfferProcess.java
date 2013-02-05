@@ -74,134 +74,134 @@ import pt.ist.emailNotifier.domain.Email;
  * 
  */
 public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<JobOfferProcess> {
-	private static final String JOB_OFFER_SIGLA = "RCT";
-	private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
-	static {
-		final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux =
-				new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
-		activitiesAux.add(new EditJobOfferActivity());
-		activitiesAux.add(new CancelJobOfferActivity());
-		activitiesAux.add(new CancelJobOfferSubmitionForSelectionActivity());
+    private static final String JOB_OFFER_SIGLA = "RCT";
+    private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
+    static {
+        final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux =
+                new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
+        activitiesAux.add(new EditJobOfferActivity());
+        activitiesAux.add(new CancelJobOfferActivity());
+        activitiesAux.add(new CancelJobOfferSubmitionForSelectionActivity());
 
-		activitiesAux.add(new SubmitJobOfferForSelectionActivity());
-		activitiesAux.add(new JobOfferSelectionActivity());
-		activitiesAux.add(new SubmitJobOfferForEvaluationActivity());
-		activitiesAux.add(new CancelJobOfferSubmitionForEvaluationActivity());
-		activitiesAux.add(new JobOfferConclusionActivity());
-		activitiesAux.add(new CancelJobOfferConclusionActivity());
-		activitiesAux.add(new JobOfferArchiveActivity());
+        activitiesAux.add(new SubmitJobOfferForSelectionActivity());
+        activitiesAux.add(new JobOfferSelectionActivity());
+        activitiesAux.add(new SubmitJobOfferForEvaluationActivity());
+        activitiesAux.add(new CancelJobOfferSubmitionForEvaluationActivity());
+        activitiesAux.add(new JobOfferConclusionActivity());
+        activitiesAux.add(new CancelJobOfferConclusionActivity());
+        activitiesAux.add(new JobOfferArchiveActivity());
 
-		activitiesAux.add(new SubmitJobOfferForJuryDefinitionActivity());
-		activitiesAux.add(new CancelJobOfferSubmitionForJuryDefinitionActivity());
-		activitiesAux.add(new JobOfferJuryDefinitionActivity());
+        activitiesAux.add(new SubmitJobOfferForJuryDefinitionActivity());
+        activitiesAux.add(new CancelJobOfferSubmitionForJuryDefinitionActivity());
+        activitiesAux.add(new JobOfferJuryDefinitionActivity());
 
-		activitiesAux.add(new SubmitJobOfferForApprovalActivity());
-		activitiesAux.add(new CancelJobOfferSubmitionForApprovalActivity());
-		activitiesAux.add(new JobOfferApprovalActivity());
-		activitiesAux.add(new CancelJobOfferApprovalActivity());
-		activitiesAux.add(new ChooseJobOfferCandidatesActivity());
+        activitiesAux.add(new SubmitJobOfferForApprovalActivity());
+        activitiesAux.add(new CancelJobOfferSubmitionForApprovalActivity());
+        activitiesAux.add(new JobOfferApprovalActivity());
+        activitiesAux.add(new CancelJobOfferApprovalActivity());
+        activitiesAux.add(new ChooseJobOfferCandidatesActivity());
 
-		activitiesAux.add(new SubmitCandidacyActivity());
-		activitiesAux.add(new UnSubmitCandidacyActivity());
-		activities = Collections.unmodifiableList(activitiesAux);
+        activitiesAux.add(new SubmitCandidacyActivity());
+        activitiesAux.add(new UnSubmitCandidacyActivity());
+        activities = Collections.unmodifiableList(activitiesAux);
 
-		UnreadCommentsWidget.register(new WorkflowCommentCounter(JobOfferProcess.class));
-	}
+        UnreadCommentsWidget.register(new WorkflowCommentCounter(JobOfferProcess.class));
+    }
 
-	public JobOfferProcess(final JobOffer jobOffer) {
-		super();
-		setJobOffer(jobOffer);
-		setProcessNumber(jobOffer.getMobilityYear().nextJobOfferNumber().toString());
-	}
+    public JobOfferProcess(final JobOffer jobOffer) {
+        super();
+        setJobOffer(jobOffer);
+        setProcessNumber(jobOffer.getMobilityYear().nextJobOfferNumber().toString());
+    }
 
-	@Override
-	public <T extends WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> List<T> getActivities() {
-		return (List) activities;
-	}
+    @Override
+    public <T extends WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> List<T> getActivities() {
+        return (List) activities;
+    }
 
-	@Override
-	public User getProcessCreator() {
-		return getJobOffer().getCreator().getUser();
-	}
+    @Override
+    public User getProcessCreator() {
+        return getJobOffer().getCreator().getUser();
+    }
 
-	public static Set<JobOfferProcess> getJobOfferProcessByUser(User user) {
-		Set<JobOfferProcess> processes = new TreeSet<JobOfferProcess>();
-		for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {
-			if (jobOffer.getJobOfferProcess().isAccessible(user)) {
-				processes.add(jobOffer.getJobOfferProcess());
-			}
-		}
-		return processes;
-	}
+    public static Set<JobOfferProcess> getJobOfferProcessByUser(User user) {
+        Set<JobOfferProcess> processes = new TreeSet<JobOfferProcess>();
+        for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {
+            if (jobOffer.getJobOfferProcess().isAccessible(user)) {
+                processes.add(jobOffer.getJobOfferProcess());
+            }
+        }
+        return processes;
+    }
 
-	public boolean getCanManageJobOfferCandidacies() {
-		final User user = UserView.getCurrentUser();
-		return getJobOffer().hasAnyJobOfferCandidacy()
-				&& (MobilitySystem.getInstance().isManagementMember(user) || (getProcessCreator().equals(user) && getJobOffer()
-						.isCandidacyPeriodFinish()));
-	}
+    public boolean getCanManageJobOfferCandidacies() {
+        final User user = UserView.getCurrentUser();
+        return getJobOffer().hasAnyJobOfferCandidacy()
+                && (MobilitySystem.getInstance().isManagementMember(user) || (getProcessCreator().equals(user) && getJobOffer()
+                        .isCandidacyPeriodFinish()));
+    }
 
-	public MobilityJobOfferProcessStageView getMobilityProcessStageView() {
-		return new MobilityJobOfferProcessStageView(getJobOffer());
-	}
+    public MobilityJobOfferProcessStageView getMobilityProcessStageView() {
+        return new MobilityJobOfferProcessStageView(getJobOffer());
+    }
 
-	@Override
-	public boolean isActive() {
-		return getJobOffer().isActive();
-	}
+    @Override
+    public boolean isActive() {
+        return getJobOffer().isActive();
+    }
 
-	@Override
-	public void notifyUserDueToComment(User user, String comment) {
-		List<String> toAddress = new ArrayList<String>();
-		final String email = new JerseyRemoteUser(user).getEmailForSendingEmails();
-		if (email != null) {
-			toAddress.add(email);
+    @Override
+    public void notifyUserDueToComment(User user, String comment) {
+        List<String> toAddress = new ArrayList<String>();
+        final String email = new JerseyRemoteUser(user).getEmailForSendingEmails();
+        if (email != null) {
+            toAddress.add(email);
 
-			final User loggedUser = UserView.getCurrentUser();
-			final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-			new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
-					toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
-							"resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
-					BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
-							"label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
-							comment));
-		}
-	}
+            final User loggedUser = UserView.getCurrentUser();
+            final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
+            new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
+                    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
+                            "resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
+                    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
+                            "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
+                            comment));
+        }
+    }
 
-	@Override
-	public boolean isAccessible(User user) {
-		return getProcessCreator().equals(user) || (getJobOffer().isApproved() && isActive())
-				|| (MobilitySystem.getInstance().isManagementMember(user) && !getJobOffer().isUnderConstruction());
-	}
+    @Override
+    public boolean isAccessible(User user) {
+        return getProcessCreator().equals(user) || (getJobOffer().isApproved() && isActive())
+                || (MobilitySystem.getInstance().isManagementMember(user) && !getJobOffer().isUnderConstruction());
+    }
 
-	@Override
-	public int compareTo(JobOfferProcess otherOfferProcess) {
-		return getJobOffer().compareTo(otherOfferProcess.getJobOffer());
-	}
+    @Override
+    public int compareTo(JobOfferProcess otherOfferProcess) {
+        return getJobOffer().compareTo(otherOfferProcess.getJobOffer());
+    }
 
-	public String getProcessIdentification() {
-		return JOB_OFFER_SIGLA + getMobilityYear().getYear() + "/" + getProcessNumber();
-	}
+    public String getProcessIdentification() {
+        return JOB_OFFER_SIGLA + getMobilityYear().getYear() + "/" + getProcessNumber();
+    }
 
-	protected MobilityYear getMobilityYear() {
-		return getJobOffer().getMobilityYear();
-	}
+    protected MobilityYear getMobilityYear() {
+        return getJobOffer().getMobilityYear();
+    }
 
-	public boolean getCanManageProcess() {
-		final User user = UserView.getCurrentUser();
-		return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
-	}
+    public boolean getCanManageProcess() {
+        final User user = UserView.getCurrentUser();
+        return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
+    }
 
-	@Override
-	public boolean isTicketSupportAvailable() {
-		return false;
-	}
+    @Override
+    public boolean isTicketSupportAvailable() {
+        return false;
+    }
 
-	@Override
-	public List<Class<? extends ProcessFile>> getAvailableFileTypes() {
-		final List<Class<? extends ProcessFile>> list = super.getAvailableFileTypes();
-		list.add(0, MinutesFile.class);
-		return list;
-	}
+    @Override
+    public List<Class<? extends ProcessFile>> getAvailableFileTypes() {
+        final List<Class<? extends ProcessFile>> list = super.getAvailableFileTypes();
+        list.add(0, MinutesFile.class);
+        return list;
+    }
 
 }

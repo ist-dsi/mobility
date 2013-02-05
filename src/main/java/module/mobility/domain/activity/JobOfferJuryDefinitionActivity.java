@@ -38,32 +38,32 @@ import pt.ist.bennu.core.domain.User;
  */
 public class JobOfferJuryDefinitionActivity extends WorkflowActivity<JobOfferProcess, JobOfferJuryInformation> {
 
-	@Override
-	public boolean isActive(JobOfferProcess process, User user) {
-		JobOffer jobOffer = process.getJobOffer();
-		return jobOffer.isPendingJuryDefinition()
-				&& (jobOffer.getOwner().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user));
-	}
+    @Override
+    public boolean isActive(JobOfferProcess process, User user) {
+        JobOffer jobOffer = process.getJobOffer();
+        return jobOffer.isPendingJuryDefinition()
+                && (jobOffer.getOwner().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user));
+    }
 
-	@Override
-	protected void process(JobOfferJuryInformation activityInformation) {
-		activityInformation.getProcess().getJobOffer().getJuryMemberSet().clear();
-		activityInformation.getProcess().getJobOffer().getJuryMemberSet().addAll(activityInformation.getJuryMembers());
-	}
+    @Override
+    protected void process(JobOfferJuryInformation activityInformation) {
+        activityInformation.getProcess().getJobOffer().getJuryMemberSet().clear();
+        activityInformation.getProcess().getJobOffer().getJuryMemberSet().addAll(activityInformation.getJuryMembers());
+    }
 
-	@Override
-	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-		return new JobOfferJuryInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+        return new JobOfferJuryInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
-	@Override
-	public boolean isDefaultInputInterfaceUsed() {
-		return false;
-	}
+    @Override
+    public boolean isDefaultInputInterfaceUsed() {
+        return false;
+    }
 
 }

@@ -40,42 +40,42 @@ import pt.ist.bennu.core.domain.User;
  */
 public class UpdatePersonalPortfolioInfo extends WorkflowActivity<PersonalPortfolioProcess, PersonalPortfolioInfoInformation> {
 
-	@Override
-	public boolean isActive(final PersonalPortfolioProcess process, final User user) {
-		return user == process.getPersonalPortfolio().getPerson().getUser()
-				&& process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
-	}
+    @Override
+    public boolean isActive(final PersonalPortfolioProcess process, final User user) {
+        return user == process.getPersonalPortfolio().getPerson().getUser()
+                && process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
+    }
 
-	@Override
-	protected void process(final PersonalPortfolioInfoInformation information) {
-		final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
-		final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-		PersonalPortfolioInfo personalPortfolioInfo = personalPortfolio.getLastPersonalPortfolioInfo();
-		if (personalPortfolioInfo.canBeUpdated()) {
-			personalPortfolioInfo.edit(information.getCarrer(), information.getCategory());
-		} else {
-			final PersonalPortfolioCurriculum personalPortfolioCurriculum =
-					personalPortfolioInfo.getPersonalPortfolioCurriculum();
-			personalPortfolioInfo =
-					new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory());
-			personalPortfolioInfo.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
-		}
-		information.updateQualifications(personalPortfolioInfo);
-	}
+    @Override
+    protected void process(final PersonalPortfolioInfoInformation information) {
+        final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
+        final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
+        PersonalPortfolioInfo personalPortfolioInfo = personalPortfolio.getLastPersonalPortfolioInfo();
+        if (personalPortfolioInfo.canBeUpdated()) {
+            personalPortfolioInfo.edit(information.getCarrer(), information.getCategory());
+        } else {
+            final PersonalPortfolioCurriculum personalPortfolioCurriculum =
+                    personalPortfolioInfo.getPersonalPortfolioCurriculum();
+            personalPortfolioInfo =
+                    new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory());
+            personalPortfolioInfo.setPersonalPortfolioCurriculum(personalPortfolioCurriculum);
+        }
+        information.updateQualifications(personalPortfolioInfo);
+    }
 
-	@Override
-	public ActivityInformation<PersonalPortfolioProcess> getActivityInformation(final PersonalPortfolioProcess process) {
-		return new PersonalPortfolioInfoInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<PersonalPortfolioProcess> getActivityInformation(final PersonalPortfolioProcess process) {
+        return new PersonalPortfolioInfoInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
-	@Override
-	public boolean isDefaultInputInterfaceUsed() {
-		return false;
-	}
+    @Override
+    public boolean isDefaultInputInterfaceUsed() {
+        return false;
+    }
 
 }

@@ -40,29 +40,29 @@ import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
  * 
  */
 public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProcess> {
-	private List<ProcessFile> files;
+    private List<ProcessFile> files;
 
-	public SubmitCandidacyInformation(final JobOfferProcess jobOfferProcess,
-			WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
-		super(jobOfferProcess, activity);
-		Person person = UserView.getCurrentUser().getPerson();
-		JobOfferCandidacy jobOfferCandidacy = getProcess().getJobOffer().getCandidacy(person);
-		if (jobOfferCandidacy != null) {
-			setFiles(jobOfferCandidacy.getCandidacyFile());
-		}
-	}
+    public SubmitCandidacyInformation(final JobOfferProcess jobOfferProcess,
+            WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
+        super(jobOfferProcess, activity);
+        Person person = UserView.getCurrentUser().getPerson();
+        JobOfferCandidacy jobOfferCandidacy = getProcess().getJobOffer().getCandidacy(person);
+        if (jobOfferCandidacy != null) {
+            setFiles(jobOfferCandidacy.getCandidacyFile());
+        }
+    }
 
-	@Override
-	public boolean hasAllneededInfo() {
-		return isForwardedFromInput() && (getProcess().getJobOffer().getOptionalDocuments() || !getFiles().isEmpty());
-	}
+    @Override
+    public boolean hasAllneededInfo() {
+        return isForwardedFromInput() && (getProcess().getJobOffer().getOptionalDocuments() || !getFiles().isEmpty());
+    }
 
-	public List<ProcessFile> getFiles() {
-		return files;
-	}
+    public List<ProcessFile> getFiles() {
+        return files;
+    }
 
-	public void setFiles(List<ProcessFile> files) {
-		this.files = files;
-	}
+    public void setFiles(List<ProcessFile> files) {
+        this.files = files;
+    }
 
 }

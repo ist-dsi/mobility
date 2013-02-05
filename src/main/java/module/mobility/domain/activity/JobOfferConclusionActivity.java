@@ -42,31 +42,31 @@ import pt.ist.bennu.core.domain.User;
  */
 public class JobOfferConclusionActivity extends WorkflowActivity<JobOfferProcess, JobOfferConclusionInformation> {
 
-	@Override
-	public boolean isActive(JobOfferProcess process, User user) {
-		JobOffer jobOffer = process.getJobOffer();
-		return jobOffer.isPendingConclusion()
-				&& (jobOffer.getOwner().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user));
-	}
+    @Override
+    public boolean isActive(JobOfferProcess process, User user) {
+        JobOffer jobOffer = process.getJobOffer();
+        return jobOffer.isPendingConclusion()
+                && (jobOffer.getOwner().equals(user.getPerson()) || MobilitySystem.getInstance().isManagementMember(user));
+    }
 
-	@Override
-	protected void process(JobOfferConclusionInformation activityInformation) {
-		byte[] fileContent = activityInformation.getBytes();
-		JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
-		if (fileContent != null) {
-			new MinutesFile(jobOffer, activityInformation.getDisplayName(), activityInformation.getFilename(), fileContent);
-		}
-		jobOffer.setConclusionDate(new DateTime());
-	}
+    @Override
+    protected void process(JobOfferConclusionInformation activityInformation) {
+        byte[] fileContent = activityInformation.getBytes();
+        JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
+        if (fileContent != null) {
+            new MinutesFile(jobOffer, activityInformation.getDisplayName(), activityInformation.getFilename(), fileContent);
+        }
+        jobOffer.setConclusionDate(new DateTime());
+    }
 
-	@Override
-	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-		return new JobOfferConclusionInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+        return new JobOfferConclusionInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
 }

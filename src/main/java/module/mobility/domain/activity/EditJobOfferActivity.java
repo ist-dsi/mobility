@@ -38,26 +38,26 @@ import pt.ist.bennu.core.domain.User;
  */
 public class EditJobOfferActivity extends WorkflowActivity<JobOfferProcess, JobOfferInformation> {
 
-	@Override
-	public boolean isActive(JobOfferProcess process, User user) {
-		JobOffer jobOffer = process.getJobOffer();
-		return jobOffer.isUnderConstruction(user)
-				|| (MobilitySystem.getInstance().isManagementMember(user) && !jobOffer.isApproved());
-	}
+    @Override
+    public boolean isActive(JobOfferProcess process, User user) {
+        JobOffer jobOffer = process.getJobOffer();
+        return jobOffer.isUnderConstruction(user)
+                || (MobilitySystem.getInstance().isManagementMember(user) && !jobOffer.isApproved());
+    }
 
-	@Override
-	protected void process(JobOfferInformation activityInformation) {
-		activityInformation.getProcess().getJobOffer().edit(activityInformation.getJobOfferBean());
-	}
+    @Override
+    protected void process(JobOfferInformation activityInformation) {
+        activityInformation.getProcess().getJobOffer().edit(activityInformation.getJobOfferBean());
+    }
 
-	@Override
-	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-		return new JobOfferInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+        return new JobOfferInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
 }

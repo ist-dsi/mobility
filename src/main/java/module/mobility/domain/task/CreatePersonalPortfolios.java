@@ -38,28 +38,28 @@ import module.organizationIst.domain.IstAccountabilityType;
  */
 public class CreatePersonalPortfolios extends CreatePersonalPortfolios_Base {
 
-	public CreatePersonalPortfolios() {
-		super();
-	}
+    public CreatePersonalPortfolios() {
+        super();
+    }
 
-	@Override
-	public void executeTask() {
-		AccountabilityType employeesAccountabilityType = IstAccountabilityType.PERSONNEL.readAccountabilityType();
-		for (Accountability accountability : employeesAccountabilityType.getAccountabilitiesSet()) {
-			if (accountability.isActiveNow()) {
-				final Party party = accountability.getChild();
-				if (party.isPerson()) {
-					Person person = (Person) party;
-					if (!person.hasPersonalPortfolio()) {
-						PersonalPortfolio.create(person);
-					}
-				}
-			}
-		}
-	}
+    @Override
+    public void executeTask() {
+        AccountabilityType employeesAccountabilityType = IstAccountabilityType.PERSONNEL.readAccountabilityType();
+        for (Accountability accountability : employeesAccountabilityType.getAccountabilitiesSet()) {
+            if (accountability.isActiveNow()) {
+                final Party party = accountability.getChild();
+                if (party.isPerson()) {
+                    Person person = (Person) party;
+                    if (!person.hasPersonalPortfolio()) {
+                        PersonalPortfolio.create(person);
+                    }
+                }
+            }
+        }
+    }
 
-	@Override
-	public String getLocalizedName() {
-		return getClass().getName();
-	}
+    @Override
+    public String getLocalizedName() {
+        return getClass().getName();
+    }
 }

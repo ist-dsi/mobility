@@ -41,25 +41,25 @@ import pt.ist.bennu.core.domain.User;
  */
 public class SubmitJobOfferForEvaluationActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
-	@Override
-	public boolean isActive(JobOfferProcess process, User user) {
-		JobOffer jobOffer = process.getJobOffer();
-		return jobOffer.hasAnySelectedWorkerOfferCandidate() && jobOffer.getSubmittedForEvaluationDate() == null
-				&& MobilitySystem.getInstance().isManagementMember(user);
-	}
+    @Override
+    public boolean isActive(JobOfferProcess process, User user) {
+        JobOffer jobOffer = process.getJobOffer();
+        return jobOffer.hasAnySelectedWorkerOfferCandidate() && jobOffer.getSubmittedForEvaluationDate() == null
+                && MobilitySystem.getInstance().isManagementMember(user);
+    }
 
-	@Override
-	protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-		activityInformation.getProcess().getJobOffer().setSubmittedForEvaluationDate(new DateTime());
-	}
+    @Override
+    protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
+        activityInformation.getProcess().getJobOffer().setSubmittedForEvaluationDate(new DateTime());
+    }
 
-	@Override
-	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-		return new ActivityInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+        return new ActivityInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 }

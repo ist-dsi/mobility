@@ -43,29 +43,29 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class WorkersForJobOfferSelection implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		List<PersonalPortfolioInfo> result = new ArrayList<PersonalPortfolioInfo>();
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        List<PersonalPortfolioInfo> result = new ArrayList<PersonalPortfolioInfo>();
 
-		ChooseJobOfferCandidatesInformation activityInformation = (ChooseJobOfferCandidatesInformation) arg0;
+        ChooseJobOfferCandidatesInformation activityInformation = (ChooseJobOfferCandidatesInformation) arg0;
 
-		JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
-		if (jobOffer.isInInternalRecruitment()) {
-			for (JobOfferCandidacy jobOfferCandidacy : jobOffer.getJobOfferCandidacy()) {
-				result.add(jobOfferCandidacy.getPersonalPortfolioInfo());
-			}
-		} else {
-			for (WorkerOffer workerOffer : jobOffer.getSelectedWorkerOfferCandidateSet()) {
-				result.add(workerOffer.getPersonalPortfolioInfo());
-			}
-		}
+        JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
+        if (jobOffer.isInInternalRecruitment()) {
+            for (JobOfferCandidacy jobOfferCandidacy : jobOffer.getJobOfferCandidacy()) {
+                result.add(jobOfferCandidacy.getPersonalPortfolioInfo());
+            }
+        } else {
+            for (WorkerOffer workerOffer : jobOffer.getSelectedWorkerOfferCandidateSet()) {
+                result.add(workerOffer.getPersonalPortfolioInfo());
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
 }

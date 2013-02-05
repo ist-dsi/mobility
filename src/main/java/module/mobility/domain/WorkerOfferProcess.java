@@ -61,104 +61,104 @@ import pt.ist.emailNotifier.domain.Email;
  */
 public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Comparable<WorkerOfferProcess> {
 
-	private static final String WORKER_OFFER_SIGLA = "PRO";
-	private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
+    private static final String WORKER_OFFER_SIGLA = "PRO";
+    private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
 
-	static {
-		final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux =
-				new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
-		activitiesAux.add(new EditWorkerJobOffer());
-		activitiesAux.add(new UpdateWorkerJobOfferProfessionalInformation());
-		activitiesAux.add(new SubmitWorkerJobOfferForApprovalActivity());
-		activitiesAux.add(new CancelWorkerJobOfferSubmitionForApprovalActivity());
-		activitiesAux.add(new WorkerJobOfferApprovalActivity());
-		activitiesAux.add(new CancelWorkerJobOfferApprovalActivity());
-		activitiesAux.add(new CancelWorkerOfferActivity());
-		activities = Collections.unmodifiableList(activitiesAux);
+    static {
+        final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux =
+                new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
+        activitiesAux.add(new EditWorkerJobOffer());
+        activitiesAux.add(new UpdateWorkerJobOfferProfessionalInformation());
+        activitiesAux.add(new SubmitWorkerJobOfferForApprovalActivity());
+        activitiesAux.add(new CancelWorkerJobOfferSubmitionForApprovalActivity());
+        activitiesAux.add(new WorkerJobOfferApprovalActivity());
+        activitiesAux.add(new CancelWorkerJobOfferApprovalActivity());
+        activitiesAux.add(new CancelWorkerOfferActivity());
+        activities = Collections.unmodifiableList(activitiesAux);
 
-		UnreadCommentsWidget.register(new WorkflowCommentCounter(WorkerOfferProcess.class));
-	}
+        UnreadCommentsWidget.register(new WorkflowCommentCounter(WorkerOfferProcess.class));
+    }
 
-	public WorkerOfferProcess(final WorkerOffer workerOffer) {
-		super();
-		setWorkerOffer(workerOffer);
-		setProcessNumber(workerOffer.getMobilityYear().nextWorkerOfferNumber().toString());
-	}
+    public WorkerOfferProcess(final WorkerOffer workerOffer) {
+        super();
+        setWorkerOffer(workerOffer);
+        setProcessNumber(workerOffer.getMobilityYear().nextWorkerOfferNumber().toString());
+    }
 
-	protected MobilityYear getMobilityYear() {
-		return getWorkerOffer().getMobilityYear();
-	}
+    protected MobilityYear getMobilityYear() {
+        return getWorkerOffer().getMobilityYear();
+    }
 
-	@Override
-	public <T extends WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> List<T> getActivities() {
-		return (List) activities;
-	}
+    @Override
+    public <T extends WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> List<T> getActivities() {
+        return (List) activities;
+    }
 
-	@Override
-	public User getProcessCreator() {
-		return getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().getUser();
-	}
+    @Override
+    public User getProcessCreator() {
+        return getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().getUser();
+    }
 
-	public static Set<WorkerOfferProcess> getWorkerJobOfferProcessByUser(User user) {
-		Set<WorkerOfferProcess> processes = new TreeSet<WorkerOfferProcess>();
-		for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
-			if (workerOffer.getWorkerOfferProcess().isAccessible(user)) {
-				processes.add(workerOffer.getWorkerOfferProcess());
-			}
-		}
-		return processes;
-	}
+    public static Set<WorkerOfferProcess> getWorkerJobOfferProcessByUser(User user) {
+        Set<WorkerOfferProcess> processes = new TreeSet<WorkerOfferProcess>();
+        for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
+            if (workerOffer.getWorkerOfferProcess().isAccessible(user)) {
+                processes.add(workerOffer.getWorkerOfferProcess());
+            }
+        }
+        return processes;
+    }
 
-	@Override
-	public boolean isActive() {
-		return getWorkerOffer().isActive();
-	}
+    @Override
+    public boolean isActive() {
+        return getWorkerOffer().isActive();
+    }
 
-	@Override
-	public void notifyUserDueToComment(User user, String comment) {
-		List<String> toAddress = new ArrayList<String>();
-		final String email = new JerseyRemoteUser(user).getEmailForSendingEmails();
-		if (email != null) {
-			toAddress.add(email);
+    @Override
+    public void notifyUserDueToComment(User user, String comment) {
+        List<String> toAddress = new ArrayList<String>();
+        final String email = new JerseyRemoteUser(user).getEmailForSendingEmails();
+        if (email != null) {
+            toAddress.add(email);
 
-			final User loggedUser = UserView.getCurrentUser();
-			final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-			new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
-					toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
-							"resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
-					BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
-							"label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
-							comment));
-		}
-	}
+            final User loggedUser = UserView.getCurrentUser();
+            final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
+            new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
+                    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
+                            "resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
+                    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
+                            "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
+                            comment));
+        }
+    }
 
-	@Override
-	public boolean isAccessible(User user) {
-		return getProcessCreator().equals(user) || (getWorkerOffer().isApproved() && isActive())
-				|| (MobilitySystem.getInstance().isManagementMember(user) && !getWorkerOffer().isUnderConstruction());
-	}
+    @Override
+    public boolean isAccessible(User user) {
+        return getProcessCreator().equals(user) || (getWorkerOffer().isApproved() && isActive())
+                || (MobilitySystem.getInstance().isManagementMember(user) && !getWorkerOffer().isUnderConstruction());
+    }
 
-	@Override
-	public int compareTo(WorkerOfferProcess otherOfferProcess) {
-		return getWorkerOffer().compareTo(otherOfferProcess.getWorkerOffer());
-	}
+    @Override
+    public int compareTo(WorkerOfferProcess otherOfferProcess) {
+        return getWorkerOffer().compareTo(otherOfferProcess.getWorkerOffer());
+    }
 
-	public String getProcessIdentification() {
-		return WORKER_OFFER_SIGLA + getMobilityYear().getYear() + "/" + getProcessNumber();
-	}
+    public String getProcessIdentification() {
+        return WORKER_OFFER_SIGLA + getMobilityYear().getYear() + "/" + getProcessNumber();
+    }
 
-	public MobilityWorkerOfferProcessStageView getMobilityProcessStageView() {
-		return new MobilityWorkerOfferProcessStageView(getWorkerOffer());
-	}
+    public MobilityWorkerOfferProcessStageView getMobilityProcessStageView() {
+        return new MobilityWorkerOfferProcessStageView(getWorkerOffer());
+    }
 
-	public boolean getCanManageProcess() {
-		final User user = UserView.getCurrentUser();
-		return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
-	}
+    public boolean getCanManageProcess() {
+        final User user = UserView.getCurrentUser();
+        return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
+    }
 
-	@Override
-	public boolean isTicketSupportAvailable() {
-		return false;
-	}
+    @Override
+    public boolean isTicketSupportAvailable() {
+        return false;
+    }
 
 }

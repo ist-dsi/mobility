@@ -39,27 +39,27 @@ import pt.ist.bennu.core.domain.User;
  */
 public class DefineNewPersonalPortfolioInfo extends WorkflowActivity<PersonalPortfolioProcess, PersonalPortfolioInfoInformation> {
 
-	@Override
-	public boolean isActive(final PersonalPortfolioProcess process, final User user) {
-		return user == process.getPersonalPortfolio().getPerson().getUser()
-				&& !process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
-	}
+    @Override
+    public boolean isActive(final PersonalPortfolioProcess process, final User user) {
+        return user == process.getPersonalPortfolio().getPerson().getUser()
+                && !process.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
+    }
 
-	@Override
-	protected void process(final PersonalPortfolioInfoInformation information) {
-		final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
-		final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
-		new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory());
-	}
+    @Override
+    protected void process(final PersonalPortfolioInfoInformation information) {
+        final PersonalPortfolioProcess personalPortfolioProcess = information.getProcess();
+        final PersonalPortfolio personalPortfolio = personalPortfolioProcess.getPersonalPortfolio();
+        new PersonalPortfolioInfo(personalPortfolio, information.getCarrer(), information.getCategory());
+    }
 
-	@Override
-	public ActivityInformation<PersonalPortfolioProcess> getActivityInformation(final PersonalPortfolioProcess process) {
-		return new PersonalPortfolioInfoInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<PersonalPortfolioProcess> getActivityInformation(final PersonalPortfolioProcess process) {
+        return new PersonalPortfolioInfoInformation(process, this);
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
 }

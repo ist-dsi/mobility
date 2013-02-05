@@ -39,35 +39,35 @@ import pt.ist.bennu.core.util.BundleUtil;
  */
 public class CancelJobOfferConclusionActivity extends WorkflowActivity<JobOfferProcess, ActivityInformation<JobOfferProcess>> {
 
-	@Override
-	public boolean isActive(JobOfferProcess process, User user) {
-		JobOffer jobOffer = process.getJobOffer();
-		return jobOffer.isConcluded() && (!jobOffer.isArchived()) && MobilitySystem.getInstance().isManagementMember(user);
-	}
+    @Override
+    public boolean isActive(JobOfferProcess process, User user) {
+        JobOffer jobOffer = process.getJobOffer();
+        return jobOffer.isConcluded() && (!jobOffer.isArchived()) && MobilitySystem.getInstance().isManagementMember(user);
+    }
 
-	@Override
-	protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-		activityInformation.getProcess().getJobOffer().setConclusionDate(null);
-	}
+    @Override
+    protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
+        activityInformation.getProcess().getJobOffer().setConclusionDate(null);
+    }
 
-	@Override
-	public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
-		return new ActivityInformation(process, this);
-	}
+    @Override
+    public ActivityInformation<JobOfferProcess> getActivityInformation(JobOfferProcess process) {
+        return new ActivityInformation(process, this);
+    }
 
-	@Override
-	public boolean isConfirmationNeeded(JobOfferProcess process) {
-		return true;
-	}
+    @Override
+    public boolean isConfirmationNeeded(JobOfferProcess process) {
+        return true;
+    }
 
-	@Override
-	public String getLocalizedConfirmationMessage() {
-		return BundleUtil.getStringFromResourceBundle(getUsedBundle(), "activity.confirmation." + getClass().getSimpleName());
-	}
+    @Override
+    public String getLocalizedConfirmationMessage() {
+        return BundleUtil.getStringFromResourceBundle(getUsedBundle(), "activity.confirmation." + getClass().getSimpleName());
+    }
 
-	@Override
-	public String getUsedBundle() {
-		return "resources/MobilityResources";
-	}
+    @Override
+    public String getUsedBundle() {
+        return "resources/MobilityResources";
+    }
 
 }

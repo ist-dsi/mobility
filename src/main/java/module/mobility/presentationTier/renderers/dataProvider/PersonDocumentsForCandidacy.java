@@ -37,15 +37,15 @@ import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
  */
 public class PersonDocumentsForCandidacy implements DataProvider {
 
-	@Override
-	public Converter getConverter() {
-		return new DomainObjectKeyArrayConverter();
-	}
+    @Override
+    public Converter getConverter() {
+        return new DomainObjectKeyArrayConverter();
+    }
 
-	@Override
-	public Object provide(Object arg0, Object arg1) {
-		Person person = UserView.getCurrentUser().getPerson();
-		return person.getPersonalPortfolio().getPersonalPortfolioProcess().getFiles();
-	}
+    @Override
+    public Object provide(Object arg0, Object arg1) {
+        Person person = UserView.getCurrentUser().getPerson();
+        return person.getPersonalPortfolio().getPersonalPortfolioProcess().getFiles();
+    }
 
 }
