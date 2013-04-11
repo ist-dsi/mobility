@@ -35,7 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -53,7 +53,7 @@ public class MobilitySystem extends MobilitySystem_Base {
         return myOrg.getMobilitySystem();
     }
 
-    @Service
+    @Atomic
     public synchronized static void initialize() {
         final MyOrg myOrg = MyOrg.getInstance();
         if (!myOrg.hasMobilitySystem()) {
@@ -66,7 +66,7 @@ public class MobilitySystem extends MobilitySystem_Base {
         setMyOrg(myOrg);
     }
 
-    @Service
+    @Atomic
     @Override
     public void setOrganizationalModel(OrganizationalModel organizationalModel) {
         super.setOrganizationalModel(organizationalModel);

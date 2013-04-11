@@ -24,7 +24,7 @@
  */
 package module.mobility.domain.activity;
 
-import java.util.List;
+import java.util.Collection;
 
 import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.JobOfferProcess;
@@ -40,7 +40,7 @@ import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
  * 
  */
 public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProcess> {
-    private List<ProcessFile> files;
+    private Collection<ProcessFile> files;
 
     public SubmitCandidacyInformation(final JobOfferProcess jobOfferProcess,
             WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
@@ -57,11 +57,11 @@ public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProc
         return isForwardedFromInput() && (getProcess().getJobOffer().getOptionalDocuments() || !getFiles().isEmpty());
     }
 
-    public List<ProcessFile> getFiles() {
+    public Collection<ProcessFile> getFiles() {
         return files;
     }
 
-    public void setFiles(List<ProcessFile> files) {
+    public void setFiles(Collection<ProcessFile> files) {
         this.files = files;
     }
 

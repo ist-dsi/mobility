@@ -24,7 +24,7 @@
  */
 package module.mobility.domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import module.workflow.domain.ProcessFile;
 
@@ -35,7 +35,7 @@ import module.workflow.domain.ProcessFile;
  */
 public class JobOfferCandidacy extends JobOfferCandidacy_Base {
 
-    public JobOfferCandidacy(PersonalPortfolioInfo personalPortfolioInfo, List<ProcessFile> candidacyFiles) {
+    public JobOfferCandidacy(PersonalPortfolioInfo personalPortfolioInfo, Collection<ProcessFile> candidacyFiles) {
         super();
         setPersonalPortfolioInfo(personalPortfolioInfo);
         if (candidacyFiles != null) {

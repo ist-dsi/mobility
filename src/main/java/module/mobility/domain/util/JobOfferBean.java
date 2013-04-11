@@ -33,7 +33,7 @@ import java.util.List;
 import module.mobility.domain.CareerType;
 import module.mobility.domain.JobOffer;
 import module.organization.domain.Unit;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -107,7 +107,7 @@ public class JobOfferBean implements Serializable {
         setOptionalDocuments(jobOffer.getOptionalDocuments());
     }
 
-    @Service
+    @Atomic
     public JobOffer create() {
         return new JobOffer(this);
     }
