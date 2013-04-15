@@ -41,12 +41,28 @@ public class JuryMember extends JuryMember_Base {
     }
 
     public void delete() {
-        removeJobOffer();
-        removePerson();
+        setJobOffer(null);
+        setPerson(null);
         deleteDomainObject();
     }
 
     public boolean getHasPresidentDefined() {
         return true;
     }
+
+    @Deprecated
+    public boolean hasJuryPresident() {
+        return getJuryPresident() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobOffer() {
+        return getJobOffer() != null;
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
 }

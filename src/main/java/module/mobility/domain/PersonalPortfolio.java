@@ -124,4 +124,34 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
         }
         return jobOffersWithCandidacies;
     }
+    @Deprecated
+    public boolean hasNotificationService() {
+        return getNotificationService() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalPortfolioProcess() {
+        return getPersonalPortfolioProcess() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolioInfo> getPersonalPortfolioInfo() {
+        return getPersonalPortfolioInfoSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalPortfolioInfo() {
+        return !getPersonalPortfolioInfoSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilitySystem() {
+        return getMobilitySystem() != null;
+    }
+
 }

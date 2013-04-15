@@ -119,7 +119,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 
     public boolean getHasAllNeededInfoForSubmitCancidacy() {
         Person person = UserView.getCurrentUser().getPerson();
-        return person.hasPersonalPortfolio() && person.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
+        return person.getPersonalPortfolio() != null && person.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
     }
 
     public boolean hasCandidacy(User user) {
@@ -205,7 +205,8 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     }
 
     public boolean isConcluded() {
-        return !getCanceled() && (getConclusionDate() != null || (isCandidacyPeriodFinish() && getJobOfferCandidacyCount() == 0));
+        return !getCanceled()
+                && (getConclusionDate() != null || (isCandidacyPeriodFinish() && getJobOfferCandidacySet().size() == 0));
     }
 
     public boolean isInInternalRecruitment() {
@@ -217,7 +218,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     }
 
     public boolean hasJuryDefined() {
-        return !getCanceled() && getJuryMemberCount() >= MINIMUM_JURY_ELEMENTS && getJuryMemberCount() % 2 == 1
+        return !getCanceled() && getJuryMemberSet().size() >= MINIMUM_JURY_ELEMENTS && getJuryMemberSet().size() % 2 == 1
                 && hasJuryPresident();
     }
 
@@ -273,6 +274,191 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         DateTime now = new DateTime();
         return !getCanceled() && (getPublicationEndDate() == null || getPublicationEndDate().isAfter(new DateTime()))
                 && (getPublicationBeginDate() == null || getPublicationBeginDate().isBefore(now));
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCanceled() {
+        return getCanceled() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmittedForSelectionDate() {
+        return getSubmittedForSelectionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmittedForEvaluationDate() {
+        return getSubmittedForEvaluationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasConclusionDate() {
+        return getConclusionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasArquivedDate() {
+        return getArquivedDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmittedForJuryDefinitionDate() {
+        return getSubmittedForJuryDefinitionDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmittedForApprovalDate() {
+        return getSubmittedForApprovalDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovalDate() {
+        return getApprovalDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicationBeginDate() {
+        return getPublicationBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasPublicationEndDate() {
+        return getPublicationEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobProfile() {
+        return getJobProfile() != null;
+    }
+
+    @Deprecated
+    public boolean hasKnowledgeRequirements() {
+        return getKnowledgeRequirements() != null;
+    }
+
+    @Deprecated
+    public boolean hasSkillRequirements() {
+        return getSkillRequirements() != null;
+    }
+
+    @Deprecated
+    public boolean hasCareerRequirements() {
+        return getCareerRequirements() != null;
+    }
+
+    @Deprecated
+    public boolean hasCategoryRequirements() {
+        return getCategoryRequirements() != null;
+    }
+
+    @Deprecated
+    public boolean hasQualificationRequirements() {
+        return getQualificationRequirements() != null;
+    }
+
+    @Deprecated
+    public boolean hasFormationRequirements() {
+        return getFormationRequirements() != null;
+    }
+
+    @Deprecated
+    public boolean hasProfessionalExperienceRequirements() {
+        return getProfessionalExperienceRequirements() != null;
+    }
+
+    @Deprecated
+    public boolean hasVacanciesNumber() {
+        return getVacanciesNumber() != null;
+    }
+
+    @Deprecated
+    public boolean hasRequiredDocumentsForCandidacy() {
+        return getRequiredDocumentsForCandidacy() != null;
+    }
+
+    @Deprecated
+    public boolean hasAdditionalRemarks() {
+        return getAdditionalRemarks() != null;
+    }
+
+    @Deprecated
+    public boolean hasOptionalDocuments() {
+        return getOptionalDocuments() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreator() {
+        return getCreator() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobOfferApproverPerson() {
+        return getJobOfferApproverPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilitySystem() {
+        return getMobilitySystem() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.JuryMember> getJuryMember() {
+        return getJuryMemberSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJuryMember() {
+        return !getJuryMemberSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.JobOfferCandidacy> getJobOfferCandidacy() {
+        return getJobOfferCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJobOfferCandidacy() {
+        return !getJobOfferCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMobilityYear() {
+        return getMobilityYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobOfferProcess() {
+        return getJobOfferProcess() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolioInfo> getChosenCandidate() {
+        return getChosenCandidateSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyChosenCandidate() {
+        return !getChosenCandidateSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.WorkerOffer> getSelectedWorkerOfferCandidate() {
+        return getSelectedWorkerOfferCandidateSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySelectedWorkerOfferCandidate() {
+        return !getSelectedWorkerOfferCandidateSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasWorkplace() {
+        return getWorkplace() != null;
     }
 
 }
