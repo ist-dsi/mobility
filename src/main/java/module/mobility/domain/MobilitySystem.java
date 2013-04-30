@@ -35,7 +35,7 @@ import org.apache.commons.lang.StringUtils;
 import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.User;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -47,16 +47,16 @@ public class MobilitySystem extends MobilitySystem_Base {
 
     public static MobilitySystem getInstance() {
         final MyOrg myOrg = MyOrg.getInstance();
-        if (!myOrg.hasMobilitySystem()) {
+        if (myOrg.getMobilitySystem() == null) {
             initialize();
         }
         return myOrg.getMobilitySystem();
     }
 
-    @Service
+    @Atomic
     public synchronized static void initialize() {
         final MyOrg myOrg = MyOrg.getInstance();
-        if (!myOrg.hasMobilitySystem()) {
+        if (myOrg.getMobilitySystem() == null) {
             new MobilitySystem(myOrg);
         }
     }
@@ -66,7 +66,7 @@ public class MobilitySystem extends MobilitySystem_Base {
         setMyOrg(myOrg);
     }
 
-    @Service
+    @Atomic
     @Override
     public void setOrganizationalModel(OrganizationalModel organizationalModel) {
         super.setOrganizationalModel(organizationalModel);
@@ -99,6 +99,81 @@ public class MobilitySystem extends MobilitySystem_Base {
             }
         }
         return emails;
+    }
+
+    @Deprecated
+    public boolean hasManagersQueue() {
+        return getManagersQueue() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.MobilityYear> getMobilityYear() {
+        return getMobilityYearSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyMobilityYear() {
+        return !getMobilityYearSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.JobOffer> getJobOffer() {
+        return getJobOfferSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJobOffer() {
+        return !getJobOfferSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.WorkerOffer> getWorkerOffer() {
+        return getWorkerOfferSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWorkerOffer() {
+        return !getWorkerOfferSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolioInfoQualification> getPersonalPortfolioInfoQualification() {
+        return getPersonalPortfolioInfoQualificationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalPortfolioInfoQualification() {
+        return !getPersonalPortfolioInfoQualificationSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMyOrg() {
+        return getMyOrg() != null;
+    }
+
+    @Deprecated
+    public boolean hasOrganizationalModel() {
+        return getOrganizationalModel() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolio> getPersonalPortfolio() {
+        return getPersonalPortfolioSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalPortfolio() {
+        return !getPersonalPortfolioSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolioInfo> getPersonalPortfolioInfo() {
+        return getPersonalPortfolioInfoSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalPortfolioInfo() {
+        return !getPersonalPortfolioInfoSet().isEmpty();
     }
 
 }

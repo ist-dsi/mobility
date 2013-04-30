@@ -225,11 +225,11 @@ public class MobilityAction extends ContextBaseAction {
     public ActionForward portfolio(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         final User user = UserView.getCurrentUser();
-        if (user == null || !user.hasPerson()) {
+        if (user == null || user.getPerson() == null) {
             return frontPage(mapping, form, request, response);
         }
         final Person person = user.getPerson();
-        if (!person.hasPersonalPortfolio()) {
+        if (person.getPersonalPortfolio() == null) {
             PersonalPortfolio.create(person);
         }
         final PersonalPortfolio personalPortfolio = person.getPersonalPortfolio();

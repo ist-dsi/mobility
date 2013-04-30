@@ -24,7 +24,7 @@
  */
 package module.mobility.domain;
 
-import java.util.List;
+import java.util.Collection;
 
 import module.workflow.domain.ProcessFile;
 
@@ -35,7 +35,7 @@ import module.workflow.domain.ProcessFile;
  */
 public class JobOfferCandidacy extends JobOfferCandidacy_Base {
 
-    public JobOfferCandidacy(PersonalPortfolioInfo personalPortfolioInfo, List<ProcessFile> candidacyFiles) {
+    public JobOfferCandidacy(PersonalPortfolioInfo personalPortfolioInfo, Collection<ProcessFile> candidacyFiles) {
         super();
         setPersonalPortfolioInfo(personalPortfolioInfo);
         if (candidacyFiles != null) {
@@ -48,13 +48,33 @@ public class JobOfferCandidacy extends JobOfferCandidacy_Base {
     }
 
     public void delete() {
-        removePersonalPortfolioInfo();
-        removeJobOffer();
-        for (; getCandidacyFileCount() != 0; getCandidacyFileIterator().next().removeJobOfferCandidacy(this)) {
+        setPersonalPortfolioInfo(null);
+        setJobOffer(null);
+        for (; getCandidacyFileSet().size() != 0; getCandidacyFileSet().iterator().next().removeJobOfferCandidacy(this)) {
             ;
         }
 
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public java.util.Set<module.workflow.domain.ProcessFile> getCandidacyFile() {
+        return getCandidacyFileSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyCandidacyFile() {
+        return !getCandidacyFileSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasJobOffer() {
+        return getJobOffer() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalPortfolioInfo() {
+        return getPersonalPortfolioInfo() != null;
     }
 
 }

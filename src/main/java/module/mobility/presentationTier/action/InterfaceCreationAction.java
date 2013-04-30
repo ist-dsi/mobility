@@ -68,7 +68,7 @@ public class InterfaceCreationAction extends ContextBaseAction {
         OrganizationalModel organizationalModel = MobilitySystem.getInstance().getOrganizationalModel();
         if (organizationalModel != null) {
             UnitGroup employeesGroup =
-                    UnitGroup.getOrCreateGroup((Unit) organizationalModel.getPartiesIterator().next(),
+                    UnitGroup.getOrCreateGroup((Unit) organizationalModel.getPartiesSet().iterator().next(),
                             new AccountabilityType[] { IstAccountabilityType.PERSONNEL.readAccountabilityType() },
                             new AccountabilityType[] { IstAccountabilityType.ORGANIZATIONAL.readAccountabilityType() });
 

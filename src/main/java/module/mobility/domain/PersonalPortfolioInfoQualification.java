@@ -42,9 +42,44 @@ public class PersonalPortfolioInfoQualification extends PersonalPortfolioInfoQua
     }
 
     public void delete() {
-        removePersonalPortfolioInfo();
-        removeMobilitySystem();
+        setPersonalPortfolioInfo(null);
+        setMobilitySystem(null);
         deleteDomainObject();
+    }
+
+    @Deprecated
+    public boolean hasQualificationType() {
+        return getQualificationType() != null;
+    }
+
+    @Deprecated
+    public boolean hasName() {
+        return getName() != null;
+    }
+
+    @Deprecated
+    public boolean hasInstitution() {
+        return getInstitution() != null;
+    }
+
+    @Deprecated
+    public boolean hasDate() {
+        return getDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasClassification() {
+        return getClassification() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalPortfolioInfo() {
+        return getPersonalPortfolioInfo() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilitySystem() {
+        return getMobilitySystem() != null;
     }
 
 }

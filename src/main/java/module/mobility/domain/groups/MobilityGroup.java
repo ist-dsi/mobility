@@ -31,7 +31,7 @@ import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.domain.User;
 import pt.ist.bennu.core.domain.groups.PersistentGroup;
 import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -51,7 +51,7 @@ public class MobilityGroup extends MobilityGroup_Base {
         return MobilitySystem.getInstance().isManagementMember(user);
     }
 
-    @Service
+    @Atomic
     public static MobilityGroup getInstance() {
         final MobilityGroup mobilityGroup = (MobilityGroup) PersistentGroup.getSystemGroup(MobilityGroup.class);
         return mobilityGroup == null ? new MobilityGroup() : mobilityGroup;

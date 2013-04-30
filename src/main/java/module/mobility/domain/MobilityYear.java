@@ -83,4 +83,44 @@ public class MobilityYear extends MobilityYear_Base {
         return findMobilityYear(year);
     }
 
+    @Deprecated
+    public boolean hasYear() {
+        return getYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasJobOfferCounter() {
+        return getJobOfferCounter() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkerOfferCounter() {
+        return getWorkerOfferCounter() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilitySystem() {
+        return getMobilitySystem() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.JobOffer> getJobOffer() {
+        return getJobOfferSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJobOffer() {
+        return !getJobOfferSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.WorkerOffer> getWorkerOffer() {
+        return getWorkerOfferSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWorkerOffer() {
+        return !getWorkerOfferSet().isEmpty();
+    }
+
 }

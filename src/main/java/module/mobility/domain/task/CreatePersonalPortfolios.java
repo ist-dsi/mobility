@@ -50,7 +50,7 @@ public class CreatePersonalPortfolios extends CreatePersonalPortfolios_Base {
                 final Party party = accountability.getChild();
                 if (party.isPerson()) {
                     Person person = (Person) party;
-                    if (!person.hasPersonalPortfolio()) {
+                    if (person.getPersonalPortfolio() == null) {
                         PersonalPortfolio.create(person);
                     }
                 }
