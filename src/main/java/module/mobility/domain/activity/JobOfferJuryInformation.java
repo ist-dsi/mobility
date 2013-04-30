@@ -32,7 +32,7 @@ import module.mobility.domain.JuryMember;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -71,7 +71,7 @@ public class JobOfferJuryInformation extends ActivityInformation<JobOfferProcess
         this.personToAddToJury = personToAddToJury;
     }
 
-    @Service
+    @Atomic
     public void addJuryMember() {
         if (getPersonToAddToJury() != null && !containsJuryMember(getPersonToAddToJury())) {
             juryMembers.add(new JuryMember(getPersonToAddToJury(), false, getProcess().getJobOffer()));
@@ -79,7 +79,7 @@ public class JobOfferJuryInformation extends ActivityInformation<JobOfferProcess
         setPersonToAddToJury(null);
     }
 
-    @Service
+    @Atomic
     public void removeJuryMember(JuryMember juryMember) {
         juryMembers.remove(juryMember);
         juryMember.delete();
@@ -94,7 +94,7 @@ public class JobOfferJuryInformation extends ActivityInformation<JobOfferProcess
         return false;
     }
 
-    @Service
+    @Atomic
     public void setJuryPresident(JuryMember presidentJuryMember) {
         for (JuryMember juryMember : juryMembers) {
             juryMember.setJuryPresident(juryMember.equals(presidentJuryMember));

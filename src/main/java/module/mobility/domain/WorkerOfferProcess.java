@@ -161,4 +161,9 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
         return false;
     }
 
+    @Deprecated
+    public boolean hasWorkerOffer() {
+        return getWorkerOffer() != null;
+    }
+
 }

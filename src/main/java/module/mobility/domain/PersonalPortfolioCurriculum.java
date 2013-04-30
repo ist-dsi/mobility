@@ -101,4 +101,14 @@ public class PersonalPortfolioCurriculum extends PersonalPortfolioCurriculum_Bas
         }
     }
 
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolioInfo> getPersonalPortfolioInfo() {
+        return getPersonalPortfolioInfoSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalPortfolioInfo() {
+        return !getPersonalPortfolioInfoSet().isEmpty();
+    }
+
 }

@@ -174,11 +174,11 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
     }
 
     public void updateQualifications(final PersonalPortfolioInfo personalPortfolioInfo) {
-        final int currentCount = personalPortfolioInfo.getPersonalPortfolioInfoQualificationCount();
+        final int currentCount = personalPortfolioInfo.getPersonalPortfolioInfoQualificationSet().size();
         final int newCount = qualificationHolders.size();
         if (currentCount > newCount) {
-            for (int i = newCount; i++ < currentCount; personalPortfolioInfo.getPersonalPortfolioInfoQualificationIterator()
-                    .next().delete()) {
+            for (int i = newCount; i++ < currentCount; personalPortfolioInfo.getPersonalPortfolioInfoQualificationSet()
+                    .iterator().next().delete()) {
                 ;
             }
         } else if (newCount > currentCount) {
@@ -188,7 +188,7 @@ public class PersonalPortfolioInfoInformation extends ActivityInformation<Person
         }
 
         final Iterator<PersonalPortfolioInfoQualification> iterator =
-                personalPortfolioInfo.getPersonalPortfolioInfoQualificationIterator();
+                personalPortfolioInfo.getPersonalPortfolioInfoQualificationSet().iterator();
         for (final QualificationHolder qualificationHolder : qualificationHolders) {
             final PersonalPortfolioInfoQualification qualification = iterator.next();
             qualification.setQualificationType(qualificationHolder.getQualificationType());

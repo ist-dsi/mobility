@@ -103,4 +103,9 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
     public boolean isTicketSupportAvailable() {
         return false;
     }
+    @Deprecated
+    public boolean hasPersonalPortfolio() {
+        return getPersonalPortfolio() != null;
+    }
+
 }

@@ -204,4 +204,9 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
         return list;
     }
 
+    @Deprecated
+    public boolean hasJobOffer() {
+        return getJobOffer() != null;
+    }
+
 }
