@@ -37,7 +37,7 @@ import module.organization.domain.Party;
 import module.organization.domain.Person;
 import module.organizationIst.domain.IstAccountabilityType;
 import module.webserviceutils.client.JerseyRemoteUser;
-import pt.ist.fenixWebFramework.services.Service;
+import pt.ist.fenixframework.Atomic;
 
 /**
  * 
@@ -65,7 +65,7 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
         return false;
     }
 
-    @Service
+    @Atomic
     public static PersonalPortfolio create(final Person person) {
         return new PersonalPortfolio(person);
     }
@@ -124,4 +124,34 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
         }
         return jobOffersWithCandidacies;
     }
+    @Deprecated
+    public boolean hasNotificationService() {
+        return getNotificationService() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalPortfolioProcess() {
+        return getPersonalPortfolioProcess() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolioInfo> getPersonalPortfolioInfo() {
+        return getPersonalPortfolioInfoSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalPortfolioInfo() {
+        return !getPersonalPortfolioInfoSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPerson() {
+        return getPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilitySystem() {
+        return getMobilitySystem() != null;
+    }
+
 }

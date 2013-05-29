@@ -78,4 +78,79 @@ public class PersonalPortfolioInfo extends PersonalPortfolioInfo_Base implements
         }
     }
 
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasModificationDate() {
+        return getModificationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCarrer() {
+        return getCarrer() != null;
+    }
+
+    @Deprecated
+    public boolean hasCategory() {
+        return getCategory() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.PersonalPortfolioInfoQualification> getPersonalPortfolioInfoQualification() {
+        return getPersonalPortfolioInfoQualificationSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyPersonalPortfolioInfoQualification() {
+        return !getPersonalPortfolioInfoQualificationSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPersonalPortfolioCurriculum() {
+        return getPersonalPortfolioCurriculum() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.WorkerOffer> getWorkerOffer() {
+        return getWorkerOfferSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyWorkerOffer() {
+        return !getWorkerOfferSet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasPersonalPortfolio() {
+        return getPersonalPortfolio() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.JobOffer> getSelectedJobOffer() {
+        return getSelectedJobOfferSet();
+    }
+
+    @Deprecated
+    public boolean hasAnySelectedJobOffer() {
+        return !getSelectedJobOfferSet().isEmpty();
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.JobOfferCandidacy> getJobOfferCandidacy() {
+        return getJobOfferCandidacySet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJobOfferCandidacy() {
+        return !getJobOfferCandidacySet().isEmpty();
+    }
+
+    @Deprecated
+    public boolean hasMobilitySystem() {
+        return getMobilitySystem() != null;
+    }
+
 }

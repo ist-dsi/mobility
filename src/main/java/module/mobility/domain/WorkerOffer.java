@@ -118,4 +118,104 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
         setWorkerOfferApproverPerson(UserView.getCurrentUser().getPerson());
     }
 
+    @Deprecated
+    public boolean hasBeginDate() {
+        return getBeginDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasEndDate() {
+        return getEndDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCreationDate() {
+        return getCreationDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasSubmittedForApprovalDate() {
+        return getSubmittedForApprovalDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasApprovalDate() {
+        return getApprovalDate() != null;
+    }
+
+    @Deprecated
+    public boolean hasCanceled() {
+        return getCanceled() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayPhoto() {
+        return getDisplayPhoto() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayName() {
+        return getDisplayName() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayDateOfBirth() {
+        return getDisplayDateOfBirth() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayCarrer() {
+        return getDisplayCarrer() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayCategory() {
+        return getDisplayCategory() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayQualifications() {
+        return getDisplayQualifications() != null;
+    }
+
+    @Deprecated
+    public boolean hasDisplayCurriculum() {
+        return getDisplayCurriculum() != null;
+    }
+
+    @Deprecated
+    public boolean hasPersonalPortfolioInfo() {
+        return getPersonalPortfolioInfo() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkerOfferApproverPerson() {
+        return getWorkerOfferApproverPerson() != null;
+    }
+
+    @Deprecated
+    public boolean hasWorkerOfferProcess() {
+        return getWorkerOfferProcess() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilityYear() {
+        return getMobilityYear() != null;
+    }
+
+    @Deprecated
+    public boolean hasMobilitySystem() {
+        return getMobilitySystem() != null;
+    }
+
+    @Deprecated
+    public java.util.Set<module.mobility.domain.JobOffer> getJobOffer() {
+        return getJobOfferSet();
+    }
+
+    @Deprecated
+    public boolean hasAnyJobOffer() {
+        return !getJobOfferSet().isEmpty();
+    }
+
 }
