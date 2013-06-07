@@ -44,8 +44,8 @@
 					<tr>
 						<td>
 							<%
-								final OrganizationalModel organizationalModel = MyOrg.getInstance().hasAnyOrganizationalModels() ?
-										MyOrg.getInstance().getOrganizationalModelsIterator().next() : null;
+								final OrganizationalModel organizationalModel = MyOrg.getInstance().getOrganizationalModelsSet().size()>0 ?
+									MyOrg.getInstance().getOrganizationalModelsSet().iterator().next() : null;
 							%>
 
 							<%
