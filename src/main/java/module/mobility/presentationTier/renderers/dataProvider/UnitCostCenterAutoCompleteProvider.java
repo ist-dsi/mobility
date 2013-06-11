@@ -31,12 +31,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import module.mobility.domain.MobilitySystem;
 import module.organization.domain.Accountability;
 import module.organization.domain.Party;
 import module.organization.domain.PartyType;
 import module.organization.domain.Unit;
-import module.organizationIst.domain.IstAccountabilityType;
-import module.organizationIst.domain.IstPartyType;
 import pt.ist.bennu.core.domain.MyOrg;
 import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import pt.utl.ist.fenix.tools.util.StringNormalizer;
@@ -57,7 +56,7 @@ public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider 
         StringNormalizer.normalize(input);
 
         for (final Party party : getParties(argsMap, value)) {
-            if (party.isUnit() && party.getPartyTypes().contains(PartyType.readBy(IstPartyType.COST_CENTER.getType()))) {
+            if (party.isUnit() && party.getPartyTypes().contains(MobilitySystem.getInstance().getCostCenterPartyType())) {
                 final Unit unit = (Unit) party;
                 if (isActive(unit)) {
                     final String unitName = StringNormalizer.normalize(unit.getPartyName().getContent());
@@ -79,8 +78,7 @@ public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider 
     }
 
     private boolean isActive(Unit unit) {
-        for (Accountability accountability : unit.getParentAccountabilities(IstAccountabilityType.ORGANIZATIONAL
-                .readAccountabilityType())) {
+        for (Accountability accountability : unit.getParentAccountabilities(MobilitySystem.getInstance().getOrganizationalAccountabilityType())) {
             if (accountability.isActiveNow()) {
                 return true;
             }
