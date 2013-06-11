@@ -310,3 +310,25 @@ relation PersonalPortfolioInfoPersonalPortfolioCurriculum {
 	}
 	PersonalPortfolioCurriculum playsRole personalPortfolioCurriculum;
 }
+
+relation MobilitySystemOrganizationalAccountabilityType {
+	MobilitySystem playsRole mobilitySystemFromOrgAccType;
+	.module.organization.domain.AccountabilityType playsRole organizationalAccountabilityType;
+}
+
+relation MobilitySystemEmployeeAccountabilityType {
+	MobilitySystem playsRole mobilitySystemFromEmployeeAccType;
+	.module.organization.domain.AccountabilityType playsRole employeeAccountabilityType;
+}
+
+relation MobilitySystemWorkerAccountabilityType {
+	MobilitySystem playsRole mobilitySystemFromWorkerAccType;
+	.module.organization.domain.AccountabilityType playsRole workerAccountabilityType {
+		multiplicity *;
+	}
+}
+
+relation MobilitySystemCostCenterPartyType {
+	MobilitySystem playsRole mobilitySystemFromCostCenterPartyType;
+	.module.organization.domain.PartyType playsRole costCenterPartyType;
+}
