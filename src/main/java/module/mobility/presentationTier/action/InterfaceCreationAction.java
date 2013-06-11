@@ -34,7 +34,6 @@ import module.organization.domain.OrganizationalModel;
 import module.organization.domain.Unit;
 import module.organization.domain.groups.PersonGroup;
 import module.organization.domain.groups.UnitGroup;
-import module.organizationIst.domain.IstAccountabilityType;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -69,8 +68,8 @@ public class InterfaceCreationAction extends ContextBaseAction {
         if (organizationalModel != null) {
             UnitGroup employeesGroup =
                     UnitGroup.getOrCreateGroup((Unit) organizationalModel.getPartiesSet().iterator().next(),
-                            new AccountabilityType[] { IstAccountabilityType.PERSONNEL.readAccountabilityType() },
-                            new AccountabilityType[] { IstAccountabilityType.ORGANIZATIONAL.readAccountabilityType() });
+                            new AccountabilityType[] { MobilitySystem.getInstance().getEmployeeAccountabilityType() },
+                            new AccountabilityType[] { MobilitySystem.getInstance().getOrganizationalAccountabilityType() });
 
             final PersistentGroup managementsGroup = MobilityGroup.getInstance();
 

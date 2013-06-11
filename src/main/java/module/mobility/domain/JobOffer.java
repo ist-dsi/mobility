@@ -33,7 +33,6 @@ import java.util.ResourceBundle;
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
 import module.organization.domain.Unit;
-import module.organizationIst.domain.IstAccountabilityType;
 import module.workflow.domain.LabelLog;
 
 import org.apache.commons.lang.StringUtils;
@@ -175,7 +174,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         StringBuilder workplacePath = new StringBuilder();
         if (getWorkplace() != null) {
             workplacePath.append(getWorkplace().getPartyName().getContent());
-            for (Unit unit : getWorkplace().getParentUnits(IstAccountabilityType.ORGANIZATIONAL.readAccountabilityType())) {
+            for (Unit unit : getWorkplace().getParentUnits(MobilitySystem.getInstance().getOrganizationalAccountabilityType())) {
                 workplacePath.append(" / ").append(unit.getPartyName().getContent());
             }
         }

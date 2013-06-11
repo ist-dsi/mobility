@@ -35,7 +35,6 @@ import module.organization.domain.Accountability;
 import module.organization.domain.AccountabilityType;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
-import module.organizationIst.domain.IstAccountabilityType;
 import module.webserviceutils.client.JerseyRemoteUser;
 import pt.ist.fenixframework.Atomic;
 
@@ -56,8 +55,7 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     private Boolean isEmployee(Person person) {
-        for (Accountability accountability : person.getParentAccountabilities(IstAccountabilityType.PERSONNEL
-                .readAccountabilityType())) {
+        for (Accountability accountability : person.getParentAccountabilities(MobilitySystem.getInstance().getEmployeeAccountabilityType())) {
             if (accountability.isActiveNow()) {
                 return true;
             }
@@ -99,11 +97,7 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     public Collection<Party> getWorkingPlaces() {
-        List<AccountabilityType> accountabilityTypes = new ArrayList<AccountabilityType>();
-        accountabilityTypes.add(IstAccountabilityType.PERSONNEL.readAccountabilityType());
-        accountabilityTypes.add(IstAccountabilityType.TEACHING_PERSONNEL.readAccountabilityType());
-        accountabilityTypes.add(IstAccountabilityType.RESEARCH_PERSONNEL.readAccountabilityType());
-        return getPerson().getParents(accountabilityTypes);
+        return getPerson().getParents(MobilitySystem.getInstance().getWorkerAccountabilityTypeSet());
     }
 
     public boolean hasAnyActiveWorkerOfferOrPendingApproval() {
