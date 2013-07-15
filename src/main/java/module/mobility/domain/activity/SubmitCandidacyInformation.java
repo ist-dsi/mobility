@@ -24,7 +24,8 @@
  */
 package module.mobility.domain.activity;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.JobOfferProcess;
@@ -40,7 +41,7 @@ import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
  * 
  */
 public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProcess> {
-    private Collection<ProcessFile> files;
+    private List<ProcessFile> files;
 
     public SubmitCandidacyInformation(final JobOfferProcess jobOfferProcess,
             WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
@@ -48,20 +49,21 @@ public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProc
         Person person = UserView.getCurrentUser().getPerson();
         JobOfferCandidacy jobOfferCandidacy = getProcess().getJobOffer().getCandidacy(person);
         if (jobOfferCandidacy != null) {
-            setFiles(jobOfferCandidacy.getCandidacyFile());
+            setFiles(new ArrayList<ProcessFile>(jobOfferCandidacy.getCandidacyFileSet()));
         }
     }
 
     @Override
     public boolean hasAllneededInfo() {
-        return isForwardedFromInput() && (getProcess().getJobOffer().getOptionalDocuments() || !getFiles().isEmpty());
+        return isForwardedFromInput()
+                && (getProcess().getJobOffer().getOptionalDocuments() || (getFiles() != null && !getFiles().isEmpty()));
     }
 
-    public Collection<ProcessFile> getFiles() {
+    public List<ProcessFile> getFiles() {
         return files;
     }
 
-    public void setFiles(Collection<ProcessFile> files) {
+    public void setFiles(List<ProcessFile> files) {
         this.files = files;
     }
 
