@@ -6,7 +6,7 @@
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/workflow" prefix="wf"%>
 
 <%@page import="module.organization.domain.OrganizationalModel"%>
-<%@page import="pt.ist.bennu.core.domain.MyOrg"%>
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 
 <bean:define id="personalPortfolio" name="process" property="personalPortfolio"/>
 <bean:define id="person" name="personalPortfolio" property="person"/>

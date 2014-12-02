@@ -24,6 +24,7 @@
  */
 package module.mobility.domain.activity;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import module.mobility.domain.JobOfferProcess;
@@ -31,7 +32,8 @@ import module.mobility.domain.MinutesFile;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
-import pt.ist.bennu.core.util.InputStreamUtil;
+
+import com.google.common.io.ByteStreams;
 
 /**
  * 
@@ -80,7 +82,11 @@ public class JobOfferConclusionInformation extends ActivityInformation<JobOfferP
     }
 
     public byte[] getBytes() {
-        return InputStreamUtil.consumeInputStream(getInputStream());
+        try {
+            return ByteStreams.toByteArray(getInputStream());
+        } catch (IOException e) {
+            throw new Error(e);
+        }
     }
 
     public String getDisplayName() {

@@ -24,18 +24,14 @@
  */
 package module.mobility.domain;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import module.organization.domain.Accountability;
-import module.organization.domain.AccountabilityType;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
-import module.webserviceutils.client.JerseyRemoteUser;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -92,8 +88,7 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     public String getEmail() {
-        JerseyRemoteUser remoteUser = new JerseyRemoteUser(getPerson().getUser());
-        return remoteUser.getEmailForSendingEmails();
+        return getPerson().getUser().getProfile().getEmail();
     }
 
     public Collection<Party> getWorkingPlaces() {

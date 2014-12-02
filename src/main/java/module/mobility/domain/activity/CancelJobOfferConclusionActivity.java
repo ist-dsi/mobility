@@ -29,8 +29,9 @@ import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.MobilitySystem;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 
 /**
  * 
@@ -62,7 +63,7 @@ public class CancelJobOfferConclusionActivity extends WorkflowActivity<JobOfferP
 
     @Override
     public String getLocalizedConfirmationMessage() {
-        return BundleUtil.getStringFromResourceBundle(getUsedBundle(), "activity.confirmation." + getClass().getSimpleName());
+        return BundleUtil.getString(getUsedBundle(), "activity.confirmation." + getClass().getSimpleName());
     }
 
     @Override

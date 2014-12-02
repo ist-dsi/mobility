@@ -7,7 +7,7 @@
 
 
 <%@page import="module.organization.domain.OrganizationalModel"%>
-<%@page import="pt.ist.bennu.core.domain.MyOrg"%>
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 <%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
 
 <bean:define id="workerOffer" name="process" property="workerOffer" type="module.mobility.domain.WorkerOffer"/>

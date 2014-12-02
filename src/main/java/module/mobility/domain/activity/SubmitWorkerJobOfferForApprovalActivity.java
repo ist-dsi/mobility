@@ -29,9 +29,8 @@ import module.mobility.domain.WorkerOfferProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 
+import org.fenixedu.bennu.core.domain.User;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.domain.User;
 
 /**
  * 

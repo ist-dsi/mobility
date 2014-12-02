@@ -25,7 +25,9 @@
 package module.mobility.presentationTier.renderers.dataProvider;
 
 import module.organization.domain.Person;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+
+import org.fenixedu.bennu.core.security.Authenticate;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -44,7 +46,7 @@ public class PersonDocumentsForCandidacy implements DataProvider {
 
     @Override
     public Object provide(Object arg0, Object arg1) {
-        Person person = UserView.getCurrentUser().getPerson();
+        Person person = Authenticate.getUser().getPerson();
         return person.getPersonalPortfolio().getPersonalPortfolioProcess().getFiles();
     }
 

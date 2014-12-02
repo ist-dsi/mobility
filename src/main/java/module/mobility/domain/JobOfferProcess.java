@@ -51,19 +51,16 @@ import module.mobility.domain.activity.SubmitJobOfferForJuryDefinitionActivity;
 import module.mobility.domain.activity.SubmitJobOfferForSelectionActivity;
 import module.mobility.domain.activity.UnSubmitCandidacyActivity;
 import module.mobility.domain.util.MobilityJobOfferProcessStageView;
-import module.webserviceutils.client.JerseyRemoteUser;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.utils.WorkflowCommentCounter;
+import module.workflow.util.ClassNameBundle;
 import module.workflow.widgets.UnreadCommentsWidget;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.bennu.core.util.ClassNameBundle;
-import pt.ist.emailNotifier.domain.Email;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 @ClassNameBundle(bundle = "resources/MobilityResources")
 /**
@@ -135,7 +132,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     }
 
     public boolean getCanManageJobOfferCandidacies() {
-        final User user = UserView.getCurrentUser();
+        final User user = Authenticate.getUser();
         return getJobOffer().hasAnyJobOfferCandidacy()
                 && (MobilitySystem.getInstance().isManagementMember(user) || (getProcessCreator().equals(user) && getJobOffer()
                         .isCandidacyPeriodFinish()));
@@ -153,18 +150,18 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     @Override
     public void notifyUserDueToComment(User user, String comment) {
         List<String> toAddress = new ArrayList<String>();
-        final String email = new JerseyRemoteUser(user).getEmailForSendingEmails();
+        final String email = user.getProfile() == null ? null : user.getProfile().getEmail();
         if (email != null) {
             toAddress.add(email);
 
-            final User loggedUser = UserView.getCurrentUser();
-            final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-            new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
-                    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
-                            "resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
-                    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
-                            "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
-                            comment));
+            final User loggedUser = Authenticate.getUser();
+            throw new Error("Reimplement");
+//            new Email(PortalConfiguration.getInstance().getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
+//                    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getString(
+//                            "resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
+//                    BundleUtil.getString("resources/MobilityResources",
+//                            "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
+//                            comment));
         }
     }
 
@@ -188,7 +185,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     }
 
     public boolean getCanManageProcess() {
-        final User user = UserView.getCurrentUser();
+        final User user = Authenticate.getUser();
         return getProcessCreator().equals(user) || (MobilitySystem.getInstance().isManagementMember(user));
     }
 

@@ -36,10 +36,10 @@ import module.mobility.domain.WorkerOfferProcess;
 import module.organization.domain.Person;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.util.BundleUtil;
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 /**
@@ -58,7 +58,7 @@ public class OfferSearch implements Serializable {
 
         @Override
         public String getLocalizedName() {
-            return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+            return BundleUtil.getString("resources/MobilityResources", getQualifiedName());
         }
 
     }
@@ -72,7 +72,7 @@ public class OfferSearch implements Serializable {
 
         @Override
         public String getLocalizedName() {
-            return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+            return BundleUtil.getString("resources/MobilityResources", getQualifiedName());
         }
 
     }
@@ -145,7 +145,7 @@ public class OfferSearch implements Serializable {
 
     public JobOfferProcess getJobOfferProcess(User user) {
         if (!StringUtils.isEmpty(getProcessNumber())) {
-            for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
+            for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {
                 if (jobOffer.getJobOfferProcess().getProcessIdentification().equalsIgnoreCase(getProcessNumber())) {
                     return jobOffer.getJobOfferProcess().isAccessible(user) ? jobOffer.getJobOfferProcess() : null;
                 }
@@ -156,7 +156,7 @@ public class OfferSearch implements Serializable {
 
     public WorkerOfferProcess getWorkerOfferProcess(User user) {
         if (!StringUtils.isEmpty(getProcessNumber())) {
-            for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOffer()) {
+            for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
                 if (workerOffer.getWorkerOfferProcess().getProcessIdentification().equalsIgnoreCase(getProcessNumber())) {
                     return workerOffer.getWorkerOfferProcess();
                 }
@@ -167,8 +167,8 @@ public class OfferSearch implements Serializable {
 
     public Set<JobOfferProcess> getJobOfferSet() {
         Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
-        User user = UserView.getCurrentUser();
-        for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
+        User user = Authenticate.getUser();
+        for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {
             if (jobOffer.getCreator().equals(user.getPerson())) {
                 result.add(jobOffer.getJobOfferProcess());
             }
@@ -178,8 +178,8 @@ public class OfferSearch implements Serializable {
 
     public Set<WorkerOfferProcess> getWorkerOfferSet() {
         Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
-        User user = UserView.getCurrentUser();
-        for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOffer()) {
+        User user = Authenticate.getUser();
+        for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
             if (workerOffer.getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().equals(user.getPerson())) {
                 result.add(workerOffer.getWorkerOfferProcess());
             }
@@ -189,8 +189,8 @@ public class OfferSearch implements Serializable {
 
     public Set<JobOfferProcess> getPendingApprovalJobOfferSet() {
         Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
-        User user = UserView.getCurrentUser();
-        for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
+        User user = Authenticate.getUser();
+        for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {
             if (jobOffer.getJobOfferProcess().hasAnyAvailableActivity(user, false) && jobOffer.isActive()) {
                 result.add(jobOffer.getJobOfferProcess());
             }
@@ -200,8 +200,8 @@ public class OfferSearch implements Serializable {
 
     public Set<WorkerOfferProcess> getPendingApprovalWorkerJobOfferSet() {
         Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
-        User user = UserView.getCurrentUser();
-        for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOffer()) {
+        User user = Authenticate.getUser();
+        for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
             if (workerOffer.isPendingApproval(user)) {
                 result.add(workerOffer.getWorkerOfferProcess());
             }
@@ -211,8 +211,8 @@ public class OfferSearch implements Serializable {
 
     public Set<JobOfferProcess> doJobOfferSearch() {
         Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
-        User user = UserView.getCurrentUser();
-        for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
+        User user = Authenticate.getUser();
+        for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {
             if ((jobOffer.getJobOfferProcess().isAccessible(user) || MobilitySystem.getInstance().isManagementMember(user))
                     && isSatisfiedJobOfferOwner(jobOffer, user) && isSatisfiedState(jobOffer)
                     && isSatisfiedState(jobOffer.isActive())
@@ -225,7 +225,7 @@ public class OfferSearch implements Serializable {
 
     public Set<WorkerOfferProcess> doWorkerOfferSearch() {
         Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
-        User user = UserView.getCurrentUser();
+        User user = Authenticate.getUser();
         for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
             if ((workerOffer.getWorkerOfferProcess().isAccessible(user) || MobilitySystem.getInstance().isManagementMember(user))
                     && isSatisfiedOwner(workerOffer.getOwner(), user) && isSatisfiedState(workerOffer)

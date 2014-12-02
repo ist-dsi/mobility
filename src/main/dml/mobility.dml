@@ -12,9 +12,6 @@ enum CareerType as CareerType;
 class MobilitySystem {
 }
 
-class groups.MobilityGroup extends .pt.ist.bennu.core.domain.groups.PersistentGroup {
-}
-	
 class MobilityYear {
 	Integer year;
 	Integer jobOfferCounter;
@@ -104,11 +101,8 @@ class WorkerOffer {
 class WorkerOfferProcess extends .module.workflow.domain.WorkflowProcess {
 }
 
-class task.CreatePersonalPortfolios extends .pt.ist.bennu.core.domain.scheduler.Task {
-}
-
 relation MyOrgMobilitySystem {
-	.pt.ist.bennu.core.domain.MyOrg playsRole myOrg;
+	.org.fenixedu.bennu.core.domain.Bennu playsRole bennu;
 	MobilitySystem playsRole mobilitySystem;
 }
 

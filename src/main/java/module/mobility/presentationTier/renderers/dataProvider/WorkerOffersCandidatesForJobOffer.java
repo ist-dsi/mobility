@@ -28,7 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import module.mobility.domain.WorkerOffer;
-import pt.ist.bennu.core.domain.MyOrg;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+
 import pt.ist.fenixWebFramework.rendererExtensions.converters.DomainObjectKeyArrayConverter;
 import pt.ist.fenixWebFramework.renderers.DataProvider;
 import pt.ist.fenixWebFramework.renderers.components.converters.Converter;
@@ -48,7 +50,7 @@ public class WorkerOffersCandidatesForJobOffer implements DataProvider {
     @Override
     public Object provide(Object arg0, Object arg1) {
         List<WorkerOffer> workerOfferList = new ArrayList<WorkerOffer>();
-        for (WorkerOffer workerOffer : MyOrg.getInstance().getMobilitySystem().getWorkerOffer()) {
+        for (WorkerOffer workerOffer : Bennu.getInstance().getMobilitySystem().getWorkerOfferSet()) {
             if (workerOffer.isActive() && workerOffer.isApproved()) {
                 workerOfferList.add(workerOffer);
             }
