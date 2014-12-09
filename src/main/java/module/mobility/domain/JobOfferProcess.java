@@ -62,7 +62,7 @@ import module.workflow.widgets.UnreadCommentsWidget;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 
-@ClassNameBundle(bundle = "resources/MobilityResources")
+@ClassNameBundle(bundle = "MobilityResources")
 /**
  * 
  * @author João Antunes
