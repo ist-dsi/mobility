@@ -61,9 +61,12 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.struts.annotations.Mapping;
 import org.fenixedu.bennu.struts.base.BaseAction;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
+@StrutsApplication(bundle = "MobilityResources", path = "mobility", titleKey = "link.sideBar.mobility", accessGroup = "logged", hint = "Mobility")
 @Mapping(path = "/mobility")
 /**
  * 
@@ -73,6 +76,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  */
 public class MobilityAction extends BaseAction {
 
+    @EntryPoint
     public ActionForward frontPage(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         OfferSearch offerSearch = getRenderedObject("offerSearch");

@@ -51,7 +51,7 @@
 		<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.configuration.managementMembers"/>
 	</h3>
 	<fr:view name="mobilitySystem" property="managementUsers">
-		<fr:schema type="pt.ist.bennu.core.domain.User" bundle="ORGANIZATION_RESOURCES">
+		<fr:schema type="org.fenixedu.bennu.core.domain.User" bundle="ORGANIZATION_RESOURCES">
 			<fr:slot name="person.partyName" key="label.name"/>
 			<fr:slot name="username" key="label.username"/>
 		</fr:schema>

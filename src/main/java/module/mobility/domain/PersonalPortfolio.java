@@ -32,6 +32,9 @@ import java.util.TreeSet;
 import module.organization.domain.Accountability;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
+
+import org.fenixedu.bennu.core.domain.UserProfile;
+
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -88,7 +91,8 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     public String getEmail() {
-        return getPerson().getUser().getProfile().getEmail();
+        final UserProfile profile = getPerson().getUser().getProfile();
+        return profile == null ? null : profile.getEmail();
     }
 
     public Collection<Party> getWorkingPlaces() {
