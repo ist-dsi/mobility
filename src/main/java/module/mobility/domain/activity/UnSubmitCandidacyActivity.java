@@ -29,8 +29,9 @@ import module.mobility.domain.JobOfferProcess;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -47,7 +48,7 @@ public class UnSubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess,
 
     @Override
     protected void process(ActivityInformation<JobOfferProcess> activityInformation) {
-        Person person = UserView.getCurrentUser().getPerson();
+        Person person = Authenticate.getUser().getPerson();
         activityInformation.getProcess().getJobOffer().removeCandidacy(person);
     }
 

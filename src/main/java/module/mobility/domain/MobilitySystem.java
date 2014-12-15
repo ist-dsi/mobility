@@ -31,10 +31,10 @@ import java.util.Set;
 import module.organization.domain.OrganizationalModel;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.bennu.core.domain.User;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -46,24 +46,24 @@ import pt.ist.fenixframework.Atomic;
 public class MobilitySystem extends MobilitySystem_Base {
 
     public static MobilitySystem getInstance() {
-        final MyOrg myOrg = MyOrg.getInstance();
-        if (myOrg.getMobilitySystem() == null) {
+        final Bennu bennu = Bennu.getInstance();
+        if (bennu.getMobilitySystem() == null) {
             initialize();
         }
-        return myOrg.getMobilitySystem();
+        return bennu.getMobilitySystem();
     }
 
     @Atomic
     public synchronized static void initialize() {
-        final MyOrg myOrg = MyOrg.getInstance();
-        if (myOrg.getMobilitySystem() == null) {
-            new MobilitySystem(myOrg);
+        final Bennu bennu = Bennu.getInstance();
+        if (bennu.getMobilitySystem() == null) {
+            new MobilitySystem(bennu);
         }
     }
 
-    private MobilitySystem(final MyOrg myOrg) {
+    private MobilitySystem(final Bennu bennu) {
         super();
-        setMyOrg(myOrg);
+        setBennu(bennu);
     }
 
     @Atomic
@@ -73,7 +73,7 @@ public class MobilitySystem extends MobilitySystem_Base {
     }
 
     public boolean isManagementMember() {
-        return isManagementMember(UserView.getCurrentUser());
+        return isManagementMember(Authenticate.getUser());
     }
 
     public boolean isManagementMember(final User user) {
@@ -99,81 +99,6 @@ public class MobilitySystem extends MobilitySystem_Base {
             }
         }
         return emails;
-    }
-
-    @Deprecated
-    public boolean hasManagersQueue() {
-        return getManagersQueue() != null;
-    }
-
-    @Deprecated
-    public java.util.Set<module.mobility.domain.MobilityYear> getMobilityYear() {
-        return getMobilityYearSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyMobilityYear() {
-        return !getMobilityYearSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<module.mobility.domain.JobOffer> getJobOffer() {
-        return getJobOfferSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyJobOffer() {
-        return !getJobOfferSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<module.mobility.domain.WorkerOffer> getWorkerOffer() {
-        return getWorkerOfferSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyWorkerOffer() {
-        return !getWorkerOfferSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<module.mobility.domain.PersonalPortfolioInfoQualification> getPersonalPortfolioInfoQualification() {
-        return getPersonalPortfolioInfoQualificationSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonalPortfolioInfoQualification() {
-        return !getPersonalPortfolioInfoQualificationSet().isEmpty();
-    }
-
-    @Deprecated
-    public boolean hasMyOrg() {
-        return getMyOrg() != null;
-    }
-
-    @Deprecated
-    public boolean hasOrganizationalModel() {
-        return getOrganizationalModel() != null;
-    }
-
-    @Deprecated
-    public java.util.Set<module.mobility.domain.PersonalPortfolio> getPersonalPortfolio() {
-        return getPersonalPortfolioSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonalPortfolio() {
-        return !getPersonalPortfolioSet().isEmpty();
-    }
-
-    @Deprecated
-    public java.util.Set<module.mobility.domain.PersonalPortfolioInfo> getPersonalPortfolioInfo() {
-        return getPersonalPortfolioInfoSet();
-    }
-
-    @Deprecated
-    public boolean hasAnyPersonalPortfolioInfo() {
-        return !getPersonalPortfolioInfoSet().isEmpty();
     }
 
 }

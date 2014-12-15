@@ -26,7 +26,8 @@ package module.mobility.domain.util;
 
 import java.io.Serializable;
 
-import pt.ist.bennu.core.util.BundleUtil;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+
 import pt.ist.fenixWebFramework.rendererExtensions.util.IPresentableEnum;
 
 /**
@@ -45,7 +46,7 @@ public class WorkerOfferSearch implements Serializable {
 
         @Override
         public String getLocalizedName() {
-            return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+            return BundleUtil.getString("resources/MobilityResources", getQualifiedName());
         }
 
     }
@@ -59,7 +60,7 @@ public class WorkerOfferSearch implements Serializable {
 
         @Override
         public String getLocalizedName() {
-            return BundleUtil.getStringFromResourceBundle("resources/MobilityResources", getQualifiedName());
+            return BundleUtil.getString("resources/MobilityResources", getQualifiedName());
         }
 
     }
@@ -117,7 +118,7 @@ public class WorkerOfferSearch implements Serializable {
 //
 //    public Set<JobOfferProcess> getJobOfferSet() {
 //	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
-//	User user = UserView.getCurrentUser();
+//	User user = Authenticate.getUser();
 //	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
 //	    if (jobOffer.getCreator().equals(user.getPerson())) {
 //		result.add(jobOffer.getJobOfferProcess());
@@ -128,7 +129,7 @@ public class WorkerOfferSearch implements Serializable {
 //
 //    public Set<WorkerOfferProcess> getWorkerOfferSet() {
 //	Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
-//	User user = UserView.getCurrentUser();
+//	User user = Authenticate.getUser();
 //	for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOffer()) {
 //	    if (workerOffer.getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().equals(user.getPerson())) {
 //		result.add(workerOffer.getWorkerOfferProcess());
@@ -139,7 +140,7 @@ public class WorkerOfferSearch implements Serializable {
 //
 //    public Set<JobOfferProcess> getPendingApprovalJobOfferSet() {
 //	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
-//	User user = UserView.getCurrentUser();
+//	User user = Authenticate.getUser();
 //	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
 //	    if (jobOffer.isPendingApproval(user)) {
 //		result.add(jobOffer.getJobOfferProcess());
@@ -150,7 +151,7 @@ public class WorkerOfferSearch implements Serializable {
 //
 //    public Set<WorkerOfferProcess> getPendingApprovalWorkerJobOfferSet() {
 //	Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
-//	User user = UserView.getCurrentUser();
+//	User user = Authenticate.getUser();
 //	for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOffer()) {
 //	    if (workerOffer.isPendingApproval(user)) {
 //		result.add(workerOffer.getWorkerOfferProcess());
@@ -161,7 +162,7 @@ public class WorkerOfferSearch implements Serializable {
 //
 //    public Set<JobOfferProcess> doJobOfferSearch() {
 //	Set<JobOfferProcess> result = new TreeSet<JobOfferProcess>();
-//	User user = UserView.getCurrentUser();
+//	User user = Authenticate.getUser();
 //	for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOffer()) {
 //	    if (jobOffer.getJobOfferProcess().isAccessible(user) && isSatisfiedOwner(jobOffer, user)
 //		    && isSatisfiedState(jobOffer, user) && isSatisfiedProcessNumber(jobOffer)) {
@@ -173,7 +174,7 @@ public class WorkerOfferSearch implements Serializable {
 //
 //    public Set<WorkerOfferProcess> doWorkerOfferSearch() {
 //	Set<WorkerOfferProcess> result = new TreeSet<WorkerOfferProcess>();
-//	User user = UserView.getCurrentUser();
+//	User user = Authenticate.getUser();
 //	for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
 //	    if (workerOffer.getWorkerOfferProcess().isAccessible(user) && isSatisfiedOwner(workerOffer, user)
 //		    && isSatisfiedState(workerOffer, user) && isSatisfiedProcessNumber(workerOffer)) {

@@ -1,14 +1,12 @@
+<%@page import="org.fenixedu.bennu.core.domain.User"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-html" prefix="html"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/workflow" prefix="wf"%>
-
-
 <%@page import="module.organization.domain.OrganizationalModel"%>
-<%@page import="pt.ist.bennu.core.domain.MyOrg"%>
-<%@page import="pt.utl.ist.fenix.tools.util.i18n.Language"%>
+<%@page import="org.fenixedu.bennu.core.domain.Bennu"%>
 
 <bean:define id="workerOffer" name="process" property="workerOffer" type="module.mobility.domain.WorkerOffer"/>
 <bean:define id="personalPortfolioInfo" name="workerOffer" property="personalPortfolioInfo"/>
@@ -31,21 +29,19 @@
 		<tr>
 			<td valign="middle" style="padding: 10px">
 				<logic:equal name="workerOffer" property="displayPhoto" value="true">
-					<bean:define id="urlPhoto" type="java.lang.String">https://fenix.ist.utl.pt/publico/retrievePersonalPhoto.do?method=retrieveByUUID&amp;contentContextPath_PATH=/homepage&amp;uuid=<bean:write name="person" property="user.username"/></bean:define>
-					<img src="<%= urlPhoto %>">
+					<bean:define id="username" name="person" property="user.username" type="java.lang.String"/>
+					<% if (User.findByUsername(username).getProfile() != null) { %>
+						<img src="<%= User.findByUsername(username).getProfile().getAvatarUrl() %>">
+					<% } %>
 				</logic:equal>
-				<logic:notEqual name="workerOffer" property="displayPhoto" value="true">
-					<bean:define id="urlPhoto" type="java.lang.String">https://fenix.ist.utl.pt//images/photo_placer01_<%= Language.getUserLanguage().name() %>.gif</bean:define>
-					<img src="<%= urlPhoto %>">
-				</logic:notEqual>
 			</td>
 			<td valign="top" style="padding: 10px">
 				<table width="100%">
 					<tr>
 						<td>
 							<%
-								final OrganizationalModel organizationalModel = MyOrg.getInstance().getOrganizationalModelsSet().size()>0 ?
-									MyOrg.getInstance().getOrganizationalModelsSet().iterator().next() : null;
+								final OrganizationalModel organizationalModel = Bennu.getInstance().getOrganizationalModelsSet().size()>0 ?
+									Bennu.getInstance().getOrganizationalModelsSet().iterator().next() : null;
 							%>
 
 							<%

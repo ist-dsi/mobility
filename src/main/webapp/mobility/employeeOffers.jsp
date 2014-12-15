@@ -1,3 +1,4 @@
+<%@page import="module.mobility.domain.MobilitySystem"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-html" prefix="html"%>
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-bean" prefix="bean"%>
@@ -8,9 +9,7 @@
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.employeeOffers"/>
 </h2>
 
-<bean:define id="user" name="USER_SESSION_ATTRIBUTE" property="user"/>
-
-<% if(module.mobility.domain.groups.MobilityGroup.getInstance().isMember((pt.ist.bennu.core.domain.User)user)) {%>
+<% if (MobilitySystem.getInstance().isManagementMember()) {%>
 <fr:form action="/mobility.do?method=employeeOffers">
 	<fr:edit id="offerSearch" name="offerSearch">
 		<fr:schema type="module.mobility.domain.util.OfferSearch" bundle="MOBILITY_RESOURCES">

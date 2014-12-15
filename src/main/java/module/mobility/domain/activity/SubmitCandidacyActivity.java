@@ -30,8 +30,9 @@ import module.mobility.domain.JobOfferProcess;
 import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
+
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -49,7 +50,7 @@ public class SubmitCandidacyActivity extends WorkflowActivity<JobOfferProcess, S
 
     @Override
     protected void process(SubmitCandidacyInformation activityInformation) {
-        Person person = UserView.getCurrentUser().getPerson();
+        Person person = Authenticate.getUser().getPerson();
         JobOfferCandidacy jobOfferCandidacy =
                 new JobOfferCandidacy(person.getPersonalPortfolio().getLastPersonalPortfolioInfo(),
                         activityInformation.getFiles());
