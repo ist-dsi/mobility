@@ -1,70 +1,84 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>pt.ist</groupId>
-        <artifactId>bennu-project</artifactId>
-        <version>1.1.0</version>
+        <groupId>org.fenixedu</groupId>
+        <artifactId>fenix-framework-project</artifactId>
+        <version>2.2.0</version>
     </parent>
 
     <groupId>pt.ist</groupId>
     <artifactId>mobility</artifactId>
-    <version>1.2.0</version>
+    <name>Mobility</name>
+    <version>2.0.0</version>
     <packaging>jar</packaging>
-    <name>mobility</name>
 
     <scm>
         <connection>scm:git:git@github.com:ist-dsi/mobility.git</connection>
         <developerConnection>scm:git:git@github.com:ist-dsi/mobility.git</developerConnection>
         <url>http://ist-dsi.github.io/mobility/</url>
-        <tag>v1.2.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <properties>
-        <version.pt.ist.bennu.core>1.1.0</version.pt.ist.bennu.core>
-        <version.pt.ist.email.dispatch>1.1.0</version.pt.ist.email.dispatch>
-        <version.pt.ist.organization>1.1.0</version.pt.ist.organization>
-        <version.pt.ist.workflow>1.1.1</version.pt.ist.workflow>
+        <version.org.fenixedu.bennu.core>3.4.1</version.org.fenixedu.bennu.core>
+        <version.org.fenixedu.bennu.renderers>5.0.2</version.org.fenixedu.bennu.renderers>
+        <version.org.fenixedu.messaging>2.0.0</version.org.fenixedu.messaging>
+        <version.org.fenixedu.organization>2.0.0</version.org.fenixedu.organization>
+        <version.org.fenixedu.workflow>2.0.0</version.org.fenixedu.workflow>
+        <version.informa>1.0</version.informa>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-core</artifactId>
+            <version>${version.org.fenixedu.bennu.core}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-renderers</artifactId>
+            <version>${version.org.fenixedu.bennu.renderers}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>bennu-struts</artifactId>
+            <version>${version.org.fenixedu.bennu.renderers}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>messaging</artifactId>
+            <version>${version.org.fenixedu.messaging}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>organization</artifactId>
+            <version>${version.org.fenixedu.organization}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.fenixedu</groupId>
+            <artifactId>workflow</artifactId>
+            <version>${version.org.fenixedu.workflow}</version>
+        </dependency>
+        <dependency>
             <groupId>informa</groupId>
             <artifactId>informa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>bennu-core</artifactId>
-            <version>${version.pt.ist.bennu.core}</version>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>email-dispatch</artifactId>
-            <version>${version.pt.ist.email.dispatch}</version>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>organization</artifactId>
-            <version>${version.pt.ist.organization}</version>
-        </dependency>
-        <dependency>
-            <groupId>pt.ist</groupId>
-            <artifactId>workflow</artifactId>
-            <version>${version.pt.ist.workflow}</version>
+            <version>${version.informa}</version>
         </dependency>
     </dependencies>
 
     <repositories>
         <repository>
-            <id>fenix-ashes-private</id>
-            <url>https://fenix-ashes.ist.utl.pt/nexus/content/groups/fenix-ashes-private</url>
+            <id>fenixedu-maven-repository</id>
+            <url>https://repo.fenixedu.org/fenixedu-maven-repository</url>
         </repository>
     </repositories>
 
     <distributionManagement>
         <repository>
-            <id>fenix-core-releases</id>
-            <url>https://fenix-ashes.ist.utl.pt/nexus/content/repositories/fenix-core-releases/</url>
+            <id>fenixedu-contrib-releases</id>
+            <url>https://repo.fenixedu.org/fenixedu-contrib-releases</url>
         </repository>
     </distributionManagement>
 </project>

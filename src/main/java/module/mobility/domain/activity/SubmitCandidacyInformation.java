@@ -33,7 +33,8 @@ import module.organization.domain.Person;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.domain.ProcessFile;
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
+
+import org.fenixedu.bennu.core.security.Authenticate;
 
 /**
  * 
@@ -46,7 +47,7 @@ public class SubmitCandidacyInformation extends ActivityInformation<JobOfferProc
     public SubmitCandidacyInformation(final JobOfferProcess jobOfferProcess,
             WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
         super(jobOfferProcess, activity);
-        Person person = UserView.getCurrentUser().getPerson();
+        Person person = Authenticate.getUser().getPerson();
         JobOfferCandidacy jobOfferCandidacy = getProcess().getJobOffer().getCandidacy(person);
         if (jobOfferCandidacy != null) {
             setFiles(new ArrayList<ProcessFile>(jobOfferCandidacy.getCandidacyFileSet()));

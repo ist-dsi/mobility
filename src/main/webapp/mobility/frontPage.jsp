@@ -4,8 +4,6 @@
 <%@ taglib uri="http://jakarta.apache.org/struts/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://fenix-ashes.ist.utl.pt/fenix-renderers" prefix="fr"%>
 
-<bean:define id="person" name="USER_SESSION_ATTRIBUTE"	property="user.person"/>
-
 <h2>
 	<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.frontPage"/>
 </h2>

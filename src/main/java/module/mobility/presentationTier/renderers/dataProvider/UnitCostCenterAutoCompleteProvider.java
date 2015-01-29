@@ -34,11 +34,11 @@ import java.util.Set;
 import module.mobility.domain.MobilitySystem;
 import module.organization.domain.Accountability;
 import module.organization.domain.Party;
-import module.organization.domain.PartyType;
 import module.organization.domain.Unit;
-import pt.ist.bennu.core.domain.MyOrg;
-import pt.ist.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
-import pt.utl.ist.fenix.tools.util.StringNormalizer;
+
+import org.fenixedu.bennu.core.domain.Bennu;
+import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
+import org.fenixedu.commons.StringNormalizer;
 
 /**
  * 
@@ -48,14 +48,13 @@ import pt.utl.ist.fenix.tools.util.StringNormalizer;
 public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider {
 
     @Override
-    public Collection getSearchResults(Map<String, String> argsMap, String value, int maxCount) {
+    public Collection getSearchResults(Map map, String value, int maxCount) {
         final List<Unit> units = new ArrayList<Unit>();
-
+        
         final String trimmedValue = value.trim();
-        final String[] input = trimmedValue.split(" ");
-        StringNormalizer.normalize(input);
-
-        for (final Party party : getParties(argsMap, value)) {
+        final String[] input = StringNormalizer.normalize(trimmedValue).split(" ");
+        
+        for (final Party party : getParties((Map<String, String>) map, value)) {
             if (party.isUnit() && party.getPartyTypes().contains(MobilitySystem.getInstance().getCostCenterPartyType())) {
                 final Unit unit = (Unit) party;
                 if (isActive(unit)) {
@@ -71,9 +70,9 @@ public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider 
                 }
             }
         }
-
+        
         Collections.sort(units, Unit.COMPARATOR_BY_PRESENTATION_NAME);
-
+        
         return units;
     }
 
@@ -96,6 +95,7 @@ public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider 
     }
 
     protected Set<Party> getParties(Map<String, String> argsMap, String value) {
-        return MyOrg.getInstance().getPartiesSet();
+        return Bennu.getInstance().getPartiesSet();
     }
+
 }

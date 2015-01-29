@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE schemas SYSTEM "../fenix-renderers-schemas.dtd" []>
 <schemas>
 <schema name="activityInformation.EditJobOfferActivity" type="module.mobility.domain.activity.JobOfferInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="jobOfferBean.vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" required="true">

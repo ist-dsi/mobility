@@ -30,10 +30,9 @@ import module.organization.domain.Person;
 import module.workflow.domain.LabelLog;
 import module.workflow.domain.ProcessFile;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
-
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
 
 /**
  * 
@@ -115,7 +114,7 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
 
     public void approve() {
         setApprovalDate(new DateTime());
-        setWorkerOfferApproverPerson(UserView.getCurrentUser().getPerson());
+        setWorkerOfferApproverPerson(Authenticate.getUser().getPerson());
     }
 
     @Deprecated

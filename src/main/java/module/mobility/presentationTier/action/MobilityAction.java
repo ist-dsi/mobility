@@ -57,14 +57,16 @@ import module.workflow.presentationTier.actions.ProcessManagement;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.struts.annotations.Mapping;
+import org.fenixedu.bennu.struts.base.BaseAction;
+import org.fenixedu.bennu.struts.portal.EntryPoint;
+import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.presentationTier.Context;
-import pt.ist.bennu.core.presentationTier.actions.ContextBaseAction;
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
-import pt.ist.fenixWebFramework.struts.annotations.Mapping;
 
+@StrutsApplication(bundle = "MobilityResources", path = "mobility", titleKey = "link.sideBar.mobility", accessGroup = "logged", hint = "Mobility")
 @Mapping(path = "/mobility")
 /**
  * 
@@ -72,24 +74,25 @@ import pt.ist.fenixWebFramework.struts.annotations.Mapping;
  * @author Susana Fernandes
  * 
  */
-public class MobilityAction extends ContextBaseAction {
+public class MobilityAction extends BaseAction {
 
+    @EntryPoint
     public ActionForward frontPage(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         OfferSearch offerSearch = getRenderedObject("offerSearch");
         if (offerSearch == null) {
             offerSearch = new OfferSearch();
         }
-        JobOfferProcess jobOfferProcess = offerSearch.getJobOfferProcess(UserView.getCurrentUser());
+        JobOfferProcess jobOfferProcess = offerSearch.getJobOfferProcess(Authenticate.getUser());
         if (jobOfferProcess != null) {
             return ProcessManagement.forwardToProcess(jobOfferProcess);
         }
-        WorkerOfferProcess workerOfferProcess = offerSearch.getWorkerOfferProcess(UserView.getCurrentUser());
+        WorkerOfferProcess workerOfferProcess = offerSearch.getWorkerOfferProcess(Authenticate.getUser());
         if (workerOfferProcess != null) {
             return ProcessManagement.forwardToProcess(workerOfferProcess);
         }
         request.setAttribute("offerSearch", offerSearch);
-        return forward(request, "/mobility/frontPage.jsp");
+        return forward("/mobility/frontPage.jsp");
     }
 
     public ActionForward jobOffers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -100,7 +103,7 @@ public class MobilityAction extends ContextBaseAction {
         }
         request.setAttribute("offerSearch", offerSearch);
         request.setAttribute("processes", offerSearch.doJobOfferSearch());
-        return forward(request, "/mobility/jobOffers.jsp");
+        return forward("/mobility/jobOffers.jsp");
     }
 
     public ActionForward employeeOffers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -111,14 +114,14 @@ public class MobilityAction extends ContextBaseAction {
         }
         request.setAttribute("offerSearch", offerSearch);
         request.setAttribute("processes", offerSearch.doWorkerOfferSearch());
-        return forward(request, "/mobility/employeeOffers.jsp");
+        return forward("/mobility/employeeOffers.jsp");
     }
 
     public ActionForward prepareToCreateJobOffer(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
         JobOfferBean jobOfferBean = new JobOfferBean();
         request.setAttribute("jobOfferBean", jobOfferBean);
-        return forward(request, "/mobility/createJobOffer.jsp");
+        return forward("/mobility/createJobOffer.jsp");
     }
 
     public ActionForward createJobOffer(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -144,14 +147,14 @@ public class MobilityAction extends ContextBaseAction {
             final HttpServletRequest request, final HttpServletResponse response) {
         JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
         request.setAttribute("process", jobOfferProcess);
-        return forward(request, "/mobility/showJobOfferProcess.jsp");
+        return forward("/mobility/showJobOfferProcess.jsp");
     }
 
     public ActionForward viewWorkerOfferProcess(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
         WorkerOfferProcess workerOfferProcess = getDomainObject(request, "OID");
         request.setAttribute("process", workerOfferProcess);
-        return forward(request, "/mobility/showWorkerOfferProcess.jsp");
+        return forward("/mobility/showWorkerOfferProcess.jsp");
     }
 
     public ActionForward prepareSubmitCandidacy(final ActionMapping mapping, final ActionForm form,
@@ -161,16 +164,11 @@ public class MobilityAction extends ContextBaseAction {
         if (submitCandidacyActivity.isActive(jobOfferProcess)) {
             ActivityInformation<JobOfferProcess> activityInformation =
                     submitCandidacyActivity.getActivityInformation(jobOfferProcess);
-            final Context context = getContext(request);
-            final WorkflowLayoutContext workflowLayoutContext = activityInformation.getProcess().getLayout();
-            workflowLayoutContext.setElements(context.getPath());
-            setContext(request, workflowLayoutContext);
-
-            return ProcessManagement.performActivityPostback(activityInformation, request);
+            return new ProcessManagement().performActivityPostback(activityInformation, request);
 
         }
         request.setAttribute("process", jobOfferProcess);
-        return forward(request, "/mobility/showJobOfferProcess.jsp");
+        return forward("/mobility/showJobOfferProcess.jsp");
     }
 
     public ActionForward submitCandidacy(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
@@ -182,11 +180,8 @@ public class MobilityAction extends ContextBaseAction {
             if (activityInformation.hasAllneededInfo()) {
                 activityInformation.execute();
             } else {
-                final Context context = getContext(request);
                 final WorkflowLayoutContext workflowLayoutContext = activityInformation.getProcess().getLayout();
-                workflowLayoutContext.setElements(context.getPath());
-                setContext(request, workflowLayoutContext);
-                return ProcessManagement.performActivityPostback(activityInformation, request);
+                return new ProcessManagement().performActivityPostback(activityInformation, request);
             }
         }
         return returnToJobOfferProcess(mapping, form, request, response);
@@ -212,19 +207,19 @@ public class MobilityAction extends ContextBaseAction {
             activityInformation.execute();
         }
         request.setAttribute("process", jobOfferProcess);
-        return forward(request, "/mobility/showJobOfferProcess.jsp");
+        return forward("/mobility/showJobOfferProcess.jsp");
     }
 
     public ActionForward viewJobOfferCandidacies(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
         JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
         request.setAttribute("process", jobOfferProcess);
-        return forward(request, "/mobility/showJobOfferCandidacies.jsp");
+        return forward("/mobility/showJobOfferCandidacies.jsp");
     }
 
     public ActionForward portfolio(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
-        final User user = UserView.getCurrentUser();
+        final User user = Authenticate.getUser();
         if (user == null || user.getPerson() == null) {
             return frontPage(mapping, form, request, response);
         }
@@ -241,21 +236,13 @@ public class MobilityAction extends ContextBaseAction {
             final HttpServletResponse response) {
         final MobilitySystem mobilitySystem = MobilitySystem.getInstance();
         request.setAttribute("mobilitySystem", mobilitySystem);
-        return forward(request, "/mobility/configuration.jsp");
-    }
-
-    @Override
-    public ActionForward execute(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) throws Exception {
-        final ActionForward forward = super.execute(mapping, form, request, response);
-        OrganizationModelAction.addHeadToLayoutContext(request);
-        return forward;
+        return forward("/mobility/configuration.jsp");
     }
 
     public ActionForward prepareSelectOrganizationalModel(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
         OrganizationModelAction.viewModels(request);
-        return forward(request, "/mobility/selectOrganizationalModel.jsp");
+        return forward("/mobility/selectOrganizationalModel.jsp");
     }
 
     public ActionForward selectOrganizationalModel(final ActionMapping mapping, final ActionForm form,
@@ -264,24 +251,19 @@ public class MobilityAction extends ContextBaseAction {
         final OrganizationalModel organizationalModel = getDomainObject(request, "organizationalModelOid");
         mobilitySystem.setOrganizationalModel(organizationalModel);
         request.setAttribute("mobilitySystem", mobilitySystem);
-        return forward(request, "/mobility/configuration.jsp");
+        return forward("/mobility/configuration.jsp");
     }
 
     public ActionForward configureManagers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         final MobilitySystem mobilitySystem = MobilitySystem.getInstance();
         request.setAttribute("mobilitySystem", mobilitySystem);
-        return forward(request, "/mobility/configureManagers.jsp");
+        return forward("/mobility/configureManagers.jsp");
     }
 
     private ActionForward editProfessionalInfoPostback(final HttpServletRequest request,
             final PersonalPortfolioInfoInformation activityInformation, final PersonalPortfolioProcess personalPortfolioProcess) {
-        final Context context = getContext(request);
-        final WorkflowLayoutContext workflowLayoutContext = personalPortfolioProcess.getLayout();
-        workflowLayoutContext.setElements(context.getPath());
-        setContext(request, workflowLayoutContext);
-
-        return ProcessManagement.performActivityPostback(activityInformation, request);
+        return new ProcessManagement().performActivityPostback(activityInformation, request);
     }
 
     public ActionForward addNewQualification(final ActionMapping mapping, final ActionForm form,
@@ -316,18 +298,7 @@ public class MobilityAction extends ContextBaseAction {
 
     public ActionForward saveProfessionalInformation(final ActionMapping mapping, final ActionForm form,
             final HttpServletRequest request, final HttpServletResponse response) {
-        // final PersonalPortfolioInfoInformation activityInformation =
-        // getRenderedObject("activityBean");
-        // final PersonalPortfolioProcess personalPortfolioProcess =
-        // activityInformation.getProcess();
-        // final WorkflowActivity<PersonalPortfolioProcess,
-        // ActivityInformation<PersonalPortfolioProcess>> activity =
-        // activityInformation
-        // .getActivity();
-        // activity.execute(activityInformation);
-        // return ProcessManagement.forwardToProcess(personalPortfolioProcess);
         final ProcessManagement processManagement = new ProcessManagement();
-        setContext(request, processManagement.createContext(getContext(request).getPath(), request));
         return processManagement.process(mapping, form, request, response);
     }
 
@@ -380,11 +351,6 @@ public class MobilityAction extends ContextBaseAction {
 
     private ActionForward jobOfferJuryInfoPostback(final HttpServletRequest request,
             final JobOfferJuryInformation jobOfferJuryInformation) {
-        final Context context = getContext(request);
-        final WorkflowLayoutContext workflowLayoutContext = jobOfferJuryInformation.getProcess().getLayout();
-        workflowLayoutContext.setElements(context.getPath());
-        setContext(request, workflowLayoutContext);
-
-        return ProcessManagement.performActivityPostback(jobOfferJuryInformation, request);
+        return new ProcessManagement().performActivityPostback(jobOfferJuryInformation, request);
     }
 }

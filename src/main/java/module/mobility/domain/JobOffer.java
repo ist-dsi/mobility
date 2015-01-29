@@ -25,10 +25,8 @@
 package module.mobility.domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
@@ -36,16 +34,12 @@ import module.organization.domain.Unit;
 import module.workflow.domain.LabelLog;
 
 import org.apache.commons.lang.StringUtils;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.exceptions.DomainException;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
-
-import pt.ist.bennu.core.applicationTier.Authenticate.UserView;
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.VirtualHost;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.ist.bennu.core.util.BundleUtil;
-import pt.ist.emailNotifier.domain.Email;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
 
 /**
  * 
@@ -68,11 +62,12 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     public JobOffer(JobOfferBean jobOfferBean) {
         super();
         setCanceled(Boolean.FALSE);
-        final User currentUser = UserView.getCurrentUser();
+        final User currentUser = Authenticate.getUser();
         final Person person = currentUser.getPerson();
         if (person == null) {
-            throw new DomainException("message.mobility.requestor.cannot.be.null", ResourceBundle.getBundle(MOBILITY_RESOURCES,
-                    Language.getLocale()));
+            throw new DomainException(MOBILITY_RESOURCES, "message.mobility.requestor.cannot.be.null") {
+                private static final long serialVersionUID = 1L;
+            };
         }
 
         setForm(jobOfferBean);
@@ -87,8 +82,9 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 
     private void checkDates(DateTime beginDate, DateTime endDate) {
         if (beginDate.isAfter(endDate)) {
-            throw new DomainException("message.mobility.beginDate.isAfter.endDate", ResourceBundle.getBundle(MOBILITY_RESOURCES,
-                    Language.getLocale()));
+            throw new DomainException(MOBILITY_RESOURCES, "message.mobility.beginDate.isAfter.endDate") {
+                private static final long serialVersionUID = 1L;
+            };
         }
     }
 
@@ -117,7 +113,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
     }
 
     public boolean getHasAllNeededInfoForSubmitCancidacy() {
-        Person person = UserView.getCurrentUser().getPerson();
+        Person person = Authenticate.getUser().getPerson();
         return person.getPersonalPortfolio() != null && person.getPersonalPortfolio().hasAnyPersonalPortfolioInfo();
     }
 
@@ -149,10 +145,10 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         setApprovalDate(new DateTime());
         setPublicationBeginDate(publicationBeginDate);
         setPublicationEndDate(publicationEndDate);
-        setJobOfferApproverPerson(UserView.getCurrentUser().getPerson());
-        String fromName = BundleUtil.getStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailFromName");
+        setJobOfferApproverPerson(Authenticate.getUser().getPerson());
+        String fromName = BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailFromName");
         String emailSubject =
-                BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject",
+                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject",
                         getWorkplace().getPartyName().getContent());
 
         List<String> carrerRequirements = new ArrayList<String>();
@@ -161,13 +157,13 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         }
 
         String messageBody =
-                BundleUtil.getFormattedStringFromResourceBundle(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailBody",
+                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailBody",
                         getWorkplacePath(), getJobOfferProcess().getProcessIdentification(), getVacanciesNumber().toString(),
                         StringUtils.join(carrerRequirements.iterator(), ", "));
 
-        final VirtualHost virtualHost = VirtualHost.getVirtualHostForThread();
-        new Email(fromName, virtualHost.getSystemEmailAddress(), new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-                MobilitySystem.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
+        throw new Error("Reimplement with new sender.");
+//        new Email(fromName, virtualHost.getSystemEmailAddress(), new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
+//                MobilitySystem.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
     }
 
     public String getWorkplacePath() {

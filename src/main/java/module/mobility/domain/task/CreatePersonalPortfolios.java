@@ -31,19 +31,17 @@ import module.organization.domain.AccountabilityType;
 import module.organization.domain.Party;
 import module.organization.domain.Person;
 
+import org.fenixedu.bennu.scheduler.CronTask;
+
 /**
  * 
  * @author Susana Fernandes
  * 
  */
-public class CreatePersonalPortfolios extends CreatePersonalPortfolios_Base {
-
-    public CreatePersonalPortfolios() {
-        super();
-    }
+public class CreatePersonalPortfolios extends CronTask {
 
     @Override
-    public void executeTask() {
+    public void runTask() throws Exception {
         AccountabilityType employeesAccountabilityType = MobilitySystem.getInstance().getEmployeeAccountabilityType();
         for (Accountability accountability : employeesAccountabilityType.getAccountabilitiesSet()) {
             if (accountability.isActiveNow()) {
@@ -56,10 +54,5 @@ public class CreatePersonalPortfolios extends CreatePersonalPortfolios_Base {
                 }
             }
         }
-    }
-
-    @Override
-    public String getLocalizedName() {
-        return getClass().getName();
     }
 }

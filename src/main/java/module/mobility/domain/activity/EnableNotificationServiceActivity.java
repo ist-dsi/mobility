@@ -24,17 +24,13 @@
  */
 package module.mobility.domain.activity;
 
-import java.util.ResourceBundle;
-
 import module.mobility.domain.PersonalPortfolioProcess;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 
 import org.apache.commons.lang.StringUtils;
-
-import pt.ist.bennu.core.domain.User;
-import pt.ist.bennu.core.domain.exceptions.DomainException;
-import pt.utl.ist.fenix.tools.util.i18n.Language;
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 
 /**
  * 
@@ -51,8 +47,9 @@ public class EnableNotificationServiceActivity extends
     @Override
     protected void process(ActivityInformation<PersonalPortfolioProcess> activityInformation) {
         if (StringUtils.isEmpty(activityInformation.getProcess().getPersonalPortfolio().getEmail())) {
-            throw new DomainException("message.mobility.empty.email", ResourceBundle.getBundle(getUsedBundle(),
-                    Language.getLocale()));
+            throw new DomainException(getUsedBundle(), "message.mobility.empty.email") {
+                private static final long serialVersionUID = 1L;
+            };
         }
         activityInformation.getProcess().getPersonalPortfolio().setNotificationService(Boolean.TRUE);
 
