@@ -53,6 +53,7 @@ import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
 import module.workflow.presentationTier.WorkflowLayoutContext;
 import module.workflow.presentationTier.actions.ProcessManagement;
+import module.workflow.util.WorkflowProcessViewer;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -74,6 +75,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * @author Susana Fernandes
  * 
  */
+@WorkflowProcessViewer(value = {JobOfferProcess.class, WorkerOfferProcess.class})
 public class MobilityAction extends BaseAction {
 
     @EntryPoint
