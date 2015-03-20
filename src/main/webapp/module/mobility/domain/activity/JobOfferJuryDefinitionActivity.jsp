@@ -11,13 +11,14 @@
 </p>
 
 
-<fr:form action="/mobility.do?method=addPersonToJobOfferJury">
+<bean:define id="pid" name="information" property="process.externalId" />
+<fr:form action="<%= "/mobility.do?method=addPersonToJobOfferJury&processId=" + pid %>">
 	<fr:edit id="addJury" name="information">
 		<fr:schema type="module.mobility.domain.activity.JobOfferJuryInformation" bundle="MOBILITY_RESOURCES">
 			<fr:slot name="personToAddToJury" layout="autoComplete" key="label.mobility.name"
 						validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator">
 	        	<fr:property name="labelField" value="name"/>
-				<fr:property name="format" value="${partyName} (${user.username})"/>
+				<fr:property name="format" value="\${partyName.content} (\${user.username})"/>
 				<fr:property name="minChars" value="3"/>
 				<fr:property name="args" value="provider=module.organization.presentationTier.renderers.providers.PersonAutoCompleteProvider" />
 				<fr:property name="size" value="60"/>
