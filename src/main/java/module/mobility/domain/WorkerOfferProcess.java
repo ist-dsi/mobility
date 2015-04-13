@@ -46,7 +46,13 @@ import module.workflow.util.ClassNameBundle;
 import module.workflow.widgets.UnreadCommentsWidget;
 
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.messaging.domain.MessagingSystem;
+import org.fenixedu.messaging.domain.Sender;
+import org.fenixedu.messaging.domain.Message.MessageBuilder;
 
 @ClassNameBundle(bundle = "MobilityResources")
 /**
@@ -113,20 +119,13 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 
     @Override
     public void notifyUserDueToComment(User user, String comment) {
-        List<String> toAddress = new ArrayList<String>();
-        final String email = user.getProfile() == null ? null : user.getProfile().getEmail();
-        if (email != null) {
-            toAddress.add(email);
-
-            final User loggedUser = Authenticate.getUser();
-            throw new Error("Reimplement");
-//            new Email(virtualHost.getApplicationSubTitle().getContent(), virtualHost.getSystemEmailAddress(), new String[] {},
-//                    toAddress, Collections.EMPTY_LIST, Collections.EMPTY_LIST, BundleUtil.getFormattedStringFromResourceBundle(
-//                            "resources/MobilityResources", "label.email.commentCreated.subject", getProcessIdentification()),
-//                    BundleUtil.getFormattedStringFromResourceBundle("resources/MobilityResources",
-//                            "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(),
-//                            comment));
-        }
+        final User loggedUser = Authenticate.getUser();
+        final Sender sender = MessagingSystem.getInstance().getSystemSender();
+        final Group ug = UserGroup.of(user);
+        final MessageBuilder message = sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
+                getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
+                "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+        message.to(ug);
     }
 
     @Override

@@ -27,6 +27,8 @@ package module.mobility.domain;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.Person;
@@ -36,8 +38,13 @@ import module.workflow.domain.LabelLog;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.messaging.domain.Message.MessageBuilder;
+import org.fenixedu.messaging.domain.MessagingSystem;
+import org.fenixedu.messaging.domain.Sender;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
@@ -146,10 +153,9 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         setPublicationBeginDate(publicationBeginDate);
         setPublicationEndDate(publicationEndDate);
         setJobOfferApproverPerson(Authenticate.getUser().getPerson());
-        String fromName = BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailFromName");
         String emailSubject =
-                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject",
-                        getWorkplace().getPartyName().getContent());
+                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject", getWorkplace().getPartyName()
+                        .getContent());
 
         List<String> carrerRequirements = new ArrayList<String>();
         for (CareerType careerType : getCareerRequirements()) {
@@ -157,13 +163,20 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         }
 
         String messageBody =
-                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailBody",
-                        getWorkplacePath(), getJobOfferProcess().getProcessIdentification(), getVacanciesNumber().toString(),
+                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailBody", getWorkplacePath(),
+                        getJobOfferProcess().getProcessIdentification(), getVacanciesNumber().toString(),
                         StringUtils.join(carrerRequirements.iterator(), ", "));
 
-        throw new Error("Reimplement with new sender.");
-//        new Email(fromName, virtualHost.getSystemEmailAddress(), new String[] {}, Collections.EMPTY_LIST, Collections.EMPTY_LIST,
-//                MobilitySystem.getInstance().getServiceNotificationEmails(), emailSubject, messageBody);
+        final Set<User> usersToNotify =
+                MobilitySystem.getInstance().getPersonalPortfolioSet().stream()
+                        .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
+                        .map(pp -> pp.getPerson().getUser()).collect(Collectors.toSet());
+
+        final Sender sender = MessagingSystem.getInstance().getSystemSender();
+        final Group ug = UserGroup.of(usersToNotify);
+        final MessageBuilder message = sender.message(emailSubject, messageBody);
+        message.to(ug);
+
     }
 
     public String getWorkplacePath() {
