@@ -51,7 +51,6 @@ import module.organization.domain.Person;
 import module.organization.presentationTier.actions.OrganizationModelAction;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
-import module.workflow.presentationTier.WorkflowLayoutContext;
 import module.workflow.presentationTier.actions.ProcessManagement;
 import module.workflow.util.WorkflowProcessViewer;
 
@@ -67,7 +66,8 @@ import org.fenixedu.bennu.struts.portal.StrutsApplication;
 
 import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
 
-@StrutsApplication(bundle = "MobilityResources", path = "mobility", titleKey = "link.sideBar.mobility", accessGroup = "logged", hint = "Mobility")
+@StrutsApplication(bundle = "MobilityResources", path = "mobility", titleKey = "link.sideBar.mobility", accessGroup = "logged",
+        hint = "Mobility")
 @Mapping(path = "/mobility")
 /**
  * 
@@ -75,7 +75,7 @@ import pt.ist.fenixWebFramework.renderers.utils.RenderUtils;
  * @author Susana Fernandes
  * 
  */
-@WorkflowProcessViewer(value = {JobOfferProcess.class, WorkerOfferProcess.class})
+@WorkflowProcessViewer(value = { JobOfferProcess.class, WorkerOfferProcess.class })
 public class MobilityAction extends BaseAction {
 
     @EntryPoint
@@ -164,9 +164,7 @@ public class MobilityAction extends BaseAction {
         JobOfferProcess jobOfferProcess = getDomainObject(request, "OID");
         SubmitCandidacyActivity submitCandidacyActivity = new SubmitCandidacyActivity();
         if (submitCandidacyActivity.isActive(jobOfferProcess)) {
-            ActivityInformation<JobOfferProcess> activityInformation =
-                    submitCandidacyActivity.getActivityInformation(jobOfferProcess);
-            return new ProcessManagement().performActivityPostback(activityInformation, request);
+            return ProcessManagement.forwardToActivity(jobOfferProcess, submitCandidacyActivity);
 
         }
         request.setAttribute("process", jobOfferProcess);
@@ -182,8 +180,7 @@ public class MobilityAction extends BaseAction {
             if (activityInformation.hasAllneededInfo()) {
                 activityInformation.execute();
             } else {
-                final WorkflowLayoutContext workflowLayoutContext = activityInformation.getProcess().getLayout();
-                return new ProcessManagement().performActivityPostback(activityInformation, request);
+                return ProcessManagement.forwardToActivity(jobOfferProcess, activityInformation.getActivity());
             }
         }
         return returnToJobOfferProcess(mapping, form, request, response);
@@ -265,7 +262,7 @@ public class MobilityAction extends BaseAction {
 
     private ActionForward editProfessionalInfoPostback(final HttpServletRequest request,
             final PersonalPortfolioInfoInformation activityInformation, final PersonalPortfolioProcess personalPortfolioProcess) {
-        return new ProcessManagement().performActivityPostback(activityInformation, request);
+        return ProcessManagement.forwardToActivity(personalPortfolioProcess, activityInformation.getActivity());
     }
 
     public ActionForward addNewQualification(final ActionMapping mapping, final ActionForm form,
@@ -353,6 +350,6 @@ public class MobilityAction extends BaseAction {
 
     private ActionForward jobOfferJuryInfoPostback(final HttpServletRequest request,
             final JobOfferJuryInformation jobOfferJuryInformation) {
-        return new ProcessManagement().performActivityPostback(jobOfferJuryInformation, request);
+        return ProcessManagement.forwardToActivity(jobOfferJuryInformation.getProcess(), jobOfferJuryInformation.getActivity());
     }
 }
