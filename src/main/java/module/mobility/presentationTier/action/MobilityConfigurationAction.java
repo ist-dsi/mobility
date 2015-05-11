@@ -35,7 +35,8 @@ import org.fenixedu.bennu.struts.base.BaseAction;
 import org.fenixedu.bennu.struts.portal.EntryPoint;
 import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
 
-@StrutsFunctionality(app = MobilityAction.class, path = "/mobilityConfiguration", titleKey = "link.sideBar.mobility.configuration", accessGroup = "#managers")
+@StrutsFunctionality(app = MobilityAction.class, path = "mobilityConfiguration",
+        titleKey = "link.sideBar.mobility.configuration", accessGroup = "#managers")
 @Mapping(path = "/mobilityConfiguration")
 /**
  * 

@@ -59,8 +59,8 @@ public class CreateWorkerJobOffer extends WorkflowActivity<PersonalPortfolioProc
         // workerOffer.setDisplayName(information.getDisplayName());
         // workerOffer.setDisplayDateOfBirth(information.getDisplayName());
         //
-        // workerOffer.setDisplayCarrer(information.getDisplayCarrer());
-        // workerOffer.setDisplayCategory(information.getDisplayCategory());
+        workerOffer.setDisplayCarrer(information.getDisplayCarrer());
+        workerOffer.setDisplayCategory(information.getDisplayCategory());
 
         workerOffer.setDisplayQualifications(information.getDisplayQualifications());
         // workerOffer.setDisplayCurriculum(information.getDisplayCurriculum());

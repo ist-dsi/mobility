@@ -105,21 +105,32 @@
 	<slot name="owner.name" key="label.mobility.name" layout="null-as-label"/>
 	<slot name="personalPortfolioInfo.carrer" key="label.mobility.carrer" />
 	<slot name="personalPortfolioInfo.category" key="label.mobility.category" />
+	<slot name="workerOfferProcess.filesSet" key="label.empty" layout="tabular-list">
+		<property name="subSchema" value="show.processFileWithLink"/>
+		<property name="subLayout" value="values"/>
+	</slot>
 </schema>
 
-
-<schema name="activityInformation.ChooseJobOfferCandidatesActivity" type="module.mobility.domain.activity.ChooseJobOfferCandidatesInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="selectedWorkers" key="label.mobility.beginDate" layout="tabular-option" schema="show.PersonalPortfolioInfo">
+<schema name="activityInformation.ChooseJobOfferSelectionActivity" type="module.mobility.domain.activity.ChooseJobOfferSelectionInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="selectedWorkers" key="label.empty" layout="tabular-option" schema="show.WorkerOffer">
 		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.WorkersForJobOfferSelection" />
 	</slot>
 </schema>
 
-<schema name="show.PersonalPortfolioInfo" type="module.mobility.domain.PersonalPortfolioInfo" bundle="MOBILITY_RESOURCES">
-	<slot name="personalPortfolio.person.name" key="label.mobility.carrer" />
-	<slot name="carrer" key="label.mobility.carrer" />
-	<slot name="category" key="label.mobility.category" />
+<schema name="activityInformation.ChooseJobOfferCandidatesActivity" type="module.mobility.domain.activity.ChooseJobOfferCandidatesInformation" bundle="MOBILITY_RESOURCES">
+	<slot name="selectedWorkers" key="label.mobility.beginDate" layout="tabular-option" schema="choose.jobOfferCandidacy">
+		<property name="providerClass" value="module.mobility.presentationTier.renderers.dataProvider.WorkersForJobOfferSelection" />
+	</slot>
 </schema>
 
+<schema name="choose.jobOfferCandidacy" bundle="MOBILITY_RESOURCES" type="module.mobility.domain.JobOfferCandidacy">
+	<slot name="personalPortfolioInfo.personalPortfolio.person.name" key="label.name" bundle="ORGANIZATION_RESOURCES"/>
+	<slot name="personalPortfolioInfo.carrer" key="label.mobility.carrer" />
+	<slot name="personalPortfolioInfo.category" key="label.mobility.category" />
+	<slot name="candidacyFile" schema="show.processFileWithLink" layout="tabular" key="label.mobility.jobOffer.candidacyDocuments">
+		<property name="displayHeaders" value="false"/>
+	</slot>
+</schema>
 
 <schema name="activityInformation.JuryDefinition" type="module.mobility.domain.activity.JobOfferJuryInformation" bundle="MOBILITY_RESOURCES">
 	<slot name="presidentJuryMember" key="label.mobility.juryPresident" layout="radio-select">
@@ -190,4 +201,6 @@
 		<property name="format" value="${presentationName}"/>
 		<property name="linkFormat" value="/workflowProcessManagement.do?method=downloadFile&amp;fileId=${externalId}&amp;processId=${process.externalId}"/>
 	</slot>
-</schema></schemas>
+</schema>
+
+</schemas>

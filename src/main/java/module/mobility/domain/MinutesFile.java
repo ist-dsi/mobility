@@ -27,7 +27,7 @@ package module.mobility.domain;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.util.ClassNameBundle;
 
-@ClassNameBundle(bundle = "resources/MobilityResources")
+@ClassNameBundle(bundle = "MobilityResources")
 /**
  * 
  * @author Susana Fernandes

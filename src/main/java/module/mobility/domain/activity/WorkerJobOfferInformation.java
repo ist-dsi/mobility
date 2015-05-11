@@ -51,8 +51,8 @@ public class WorkerJobOfferInformation extends ActivityInformation<PersonalPortf
     private Boolean displayName = Boolean.FALSE;
     private Boolean displayDateOfBirth = Boolean.FALSE;
 
-    private Boolean displayCarrer = Boolean.FALSE;
-    private Boolean displayCategory = Boolean.FALSE;
+    private Boolean displayCarrer = Boolean.TRUE;
+    private Boolean displayCategory = Boolean.TRUE;
 
     private Boolean displayQualifications = Boolean.FALSE;
     private Boolean displayCurriculum = Boolean.FALSE;
