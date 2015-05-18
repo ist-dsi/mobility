@@ -27,6 +27,10 @@ package module.mobility.presentationTier.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import module.mobility.domain.JobOfferProcess;
+import module.mobility.domain.WorkerOfferProcess;
+import module.workflow.util.WorkflowProcessViewer;
+
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -43,6 +47,7 @@ import org.fenixedu.bennu.struts.portal.StrutsFunctionality;
  * @author Susana Fernandes
  * 
  */
+@WorkflowProcessViewer(value = {PersonalPortfolioProcess.class})
 public class MobilityPortfilioAction extends BaseAction {
 
     @EntryPoint
