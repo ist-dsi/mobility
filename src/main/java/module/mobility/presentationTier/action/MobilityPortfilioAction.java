@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import module.mobility.domain.JobOfferProcess;
+import module.mobility.domain.PersonalPortfolioProcess;
 import module.mobility.domain.WorkerOfferProcess;
 import module.workflow.util.WorkflowProcessViewer;
 
