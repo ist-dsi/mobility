@@ -176,6 +176,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         final Group ug = UserGroup.of(usersToNotify);
         final MessageBuilder message = sender.message(emailSubject, messageBody);
         message.to(ug);
+        message.send();
 
     }
 

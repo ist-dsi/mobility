@@ -135,6 +135,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
                         getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
                         "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
         message.to(ug);
+        message.send();
     }
 
     @Override
