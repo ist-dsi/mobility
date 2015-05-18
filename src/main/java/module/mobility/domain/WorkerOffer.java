@@ -24,6 +24,8 @@
  */
 package module.mobility.domain;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import module.organization.domain.Person;
@@ -72,7 +74,19 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
         setDisplayCategory(Boolean.FALSE);
         new LabelLog(workerOfferProcess, personalPortfolioInfo.getPersonalPortfolio().getPerson().getUser(),
                 "activity.CreateWorkerJobOffer", "resources.MobilityResources");
-        getWorkerOfferProcess().getFiles().addAll(processFiles);
+        for (ProcessFile processFile : processFiles) {
+            try {
+                Constructor<? extends ProcessFile> fileConstructor =
+                        processFile.getClass().getConstructor(String.class, String.class, byte[].class);
+                ProcessFile file =
+                        fileConstructor.newInstance(new Object[] { processFile.getDisplayName(), processFile.getFilename(),
+                                processFile.getContent() });
+                getWorkerOfferProcess().addFiles(file);
+            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException
+                    | IllegalArgumentException | InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public Person getOwner() {

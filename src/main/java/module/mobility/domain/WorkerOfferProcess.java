@@ -40,6 +40,7 @@ import module.mobility.domain.activity.WorkerJobOfferApprovalActivity;
 import module.mobility.domain.util.MobilityWorkerOfferProcessStageView;
 import module.workflow.activities.ActivityInformation;
 import module.workflow.activities.WorkflowActivity;
+import module.workflow.domain.ProcessFile;
 import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.util.ClassNameBundle;
@@ -50,9 +51,9 @@ import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.messaging.domain.Message.MessageBuilder;
 import org.fenixedu.messaging.domain.MessagingSystem;
 import org.fenixedu.messaging.domain.Sender;
-import org.fenixedu.messaging.domain.Message.MessageBuilder;
 
 @ClassNameBundle(bundle = "MobilityResources")
 /**
@@ -80,6 +81,13 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
         activities = Collections.unmodifiableList(activitiesAux);
 
         UnreadCommentsWidget.register(new WorkflowCommentCounter(WorkerOfferProcess.class));
+    }
+
+    @Override
+    public List<Class<? extends ProcessFile>> getAvailableFileTypes() {
+        final List<Class<? extends ProcessFile>> list = super.getAvailableFileTypes();
+        list.add(0, PersonalPortfolioCurriculum.class);
+        return list;
     }
 
     public WorkerOfferProcess(final WorkerOffer workerOffer) {
@@ -122,9 +130,10 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
         final User loggedUser = Authenticate.getUser();
         final Sender sender = MessagingSystem.getInstance().getSystemSender();
         final Group ug = UserGroup.of(user);
-        final MessageBuilder message = sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
-                getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
-                "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+        final MessageBuilder message =
+                sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
+                        getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
+                        "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
         message.to(ug);
     }
 

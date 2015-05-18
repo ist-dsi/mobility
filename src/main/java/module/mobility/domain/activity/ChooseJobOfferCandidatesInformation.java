@@ -26,8 +26,10 @@ package module.mobility.domain.activity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import module.mobility.domain.JobOffer;
+import module.mobility.domain.JobOfferCandidacy;
 import module.mobility.domain.JobOfferProcess;
 import module.mobility.domain.PersonalPortfolioInfo;
 import module.workflow.activities.ActivityInformation;
@@ -39,14 +41,17 @@ import module.workflow.activities.WorkflowActivity;
  * 
  */
 public class ChooseJobOfferCandidatesInformation extends ActivityInformation<JobOfferProcess> {
-    private List<PersonalPortfolioInfo> selectedWorkers;
+    private List<JobOfferCandidacy> selectedWorkers = new ArrayList<JobOfferCandidacy>();
 
     public ChooseJobOfferCandidatesInformation(final JobOfferProcess jobOfferProcess,
             WorkflowActivity<JobOfferProcess, ? extends ActivityInformation<JobOfferProcess>> activity) {
         super(jobOfferProcess, activity);
 
         JobOffer jobOffer = jobOfferProcess.getJobOffer();
-        setSelectedWorkers(new ArrayList<PersonalPortfolioInfo>(jobOffer.getChosenCandidateSet()));
+        selectedWorkers.addAll(jobOffer.getJobOfferCandidacySet().stream()
+                .filter(c -> jobOffer.getChosenCandidateSet().contains(c.getPersonalPortfolioInfo()))
+                .collect(Collectors.toList()));
+
     }
 
     @Override
@@ -54,11 +59,15 @@ public class ChooseJobOfferCandidatesInformation extends ActivityInformation<Job
         return isForwardedFromInput();
     }
 
-    public List<PersonalPortfolioInfo> getSelectedWorkers() {
+    public List<JobOfferCandidacy> getSelectedWorkers() {
         return selectedWorkers;
     }
 
-    public void setSelectedWorkers(List<PersonalPortfolioInfo> selectedWorkers) {
+    public void setSelectedWorkers(List<JobOfferCandidacy> selectedWorkers) {
         this.selectedWorkers = selectedWorkers;
+    }
+
+    public List<PersonalPortfolioInfo> getSelectedPersonalPortfolioInfo() {
+        return getSelectedWorkers().stream().map(JobOfferCandidacy::getPersonalPortfolioInfo).collect(Collectors.toList());
     }
 }

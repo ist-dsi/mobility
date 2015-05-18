@@ -38,6 +38,7 @@ import module.mobility.domain.activity.CancelJobOfferSubmitionForEvaluationActiv
 import module.mobility.domain.activity.CancelJobOfferSubmitionForJuryDefinitionActivity;
 import module.mobility.domain.activity.CancelJobOfferSubmitionForSelectionActivity;
 import module.mobility.domain.activity.ChooseJobOfferCandidatesActivity;
+import module.mobility.domain.activity.ChooseJobOfferSelectionActivity;
 import module.mobility.domain.activity.EditJobOfferActivity;
 import module.mobility.domain.activity.JobOfferApprovalActivity;
 import module.mobility.domain.activity.JobOfferArchiveActivity;
@@ -102,6 +103,8 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
         activitiesAux.add(new CancelJobOfferSubmitionForApprovalActivity());
         activitiesAux.add(new JobOfferApprovalActivity());
         activitiesAux.add(new CancelJobOfferApprovalActivity());
+
+        activitiesAux.add(new ChooseJobOfferSelectionActivity());
         activitiesAux.add(new ChooseJobOfferCandidatesActivity());
 
         activitiesAux.add(new SubmitCandidacyActivity());
@@ -158,9 +161,10 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
         final User loggedUser = Authenticate.getUser();
         final Sender sender = MessagingSystem.getInstance().getSystemSender();
         final Group ug = UserGroup.of(user);
-        final MessageBuilder message = sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
-                getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
-                "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+        final MessageBuilder message =
+                sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
+                        getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
+                        "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
         message.to(ug);
     }
 
