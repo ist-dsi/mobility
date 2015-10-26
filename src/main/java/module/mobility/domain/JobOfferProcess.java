@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Stream;
 
 import module.mobility.domain.activity.CancelJobOfferActivity;
 import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
@@ -126,10 +127,16 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     }
 
     @Override
+    public <T extends WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> Stream<T> getActivityStream() {
+        return ((List) activities).stream();
+    }
+
+    @Override
     public User getProcessCreator() {
         return getJobOffer().getCreator().getUser();
     }
 
+    @Deprecated // This method is never used... consider exterminating it
     public static Set<JobOfferProcess> getJobOfferProcessByUser(User user) {
         Set<JobOfferProcess> processes = new TreeSet<JobOfferProcess>();
         for (JobOffer jobOffer : MobilitySystem.getInstance().getJobOfferSet()) {

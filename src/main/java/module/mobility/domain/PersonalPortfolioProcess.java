@@ -27,6 +27,7 @@ package module.mobility.domain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import module.mobility.domain.activity.CreateWorkerJobOffer;
 import module.mobility.domain.activity.DefineNewPersonalPortfolioInfo;
@@ -60,7 +61,6 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
         activitiesAux.add(new EnableNotificationServiceActivity());
         activitiesAux.add(new DisableNotificationServiceActivity());
         activities = Collections.unmodifiableList(activitiesAux);
-
     }
 
     public PersonalPortfolioProcess(final PersonalPortfolio personalPortfolio) {
@@ -73,6 +73,11 @@ public class PersonalPortfolioProcess extends PersonalPortfolioProcess_Base {
         return (List) activities;
     }
 
+    @Override
+    public <T extends WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> Stream<T> getActivityStream() {
+        return ((List) activities).stream();
+    }
+    
     @Override
     public User getProcessCreator() {
         return getPersonalPortfolio().getPerson().getUser();
