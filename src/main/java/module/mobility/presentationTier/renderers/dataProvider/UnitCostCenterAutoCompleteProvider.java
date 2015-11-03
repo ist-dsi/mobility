@@ -31,14 +31,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import module.mobility.domain.MobilitySystem;
-import module.organization.domain.Accountability;
-import module.organization.domain.Party;
-import module.organization.domain.Unit;
-
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.presentationTier.renderers.autoCompleteProvider.AutoCompleteProvider;
 import org.fenixedu.commons.StringNormalizer;
+
+import module.mobility.domain.MobilitySystem;
+import module.organization.domain.AccountabilityType;
+import module.organization.domain.Party;
+import module.organization.domain.Unit;
 
 /**
  * 
@@ -50,10 +50,10 @@ public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider 
     @Override
     public Collection getSearchResults(Map map, String value, int maxCount) {
         final List<Unit> units = new ArrayList<Unit>();
-        
+
         final String trimmedValue = value.trim();
         final String[] input = StringNormalizer.normalize(trimmedValue).split(" ");
-        
+
         for (final Party party : getParties((Map<String, String>) map, value)) {
             if (party.isUnit() && party.getPartyTypes().contains(MobilitySystem.getInstance().getCostCenterPartyType())) {
                 final Unit unit = (Unit) party;
@@ -70,19 +70,15 @@ public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider 
                 }
             }
         }
-        
+
         Collections.sort(units, Unit.COMPARATOR_BY_PRESENTATION_NAME);
-        
+
         return units;
     }
 
     private boolean isActive(Unit unit) {
-        for (Accountability accountability : unit.getParentAccountabilities(MobilitySystem.getInstance().getOrganizationalAccountabilityType())) {
-            if (accountability.isActiveNow()) {
-                return true;
-            }
-        }
-        return false;
+        final AccountabilityType type = MobilitySystem.getInstance().getOrganizationalAccountabilityType();
+        return unit.getParentAccountabilityStream().anyMatch(a -> a.getAccountabilityType() == type && a.isActiveNow());
     }
 
     private boolean hasMatch(final String[] input, final String unitNameParts) {

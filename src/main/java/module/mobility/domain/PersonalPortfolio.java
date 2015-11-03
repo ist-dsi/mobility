@@ -28,13 +28,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
-
-import module.organization.domain.Accountability;
-import module.organization.domain.Party;
-import module.organization.domain.Person;
+import java.util.stream.Collectors;
 
 import org.fenixedu.bennu.core.domain.UserProfile;
 
+import module.organization.domain.AccountabilityType;
+import module.organization.domain.Party;
+import module.organization.domain.Person;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -54,12 +54,8 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     private Boolean isEmployee(Person person) {
-        for (Accountability accountability : person.getParentAccountabilities(MobilitySystem.getInstance().getEmployeeAccountabilityType())) {
-            if (accountability.isActiveNow()) {
-                return true;
-            }
-        }
-        return false;
+        final AccountabilityType type = MobilitySystem.getInstance().getEmployeeAccountabilityType();
+        return person.getParentAccountabilityStream().anyMatch(a -> a.getAccountabilityType() == type && a.isActiveNow());
     }
 
     @Atomic
@@ -96,7 +92,9 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
     }
 
     public Collection<Party> getWorkingPlaces() {
-        return getPerson().getParents(MobilitySystem.getInstance().getWorkerAccountabilityTypeSet());
+        final Set<AccountabilityType> set = MobilitySystem.getInstance().getWorkerAccountabilityTypeSet();
+        return getPerson().getParentAccountabilityStream().filter(a -> set.contains(a.getAccountabilityType()))
+                .map(a -> a.getParent()).collect(Collectors.toSet());
     }
 
     public boolean hasAnyActiveWorkerOfferOrPendingApproval() {
@@ -117,6 +115,7 @@ public class PersonalPortfolio extends PersonalPortfolio_Base {
         }
         return jobOffersWithCandidacies;
     }
+
     @Deprecated
     public boolean hasNotificationService() {
         return getNotificationService() != null;

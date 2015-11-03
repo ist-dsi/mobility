@@ -30,11 +30,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import module.mobility.domain.util.JobOfferBean;
-import module.organization.domain.Person;
-import module.organization.domain.Unit;
-import module.workflow.domain.LabelLog;
-
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
@@ -47,6 +42,11 @@ import org.fenixedu.messaging.domain.MessagingSystem;
 import org.fenixedu.messaging.domain.Sender;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+
+import module.mobility.domain.util.JobOfferBean;
+import module.organization.domain.AccountabilityType;
+import module.organization.domain.Person;
+import module.workflow.domain.LabelLog;
 
 /**
  * 
@@ -153,24 +153,21 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         setPublicationBeginDate(publicationBeginDate);
         setPublicationEndDate(publicationEndDate);
         setJobOfferApproverPerson(Authenticate.getUser().getPerson());
-        String emailSubject =
-                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject", getWorkplace().getPartyName()
-                        .getContent());
+        String emailSubject = BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject",
+                getWorkplace().getPartyName().getContent());
 
         List<String> carrerRequirements = new ArrayList<String>();
         for (CareerType careerType : getCareerRequirements()) {
             carrerRequirements.add(careerType.getLocalizedName());
         }
 
-        String messageBody =
-                BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailBody", getWorkplacePath(),
-                        getJobOfferProcess().getProcessIdentification(), getVacanciesNumber().toString(),
-                        StringUtils.join(carrerRequirements.iterator(), ", "));
+        String messageBody = BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailBody", getWorkplacePath(),
+                getJobOfferProcess().getProcessIdentification(), getVacanciesNumber().toString(),
+                StringUtils.join(carrerRequirements.iterator(), ", "));
 
-        final Set<User> usersToNotify =
-                MobilitySystem.getInstance().getPersonalPortfolioSet().stream()
-                        .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
-                        .map(pp -> pp.getPerson().getUser()).collect(Collectors.toSet());
+        final Set<User> usersToNotify = MobilitySystem.getInstance().getPersonalPortfolioSet().stream()
+                .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
+                .map(pp -> pp.getPerson().getUser()).collect(Collectors.toSet());
 
         final Sender sender = MessagingSystem.getInstance().getSystemSender();
         final Group ug = UserGroup.of(usersToNotify);
@@ -184,9 +181,9 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         StringBuilder workplacePath = new StringBuilder();
         if (getWorkplace() != null) {
             workplacePath.append(getWorkplace().getPartyName().getContent());
-            for (Unit unit : getWorkplace().getParentUnits(MobilitySystem.getInstance().getOrganizationalAccountabilityType())) {
-                workplacePath.append(" / ").append(unit.getPartyName().getContent());
-            }
+            final AccountabilityType type = MobilitySystem.getInstance().getOrganizationalAccountabilityType();
+            getWorkplace().getParentAccountabilityStream().filter(a -> a.getAccountabilityType() == type).map(a -> a.getParent())
+                    .filter(p -> p.isUnit()).forEach(p -> workplacePath.append(" / ").append(p.getPartyName().getContent()));
         }
         return workplacePath.toString();
     }
