@@ -3,14 +3,14 @@
  *
  * Copyright 2010 Instituto Superior Tecnico
  * Founding Authors: Susana Fernandes
- * 
+ *
  *      https://fenix-ashes.ist.utl.pt/
- * 
+ *
  *   This file is part of the Internal Mobility Module.
  *
  *   The Internal Mobility Module is free software: you can
  *   redistribute it and/or modify it under the terms of the GNU Lesser General
- *   Public License as published by the Free Software Foundation, either version 
+ *   Public License as published by the Free Software Foundation, either version
  *   3 of the License, or (at your option) any later version.
  *
  *   The Internal Mobility  Module is distributed in the hope that it will be useful,
@@ -20,7 +20,7 @@
  *
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with the Internal Mobility  Module. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 package module.mobility.domain;
 
@@ -30,15 +30,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
-
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.messaging.domain.Message.MessageBuilder;
-import org.fenixedu.messaging.domain.MessagingSystem;
-import org.fenixedu.messaging.domain.Sender;
 
 import module.mobility.domain.activity.CancelWorkerJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerJobOfferSubmitionForApprovalActivity;
@@ -56,13 +47,19 @@ import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.util.ClassNameBundle;
 import module.workflow.widgets.UnreadCommentsWidget;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.messaging.domain.Message;
+
 @ClassNameBundle(bundle = "MobilityResources")
 /**
- * 
+ *
  * @author João Antunes
  * @author Luis Cruz
  * @author Susana Fernandes
- * 
+ *
  */
 public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Comparable<WorkerOfferProcess> {
 
@@ -116,7 +113,8 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
         return getWorkerOffer().getPersonalPortfolioInfo().getPersonalPortfolio().getPerson().getUser();
     }
 
-    @Deprecated // This method is never used... consider exterminating it.
+    @Deprecated
+    // This method is never used... consider exterminating it.
     public static Set<WorkerOfferProcess> getWorkerJobOfferProcessByUser(User user) {
         Set<WorkerOfferProcess> processes = new TreeSet<WorkerOfferProcess>();
         for (WorkerOffer workerOffer : MobilitySystem.getInstance().getWorkerOfferSet()) {
@@ -134,15 +132,9 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 
     @Override
     public void notifyUserDueToComment(User user, String comment) {
-        final User loggedUser = Authenticate.getUser();
-        final Sender sender = MessagingSystem.getInstance().getSystemSender();
-        final Group ug = UserGroup.of(user);
-        final MessageBuilder message =
-                sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
-                        getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
-                        "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
-        message.to(ug);
-        message.send();
+        Message.fromSystem().to(UserGroup.of(user)).template("mobility.comment").parameter("process", getProcessIdentification())
+                .parameter("applicationUrl", CoreConfiguration.getConfiguration().applicationUrl())
+                .parameter("commenter", Authenticate.getUser().getPerson().getName()).parameter("comment", comment).and().send();
     }
 
     @Override

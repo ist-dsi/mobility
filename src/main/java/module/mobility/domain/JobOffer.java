@@ -3,14 +3,14 @@
  *
  * Copyright 2010 Instituto Superior Tecnico
  * Founding Authors: Susana Fernandes
- * 
+ *
  *      https://fenix-ashes.ist.utl.pt/
- * 
+ *
  *   This file is part of the Internal Mobility Module.
  *
  *   The Internal Mobility Module is free software: you can
  *   redistribute it and/or modify it under the terms of the GNU Lesser General
- *   Public License as published by the Free Software Foundation, either version 
+ *   Public License as published by the Free Software Foundation, either version
  *   3 of the License, or (at your option) any later version.
  *
  *   The Internal Mobility  Module is distributed in the hope that it will be useful,
@@ -20,40 +20,46 @@
  *
  *   You should have received a copy of the GNU Lesser General Public License
  *   along with the Internal Mobility  Module. If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 package module.mobility.domain;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang.StringUtils;
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.domain.exceptions.DomainException;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.messaging.domain.Message.MessageBuilder;
-import org.fenixedu.messaging.domain.MessagingSystem;
-import org.fenixedu.messaging.domain.Sender;
-import org.joda.time.DateTime;
-import org.joda.time.Interval;
 
 import module.mobility.domain.util.JobOfferBean;
 import module.organization.domain.AccountabilityType;
 import module.organization.domain.Person;
 import module.workflow.domain.LabelLog;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.domain.exceptions.DomainException;
+import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.commons.i18n.LocalizedString;
+import org.fenixedu.messaging.domain.Message;
+import org.fenixedu.messaging.template.DeclareMessageTemplate;
+import org.fenixedu.messaging.template.TemplateParameter;
+import org.joda.time.DateTime;
+import org.joda.time.Interval;
+
 /**
- * 
+ *
  * @author Luis Cruz
  * @author Susana Fernandes
- * 
+ *
  */
+@DeclareMessageTemplate(id = "mobility.opening", bundle = "resources.MobilityResources",
+        description = "template.mobility.opening", subject = "template.mobility.opening.subject",
+        text = "template.mobility.opening.text", parameters = {
+                @TemplateParameter(id = "applicationUrl", description = "template.parameter.application.url"),
+                @TemplateParameter(id = "career", description = "template.parameter.career"),
+                @TemplateParameter(id = "process", description = "template.parameter.process"),
+                @TemplateParameter(id = "vacancies", description = "template.parameter.vacancies"),
+                @TemplateParameter(id = "workplace", description = "template.parameter.workplace"),
+                @TemplateParameter(id = "workplacePath", description = "template.parameter.workplacePath") })
 public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 
     private static final int MINIMUM_JURY_ELEMENTS = 3;
@@ -153,28 +159,19 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         setPublicationBeginDate(publicationBeginDate);
         setPublicationEndDate(publicationEndDate);
         setJobOfferApproverPerson(Authenticate.getUser().getPerson());
-        String emailSubject = BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailSubject",
-                getWorkplace().getPartyName().getContent());
 
-        List<String> carrerRequirements = new ArrayList<String>();
-        for (CareerType careerType : getCareerRequirements()) {
-            carrerRequirements.add(careerType.getLocalizedName());
-        }
-
-        String messageBody = BundleUtil.getString(MOBILITY_RESOURCES, "message.mobility.jobOffer.emailBody", getWorkplacePath(),
-                getJobOfferProcess().getProcessIdentification(), getVacanciesNumber().toString(),
-                StringUtils.join(carrerRequirements.iterator(), ", "));
-
-        final Set<User> usersToNotify = MobilitySystem.getInstance().getPersonalPortfolioSet().stream()
-                .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
-                .map(pp -> pp.getPerson().getUser()).collect(Collectors.toSet());
-
-        final Sender sender = MessagingSystem.getInstance().getSystemSender();
-        final Group ug = UserGroup.of(usersToNotify);
-        final MessageBuilder message = sender.message(emailSubject, messageBody);
-        message.bcc(ug);
-        message.send();
-
+        final Set<User> usersToNotify =
+                MobilitySystem.getInstance().getPersonalPortfolioSet().stream()
+                        .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
+                        .map(pp -> pp.getPerson().getUser()).collect(Collectors.toSet());
+        LocalizedString career =
+                getCareerRequirements().stream().map(CareerType::getName).reduce((a, ls) -> a.append(ls, ", ")).orElse(null);
+        Message.fromSystem().bcc(UserGroup.of(usersToNotify)).template("mobility.opening")
+                .parameter("workplace", getWorkplace().getPartyName().getContent())
+                .parameter("workplacePath", getWorkplacePath())
+                .parameter("process", getJobOfferProcess().getProcessIdentification())
+                .parameter("applicationUrl", CoreConfiguration.getConfiguration().applicationUrl())
+                .parameter("vacancies", getVacanciesNumber()).parameter("career", career).and().send();
     }
 
     public String getWorkplacePath() {
