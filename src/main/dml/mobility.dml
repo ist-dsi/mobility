@@ -186,11 +186,6 @@ relation MobilityYearWorkerOffer {
 	}
 }
 
-relation MobilitySystemWorkflowQueue {
-	MobilitySystem playsRole mobilitySystem;
-	.module.workflow.domain.WorkflowUserGroupQueue playsRole managersQueue;
-}
-
 relation MobilitySystemPersonalPortfolio {
 	MobilitySystem playsRole mobilitySystem;
 	PersonalPortfolio playsRole personalPortfolio {

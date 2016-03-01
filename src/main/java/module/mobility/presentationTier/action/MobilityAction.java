@@ -81,22 +81,9 @@ public class MobilityAction extends BaseAction {
     @EntryPoint
     public ActionForward frontPage(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
-        OfferSearch offerSearch = getRenderedObject("offerSearch");
-        if (offerSearch == null) {
-            offerSearch = new OfferSearch();
-        }
-        JobOfferProcess jobOfferProcess = offerSearch.getJobOfferProcess(Authenticate.getUser());
-        if (jobOfferProcess != null) {
-            return ProcessManagement.forwardToProcess(jobOfferProcess);
-        }
-        WorkerOfferProcess workerOfferProcess = offerSearch.getWorkerOfferProcess(Authenticate.getUser());
-        if (workerOfferProcess != null) {
-            return ProcessManagement.forwardToProcess(workerOfferProcess);
-        }
-        request.setAttribute("offerSearch", offerSearch);
-        return forward("/mobility/frontPage.jsp");
+        return jobOffers(mapping, form, request, response);
     }
-
+    
     public ActionForward jobOffers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         OfferSearch offerSearch = getRenderedObject("offerSearch");
@@ -251,13 +238,6 @@ public class MobilityAction extends BaseAction {
         mobilitySystem.setOrganizationalModel(organizationalModel);
         request.setAttribute("mobilitySystem", mobilitySystem);
         return forward("/mobility/configuration.jsp");
-    }
-
-    public ActionForward configureManagers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
-            final HttpServletResponse response) {
-        final MobilitySystem mobilitySystem = MobilitySystem.getInstance();
-        request.setAttribute("mobilitySystem", mobilitySystem);
-        return forward("/mobility/configureManagers.jsp");
     }
 
     private ActionForward editProfessionalInfoPostback(final HttpServletRequest request,

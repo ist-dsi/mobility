@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemas>
 <schema name="activityInformation.EditJobOfferActivity" type="module.mobility.domain.activity.JobOfferInformation" bundle="MOBILITY_RESOURCES">
-	<slot name="jobOfferBean.vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" required="true">
+	<slot name="jobOfferBean.vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" required="true" validator="pt.ist.fenixWebFramework.renderers.validators.NumberValidator">
 		<property name="size" value="2"/>
 	</slot>
 	<slot name="jobOfferBean.workplace" key="label.mobility.jobOffer.workplace" layout="autoComplete" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator">

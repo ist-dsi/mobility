@@ -31,35 +31,5 @@
 	<br/>
 </logic:present>
 
-<logic:present name="mobilitySystem" property="managersQueue">
-<fr:view name="mobilitySystem">
-	<fr:layout name="tabular-list">
-		<fr:property name="classes" value="plist mtop05 width100pc"/>
-	</fr:layout>
-	<fr:schema type="module.mobility.domain.MobilitySystem" bundle="MOBILITY_RESOURCES">
-		<fr:slot name="managersQueue.name" key="label.mobility.configuration.queue.name"/>
-	</fr:schema>
-</fr:view>
-</logic:present>
-<html:link action="/mobility.do?method=configureManagers">
-	<bean:message bundle="MOBILITY_RESOURCES" key="label.mobility.configure"/>
-</html:link>
-<br/>
-<logic:present name="mobilitySystem" property="managersQueue">
-	<br/>
-	<h3>
-		<bean:message bundle="MOBILITY_RESOURCES" key="label.module.mobility.configuration.managementMembers"/>
-	</h3>
-	<fr:view name="mobilitySystem" property="managementUsers">
-		<fr:schema type="org.fenixedu.bennu.core.domain.User" bundle="ORGANIZATION_RESOURCES">
-			<fr:slot name="person.partyName" key="label.name"/>
-			<fr:slot name="username" key="label.username"/>
-		</fr:schema>
-		<fr:layout name="tabular">
-			<fr:property name="classes" value="tstyle2 tdleft thleft"/>
-		</fr:layout>
-	</fr:view>
-</logic:present>
-
 
 

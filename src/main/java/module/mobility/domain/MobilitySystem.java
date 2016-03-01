@@ -33,6 +33,7 @@ import module.organization.domain.OrganizationalModel;
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
 import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
 import pt.ist.fenixframework.Atomic;
@@ -77,14 +78,11 @@ public class MobilitySystem extends MobilitySystem_Base {
     }
 
     public boolean isManagementMember(final User user) {
-        if (getManagersQueue() != null) {
-            return getManagersQueue().isUserAbleToAccessQueue(user);
-        }
-        return false;
+        return Group.parse("#MobilityManagers").isMember(user);
     }
 
     public Set<User> getManagementUsers() {
-        return getManagersQueue() != null ? getManagersQueue().getUsersSet() : new HashSet<User>();
+        return Group.parse("#MobilityManagers").getMembers();
     }
 
     public Collection<String> getServiceNotificationEmails() {

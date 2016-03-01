@@ -97,6 +97,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
 
     private void setForm(JobOfferBean jobOfferBean) {
         // checkDates(jobOfferBean.getBeginDate(), jobOfferBean.getEndDate());
+        setVacanciesNumber(jobOfferBean.getVacanciesNumber());
         setWorkplace(jobOfferBean.getWorkplace());
         setJobProfile(jobOfferBean.getJobProfile());
         setKnowledgeRequirements(jobOfferBean.getKnowledgeRequirements());

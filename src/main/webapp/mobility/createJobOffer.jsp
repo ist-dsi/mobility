@@ -10,6 +10,7 @@
 	<fr:schema type="module.mobility.domain.util.JobOfferBean" bundle="MOBILITY_RESOURCES">
 		<fr:slot name="vacanciesNumber" key="label.mobility.jobOffer.vacanciesNumber" required="true">
 			<fr:property name="size" value="2"/>
+			<fr:validator name="pt.ist.fenixWebFramework.renderers.validators.NumberValidator"/>
 		</fr:slot>	
 		<fr:slot name="workplace" key="label.mobility.jobOffer.workplace" layout="autoComplete" validator="pt.ist.fenixWebFramework.rendererExtensions.validators.RequiredAutoCompleteSelectionValidator">
         	<fr:property name="labelField" value="presentationName"/>
