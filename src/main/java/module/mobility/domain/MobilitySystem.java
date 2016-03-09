@@ -26,9 +26,7 @@ package module.mobility.domain;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Set;
-
-import module.organization.domain.OrganizationalModel;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.Bennu;
@@ -36,6 +34,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 
+import module.organization.domain.OrganizationalModel;
 import pt.ist.fenixframework.Atomic;
 
 /**
@@ -81,7 +80,7 @@ public class MobilitySystem extends MobilitySystem_Base {
         return Group.parse("#MobilityManagers").isMember(user);
     }
 
-    public Set<User> getManagementUsers() {
+    public Stream<User> getManagementUsers() {
         return Group.parse("#MobilityManagers").getMembers();
     }
 
