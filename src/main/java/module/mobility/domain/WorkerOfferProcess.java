@@ -31,6 +31,12 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.messaging.domain.Message;
+
 import module.mobility.domain.activity.CancelWorkerJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerJobOfferSubmitionForApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerOfferActivity;
@@ -46,12 +52,6 @@ import module.workflow.domain.WorkflowProcess;
 import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.util.ClassNameBundle;
 import module.workflow.widgets.UnreadCommentsWidget;
-
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
-import org.fenixedu.messaging.domain.Message;
 
 @ClassNameBundle(bundle = "MobilityResources")
 /**
@@ -132,7 +132,7 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
 
     @Override
     public void notifyUserDueToComment(User user, String comment) {
-        Message.fromSystem().to(UserGroup.of(user)).template("mobility.comment").parameter("process", getProcessIdentification())
+        Message.fromSystem().to(Group.users(user)).template("mobility.comment").parameter("process", getProcessIdentification())
                 .parameter("applicationUrl", CoreConfiguration.getConfiguration().applicationUrl())
                 .parameter("commenter", Authenticate.getUser().getPerson().getName()).parameter("comment", comment).and().send();
     }

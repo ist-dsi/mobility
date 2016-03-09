@@ -55,7 +55,7 @@ public class UnitCostCenterAutoCompleteProvider implements AutoCompleteProvider 
         final String[] input = StringNormalizer.normalize(trimmedValue).split(" ");
 
         for (final Party party : getParties((Map<String, String>) map, value)) {
-            if (party.isUnit() && party.getPartyTypes().contains(MobilitySystem.getInstance().getCostCenterPartyType())) {
+            if (party.isUnit() && party.getPartyTypesSet().contains(MobilitySystem.getInstance().getCostCenterPartyType())) {
                 final Unit unit = (Unit) party;
                 if (isActive(unit)) {
                     final String unitName = StringNormalizer.normalize(unit.getPartyName().getContent());

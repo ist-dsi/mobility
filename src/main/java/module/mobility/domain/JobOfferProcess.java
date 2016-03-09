@@ -31,6 +31,14 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.bennu.core.util.CoreConfiguration;
+import org.fenixedu.messaging.domain.Message;
+import org.fenixedu.messaging.template.DeclareMessageTemplate;
+import org.fenixedu.messaging.template.TemplateParameter;
+
 import module.mobility.domain.activity.CancelJobOfferActivity;
 import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferConclusionActivity;
@@ -61,14 +69,6 @@ import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.util.ClassNameBundle;
 import module.workflow.widgets.UnreadCommentsWidget;
 
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.bennu.core.util.CoreConfiguration;
-import org.fenixedu.messaging.domain.Message;
-import org.fenixedu.messaging.template.DeclareMessageTemplate;
-import org.fenixedu.messaging.template.TemplateParameter;
-
 @ClassNameBundle(bundle = "MobilityResources")
 /**
  *
@@ -79,14 +79,15 @@ import org.fenixedu.messaging.template.TemplateParameter;
  */
 @DeclareMessageTemplate(id = "mobility.comment", bundle = "resources.MobilityResources",
         description = "template.mobility.comment", subject = "template.mobility.comment.subject",
-        text = "template.mobility.comment.text", parameters = {
-                @TemplateParameter(id = "applicationUrl", description = "template.parameter.application.url"),
+        text = "template.mobility.comment.text",
+        parameters = { @TemplateParameter(id = "applicationUrl", description = "template.parameter.application.url"),
                 @TemplateParameter(id = "commenter", description = "template.parameter.commenter"),
                 @TemplateParameter(id = "comment", description = "template.parameter.comment"),
                 @TemplateParameter(id = "process", description = "template.parameter.process") })
 public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<JobOfferProcess> {
     private static final String JOB_OFFER_SIGLA = "RCT";
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
+
     static {
         final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux =
                 new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
@@ -156,9 +157,8 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 
     public boolean getCanManageJobOfferCandidacies() {
         final User user = Authenticate.getUser();
-        return getJobOffer().hasAnyJobOfferCandidacy()
-                && (MobilitySystem.getInstance().isManagementMember(user) || (getProcessCreator().equals(user) && getJobOffer()
-                        .isCandidacyPeriodFinish()));
+        return getJobOffer().hasAnyJobOfferCandidacy() && (MobilitySystem.getInstance().isManagementMember(user)
+                || (getProcessCreator().equals(user) && getJobOffer().isCandidacyPeriodFinish()));
     }
 
     public MobilityJobOfferProcessStageView getMobilityProcessStageView() {
@@ -172,7 +172,7 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 
     @Override
     public void notifyUserDueToComment(User user, String comment) {
-        Message.fromSystem().to(UserGroup.of(user)).template("mobility.comment").parameter("process", getProcessIdentification())
+        Message.fromSystem().to(Group.users(user)).template("mobility.comment").parameter("process", getProcessIdentification())
                 .parameter("applicationUrl", CoreConfiguration.getConfiguration().applicationUrl())
                 .parameter("commenter", Authenticate.getUser().getPerson().getName()).parameter("comment", comment).and().send();
     }

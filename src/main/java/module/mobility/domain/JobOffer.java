@@ -25,17 +25,11 @@
 package module.mobility.domain;
 
 import java.util.EnumSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import module.mobility.domain.util.JobOfferBean;
-import module.organization.domain.AccountabilityType;
-import module.organization.domain.Person;
-import module.workflow.domain.LabelLog;
+import java.util.stream.Stream;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
-import org.fenixedu.bennu.core.groups.UserGroup;
+import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
 import org.fenixedu.commons.i18n.LocalizedString;
@@ -45,6 +39,11 @@ import org.fenixedu.messaging.template.TemplateParameter;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 
+import module.mobility.domain.util.JobOfferBean;
+import module.organization.domain.AccountabilityType;
+import module.organization.domain.Person;
+import module.workflow.domain.LabelLog;
+
 /**
  *
  * @author Luis Cruz
@@ -53,8 +52,8 @@ import org.joda.time.Interval;
  */
 @DeclareMessageTemplate(id = "mobility.opening", bundle = "resources.MobilityResources",
         description = "template.mobility.opening", subject = "template.mobility.opening.subject",
-        text = "template.mobility.opening.text", parameters = {
-                @TemplateParameter(id = "applicationUrl", description = "template.parameter.application.url"),
+        text = "template.mobility.opening.text",
+        parameters = { @TemplateParameter(id = "applicationUrl", description = "template.parameter.application.url"),
                 @TemplateParameter(id = "career", description = "template.parameter.career"),
                 @TemplateParameter(id = "process", description = "template.parameter.process"),
                 @TemplateParameter(id = "vacancies", description = "template.parameter.vacancies"),
@@ -161,15 +160,13 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         setPublicationEndDate(publicationEndDate);
         setJobOfferApproverPerson(Authenticate.getUser().getPerson());
 
-        final Set<User> usersToNotify =
-                MobilitySystem.getInstance().getPersonalPortfolioSet().stream()
-                        .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
-                        .map(pp -> pp.getPerson().getUser()).collect(Collectors.toSet());
+        final Stream<User> usersToNotify = MobilitySystem.getInstance().getPersonalPortfolioSet().stream()
+                .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
+                .map(pp -> pp.getPerson().getUser());
         LocalizedString career =
                 getCareerRequirements().stream().map(CareerType::getName).reduce((a, ls) -> a.append(ls, ", ")).orElse(null);
-        Message.fromSystem().bcc(UserGroup.of(usersToNotify)).template("mobility.opening")
-                .parameter("workplace", getWorkplace().getPartyName().getContent())
-                .parameter("workplacePath", getWorkplacePath())
+        Message.fromSystem().bcc(Group.users(usersToNotify)).template("mobility.opening")
+                .parameter("workplace", getWorkplace().getPartyName().getContent()).parameter("workplacePath", getWorkplacePath())
                 .parameter("process", getJobOfferProcess().getProcessIdentification())
                 .parameter("applicationUrl", CoreConfiguration.getConfiguration().applicationUrl())
                 .parameter("vacancies", getVacanciesNumber()).parameter("career", career).and().send();
