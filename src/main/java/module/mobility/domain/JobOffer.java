@@ -34,9 +34,9 @@ import org.apache.commons.lang.StringUtils;
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.domain.exceptions.DomainException;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.messaging.domain.Message;
 import org.fenixedu.messaging.domain.Message.MessageBuilder;
 import org.fenixedu.messaging.domain.MessagingSystem;
 import org.fenixedu.messaging.domain.Sender;
@@ -170,9 +170,11 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
                 .filter(pp -> pp.getNotificationService() != null && pp.getNotificationService().booleanValue())
                 .map(pp -> pp.getPerson().getUser()).collect(Collectors.toSet());
 
-        final Sender sender = MessagingSystem.getInstance().getSystemSender();
-        final Group ug = UserGroup.of(usersToNotify);
-        final MessageBuilder message = sender.message(emailSubject, messageBody);
+        final Sender sender = MessagingSystem.systemSender();
+        final Group ug = Group.users(usersToNotify.stream());
+        final MessageBuilder message = Message.from(sender);
+        message.subject(emailSubject);
+        message.textBody(messageBody);
         message.bcc(ug);
         message.send();
 

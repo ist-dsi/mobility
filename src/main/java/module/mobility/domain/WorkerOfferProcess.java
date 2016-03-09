@@ -33,9 +33,9 @@ import java.util.stream.Stream;
 
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
 import org.fenixedu.bennu.core.i18n.BundleUtil;
 import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.messaging.domain.Message;
 import org.fenixedu.messaging.domain.Message.MessageBuilder;
 import org.fenixedu.messaging.domain.MessagingSystem;
 import org.fenixedu.messaging.domain.Sender;
@@ -135,12 +135,13 @@ public class WorkerOfferProcess extends WorkerOfferProcess_Base implements Compa
     @Override
     public void notifyUserDueToComment(User user, String comment) {
         final User loggedUser = Authenticate.getUser();
-        final Sender sender = MessagingSystem.getInstance().getSystemSender();
-        final Group ug = UserGroup.of(user);
-        final MessageBuilder message =
-                sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
-                        getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
-                        "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+        final Sender sender = MessagingSystem.systemSender();
+        final Group ug = Group.users(user);
+        final MessageBuilder message = Message.from(sender);
+        message.subject(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
+                getProcessIdentification()));
+        message.textBody(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.body",
+                loggedUser.getPerson().getName(), getProcessIdentification(), comment));
         message.to(ug);
         message.send();
     }

@@ -31,6 +31,15 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
+import org.fenixedu.bennu.core.domain.User;
+import org.fenixedu.bennu.core.groups.Group;
+import org.fenixedu.bennu.core.i18n.BundleUtil;
+import org.fenixedu.bennu.core.security.Authenticate;
+import org.fenixedu.messaging.domain.Message;
+import org.fenixedu.messaging.domain.Message.MessageBuilder;
+import org.fenixedu.messaging.domain.MessagingSystem;
+import org.fenixedu.messaging.domain.Sender;
+
 import module.mobility.domain.activity.CancelJobOfferActivity;
 import module.mobility.domain.activity.CancelJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelJobOfferConclusionActivity;
@@ -61,15 +70,6 @@ import module.workflow.domain.utils.WorkflowCommentCounter;
 import module.workflow.util.ClassNameBundle;
 import module.workflow.widgets.UnreadCommentsWidget;
 
-import org.fenixedu.bennu.core.domain.User;
-import org.fenixedu.bennu.core.groups.Group;
-import org.fenixedu.bennu.core.groups.UserGroup;
-import org.fenixedu.bennu.core.i18n.BundleUtil;
-import org.fenixedu.bennu.core.security.Authenticate;
-import org.fenixedu.messaging.domain.Message.MessageBuilder;
-import org.fenixedu.messaging.domain.MessagingSystem;
-import org.fenixedu.messaging.domain.Sender;
-
 @ClassNameBundle(bundle = "MobilityResources")
 /**
  * 
@@ -81,6 +81,7 @@ import org.fenixedu.messaging.domain.Sender;
 public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<JobOfferProcess> {
     private static final String JOB_OFFER_SIGLA = "RCT";
     private static final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activities;
+
     static {
         final List<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>> activitiesAux =
                 new ArrayList<WorkflowActivity<? extends WorkflowProcess, ? extends ActivityInformation>>();
@@ -149,9 +150,8 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
 
     public boolean getCanManageJobOfferCandidacies() {
         final User user = Authenticate.getUser();
-        return getJobOffer().hasAnyJobOfferCandidacy()
-                && (MobilitySystem.getInstance().isManagementMember(user) || (getProcessCreator().equals(user) && getJobOffer()
-                        .isCandidacyPeriodFinish()));
+        return getJobOffer().hasAnyJobOfferCandidacy() && (MobilitySystem.getInstance().isManagementMember(user)
+                || (getProcessCreator().equals(user) && getJobOffer().isCandidacyPeriodFinish()));
     }
 
     public MobilityJobOfferProcessStageView getMobilityProcessStageView() {
@@ -166,12 +166,14 @@ public class JobOfferProcess extends JobOfferProcess_Base implements Comparable<
     @Override
     public void notifyUserDueToComment(User user, String comment) {
         final User loggedUser = Authenticate.getUser();
-        final Sender sender = MessagingSystem.getInstance().getSystemSender();
-        final Group ug = UserGroup.of(user);
-        final MessageBuilder message =
-                sender.message(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
-                        getProcessIdentification()), BundleUtil.getString("resources/MobilityResources",
-                        "label.email.commentCreated.body", loggedUser.getPerson().getName(), getProcessIdentification(), comment));
+        final Sender sender = MessagingSystem.systemSender();
+        final Group ug = Group.users(user);
+
+        final MessageBuilder message = Message.from(sender);
+        message.subject(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.subject",
+                getProcessIdentification()));
+        message.textBody(BundleUtil.getString("resources/MobilityResources", "label.email.commentCreated.body",
+                loggedUser.getPerson().getName(), getProcessIdentification(), comment));
         message.to(ug);
         message.send();
     }

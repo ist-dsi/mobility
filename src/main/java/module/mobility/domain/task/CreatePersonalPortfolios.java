@@ -24,14 +24,12 @@
  */
 package module.mobility.domain.task;
 
+import org.fenixedu.bennu.scheduler.CronTask;
+
 import module.mobility.domain.MobilitySystem;
 import module.mobility.domain.PersonalPortfolio;
-import module.organization.domain.Accountability;
 import module.organization.domain.AccountabilityType;
-import module.organization.domain.Party;
 import module.organization.domain.Person;
-
-import org.fenixedu.bennu.scheduler.CronTask;
 
 /**
  * 
@@ -42,17 +40,8 @@ public class CreatePersonalPortfolios extends CronTask {
 
     @Override
     public void runTask() throws Exception {
-        AccountabilityType employeesAccountabilityType = MobilitySystem.getInstance().getEmployeeAccountabilityType();
-        for (Accountability accountability : employeesAccountabilityType.getAccountabilitiesSet()) {
-            if (accountability.isActiveNow()) {
-                final Party party = accountability.getChild();
-                if (party.isPerson()) {
-                    Person person = (Person) party;
-                    if (person.getPersonalPortfolio() == null) {
-                        PersonalPortfolio.create(person);
-                    }
-                }
-            }
-        }
+        final AccountabilityType type = MobilitySystem.getInstance().getEmployeeAccountabilityType();
+        type.getAccountabilityStream().filter(a -> a.isActiveNow()).map(a -> a.getChild()).filter(p -> p.isPerson())
+                .map(p -> (Person) p).filter(p -> p.getPersonalPortfolio() == null).forEach(p -> PersonalPortfolio.create(p));
     }
 }
