@@ -35,7 +35,7 @@ import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.groups.Group;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.fenixedu.bennu.core.util.CoreConfiguration;
-import org.fenixedu.messaging.domain.Message;
+import org.fenixedu.messaging.core.domain.Message;
 
 import module.mobility.domain.activity.CancelWorkerJobOfferApprovalActivity;
 import module.mobility.domain.activity.CancelWorkerJobOfferSubmitionForApprovalActivity;
