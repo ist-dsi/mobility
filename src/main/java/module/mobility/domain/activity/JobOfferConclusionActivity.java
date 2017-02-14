@@ -50,10 +50,9 @@ public class JobOfferConclusionActivity extends WorkflowActivity<JobOfferProcess
 
     @Override
     protected void process(JobOfferConclusionInformation activityInformation) {
-        byte[] fileContent = activityInformation.getBytes();
         JobOffer jobOffer = activityInformation.getProcess().getJobOffer();
-        if (fileContent != null) {
-            new MinutesFile(jobOffer, activityInformation.getDisplayName(), activityInformation.getFilename(), fileContent);
+        if (activityInformation.getInputStream() != null) {
+            new MinutesFile(jobOffer, activityInformation.getDisplayName(), activityInformation.getFilename(), activityInformation.getBytes());
         }
         jobOffer.setConclusionDate(new DateTime());
     }
