@@ -169,7 +169,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
                 .parameter("workplace", getWorkplace().getPartyName().getContent()).parameter("workplacePath", getWorkplacePath())
                 .parameter("process", getJobOfferProcess().getProcessIdentification())
                 .parameter("applicationUrl", CoreConfiguration.getConfiguration().applicationUrl())
-                .parameter("vacancies", getVacanciesNumber()).parameter("career", career).and().send();
+                .parameter("vacancies", getVacanciesNumber()).parameter("career", career.getContent()).and().send();
     }
 
     public String getWorkplacePath() {
