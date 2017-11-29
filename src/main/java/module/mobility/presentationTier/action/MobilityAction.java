@@ -83,7 +83,7 @@ public class MobilityAction extends BaseAction {
             final HttpServletResponse response) {
         return jobOffers(mapping, form, request, response);
     }
-    
+
     public ActionForward jobOffers(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request,
             final HttpServletResponse response) {
         OfferSearch offerSearch = getRenderedObject("offerSearch");
@@ -167,7 +167,7 @@ public class MobilityAction extends BaseAction {
             if (activityInformation.hasAllneededInfo()) {
                 activityInformation.execute();
             } else {
-                return ProcessManagement.forwardToActivity(jobOfferProcess, activityInformation.getActivity());
+                return new ProcessManagement().performActivityPostback(activityInformation, request);
             }
         }
         return returnToJobOfferProcess(mapping, form, request, response);
@@ -242,7 +242,8 @@ public class MobilityAction extends BaseAction {
 
     private ActionForward editProfessionalInfoPostback(final HttpServletRequest request,
             final PersonalPortfolioInfoInformation activityInformation, final PersonalPortfolioProcess personalPortfolioProcess) {
-        return ProcessManagement.forwardToActivity(personalPortfolioProcess, activityInformation.getActivity());
+        return new ProcessManagement().performActivityPostback(activityInformation, request);
+
     }
 
     public ActionForward addNewQualification(final ActionMapping mapping, final ActionForm form,
@@ -330,6 +331,6 @@ public class MobilityAction extends BaseAction {
 
     private ActionForward jobOfferJuryInfoPostback(final HttpServletRequest request,
             final JobOfferJuryInformation jobOfferJuryInformation) {
-        return ProcessManagement.forwardToActivity(jobOfferJuryInformation.getProcess(), jobOfferJuryInformation.getActivity());
+        return new ProcessManagement().performActivityPostback(jobOfferJuryInformation, request);
     }
 }
