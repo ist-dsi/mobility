@@ -89,15 +89,7 @@ public class JobOffer extends JobOffer_Base implements Comparable<JobOffer> {
         setCreator(person);
         setCreationDate(new DateTime());
         JobOfferProcess jobOfferProcess = new JobOfferProcess(this);
-        new LabelLog(jobOfferProcess, currentUser, "activity.CreateJobOfferActivity", MOBILITY_RESOURCES);
-    }
-
-    private void checkDates(DateTime beginDate, DateTime endDate) {
-        if (beginDate.isAfter(endDate)) {
-            throw new DomainException(MOBILITY_RESOURCES, "message.mobility.beginDate.isAfter.endDate") {
-                private static final long serialVersionUID = 1L;
-            };
-        }
+        new LabelLog(jobOfferProcess, "activity.CreateJobOfferActivity", MOBILITY_RESOURCES);
     }
 
     private void setForm(JobOfferBean jobOfferBean) {

@@ -28,13 +28,13 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import module.organization.domain.Person;
-import module.workflow.domain.LabelLog;
-import module.workflow.domain.ProcessFile;
-
 import org.fenixedu.bennu.core.domain.User;
 import org.fenixedu.bennu.core.security.Authenticate;
 import org.joda.time.DateTime;
+
+import module.organization.domain.Person;
+import module.workflow.domain.LabelLog;
+import module.workflow.domain.ProcessFile;
 
 /**
  * 
@@ -72,8 +72,7 @@ public class WorkerOffer extends WorkerOffer_Base implements Comparable<WorkerOf
         setDisplayDateOfBirth(Boolean.FALSE);
         setDisplayCarrer(Boolean.FALSE);
         setDisplayCategory(Boolean.FALSE);
-        new LabelLog(workerOfferProcess, personalPortfolioInfo.getPersonalPortfolio().getPerson().getUser(),
-                "activity.CreateWorkerJobOffer", "resources.MobilityResources");
+        new LabelLog(workerOfferProcess, "activity.CreateWorkerJobOffer", "resources.MobilityResources");
         for (ProcessFile processFile : processFiles) {
             try {
                 Constructor<? extends ProcessFile> fileConstructor =
